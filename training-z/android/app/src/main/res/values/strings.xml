@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">training-z</string>
+    <string name="title_activity_main">training-z</string>
+    <string name="package_name">com.trainingz.app</string>
+    <string name="custom_url_scheme">com.trainingz.app</string>
+</resources>
