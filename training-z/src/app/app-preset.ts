@@ -1,7 +1,7 @@
 import Material from '@primeuix/themes/material';
 import { definePreset } from '@primeuix/themes';
 
-const primaryColor = 'violet';
+const primaryColor = 'orange';
 const secondaryColor = 'zinc';
 
 export const AppPreset = definePreset(Material, {

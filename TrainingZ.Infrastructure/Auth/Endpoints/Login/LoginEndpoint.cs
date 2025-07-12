@@ -26,7 +26,7 @@ public class LoginEndpoint(AppDbContext context, PasswordHashService passwordHas
 
         if (!passwordCorrect || user == null)
         {
-            ThrowError("Incorrect email or password");
+            AddError("Incorrect email or password");
             return;
         }
 
