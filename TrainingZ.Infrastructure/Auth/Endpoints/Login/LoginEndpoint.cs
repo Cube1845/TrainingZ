@@ -22,11 +22,9 @@ public class LoginEndpoint(AppDbContext context, PasswordHashService passwordHas
     {
         var user = await _context.AppUsers.FirstOrDefaultAsync(user => user.Email == req.Email, ct);
 
-        var passwordCorrect = _passwordHashService.VerifyPassword(req.Password, user!.PasswordHash);
-
-        if (!passwordCorrect || user == null)
+        if (!_passwordHashService.VerifyPassword(req.Password, user!.PasswordHash) || user == null)
         {
-            AddError("Incorrect email or password");
+            ThrowError("Incorrect email or password");
             return;
         }
 

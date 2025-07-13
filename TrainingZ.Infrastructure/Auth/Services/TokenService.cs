@@ -34,14 +34,14 @@ public class TokenService : RefreshTokenService<TokenRequest, LoginResponse>
     public override async Task PersistTokenAsync(LoginResponse response)
     {
         var userId = Guid.Parse(response.UserId);
-        var createdAt = response.RefreshExpiryDateTime.Subtract(TimeSpan.FromSeconds(_tokenConfiguration.GetTokenConfiguration().RefreshTokenExpirationSeconds));
+        var createdAt = response.RefreshExpiryDateTime.Subtract(TimeSpan.FromSeconds(_tokenConfiguration.GetTokenConfiguration().RefreshTokenExpirationSeconds)).ToUniversalTime();
 
         var refreshToken = new RefreshToken()
         {
             OwnerId = userId,
             Token = response.RefreshToken,
             CreatedAt = createdAt,
-            ExpiryDate = response.RefreshExpiryDateTime
+            ExpiryDate = response.RefreshExpiryDateTime.ToUniversalTime()
         };
 
         await _context.AddAsync(refreshToken);

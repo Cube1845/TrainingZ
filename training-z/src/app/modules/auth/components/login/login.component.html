@@ -4,7 +4,7 @@
     <app-input label="Email" formControlName="email" />
     <app-input label="Password" type="password" formControlName="password" />
 
-    <app-button label="Log in" [outlined]="true" [disabled]="data.invalid" />
+    <app-button label="Log in" [outlined]="true" [disabled]="data.invalid" (click)="login()" />
 
     <a routerLink="register">Don't have an account? Register</a>
 </div>

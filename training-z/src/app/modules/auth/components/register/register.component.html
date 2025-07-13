@@ -5,7 +5,7 @@
     <app-input label="Password" type="password" formControlName="password" />
     <app-input label="Confirm password" type="password" formControlName="confirmPassword" />
 
-    <app-button label="Register" [outlined]="true" [disabled]="data.invalid" />
+    <app-button label="Register" [outlined]="true" [disabled]="data.invalid" (click)="register()" />
 
     <a routerLink="login">Already have an account? Log in</a>
 </div>

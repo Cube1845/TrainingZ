@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AppButtonComponent } from '../../../common/components/app-button/app-button.component';
 import { AppInputComponent } from '../../../common/components/app-input/app-input.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {
   FormControl,
   FormGroup,
@@ -9,6 +9,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { passwordsMatchValidator } from './passwordsMatchValidator';
+import { RegisterRequestService } from '../../services/register/register-request.service';
+import { AppToastService } from '../../../common/services/app-toast.service';
+import { AuthDto } from '../../models/auth-dto';
 
 @Component({
   selector: 'app-register',
@@ -22,6 +25,10 @@ import { passwordsMatchValidator } from './passwordsMatchValidator';
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
+  private readonly registerRequest = inject(RegisterRequestService);
+  private readonly toastService = inject(AppToastService);
+  private readonly router = inject(Router);
+
   data = new FormGroup(
     {
       email: new FormControl<string>('', [
@@ -39,4 +46,21 @@ export class RegisterComponent {
     },
     passwordsMatchValidator
   );
+
+  register(): void {
+    const body: AuthDto = {
+      email: this.data.value.email!,
+      password: this.data.value.password!,
+    };
+
+    this.registerRequest.request(body).subscribe((result) => {
+      if (result.isSuccess) {
+        this.toastService.success('Registered! Now log in');
+        this.router.navigateByUrl('auth');
+        return;
+      }
+
+      this.toastService.error(result.message || 'Failed to register');
+    });
+  }
 }
