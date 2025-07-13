@@ -1,10 +1,10 @@
-<div class="flex w-full h-full flex-column align-items-center justify-content-center gap-3">
+<div class="flex w-full h-full flex-column align-items-center justify-content-center gap-3" [formGroup]="data">
     <h1 class="line-height-1 m-0 p-0">Login</h1>
 
-    <app-input label="Email" />
-    <app-input label="Password" type="password"/>
+    <app-input label="Email" formControlName="email" />
+    <app-input label="Password" type="password" formControlName="password" />
 
-    <app-button label="Log in" [outlined]="true" />
+    <app-button label="Log in" [outlined]="true" [disabled]="data.invalid" />
 
     <a routerLink="register">Don't have an account? Register</a>
 </div>
