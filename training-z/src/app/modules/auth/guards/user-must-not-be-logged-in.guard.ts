@@ -10,6 +10,6 @@ export const userMustNotBeLoggedInGuard: CanActivateFn = (route, state) => {
     return true;
   }
 
-  router.navigateByUrl('home');
+  router.navigateByUrl('dashboard');
   return false;
 };
