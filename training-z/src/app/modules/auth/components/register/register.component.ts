@@ -11,7 +11,9 @@ import {
 import { passwordsMatchValidator } from './passwordsMatchValidator';
 import { RegisterRequestService } from '../../services/register/register-request.service';
 import { AppToastService } from '../../../common/services/app-toast.service';
-import { AuthDto } from '../../models/auth-dto';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { RegisterRequest } from '../../services/register/register-request';
+import { Role, ROLE_TRAINER, ROLE_USER } from '../../models/roles';
 
 @Component({
   selector: 'app-register',
@@ -20,6 +22,7 @@ import { AuthDto } from '../../models/auth-dto';
     AppInputComponent,
     RouterLink,
     ReactiveFormsModule,
+    ToggleSwitchModule,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
@@ -43,14 +46,16 @@ export class RegisterComponent {
         Validators.required,
         Validators.minLength(6),
       ]),
+      trainerAccount: new FormControl<boolean>(false),
     },
     passwordsMatchValidator
   );
 
   register(): void {
-    const body: AuthDto = {
+    const body: RegisterRequest = {
       email: this.data.value.email!,
       password: this.data.value.password!,
+      role: this.data.value.trainerAccount ? Role.Trainer : Role.User,
     };
 
     this.registerRequest.request(body).subscribe((result) => {

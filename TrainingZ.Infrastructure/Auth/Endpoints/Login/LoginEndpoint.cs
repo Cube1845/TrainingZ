@@ -28,9 +28,14 @@ public class LoginEndpoint(AppDbContext context, PasswordHashService passwordHas
             return;
         }
 
-        Response = await CreateTokenWith<TokenService>(user.Id.ToString(), u =>
+        var response = await CreateTokenWith<TokenService>(user.Id.ToString(), u =>
         {
             u.Claims.Add(new(ClaimTypes.NameIdentifier, user.Id.ToString()));
+            u.Claims.Add(new(ClaimTypes.Role, user.Role.ToString()));
         });
+
+        response.Role = user.Role;
+
+        Response = response;
     }
 }

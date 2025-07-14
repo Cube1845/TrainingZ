@@ -5,6 +5,11 @@
     <app-input label="Password" type="password" formControlName="password" />
     <app-input label="Confirm password" type="password" formControlName="confirmPassword" />
 
+    <div class="flex w-full mt-1">
+        <h2 class="m-0 p-0 line-height-1 text-lg pr-3 pb-1">Trainer account</h2>
+        <p-toggle-switch formControlName="trainerAccount"/>
+    </div>
+
     <app-button label="Register" [outlined]="true" [disabled]="data.invalid" (click)="register()" />
 
     <a routerLink="login">Already have an account? Log in</a>

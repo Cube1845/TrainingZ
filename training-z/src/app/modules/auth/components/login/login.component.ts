@@ -50,7 +50,7 @@ export class LoginComponent {
       next: (data) => {
         if (this.isAuthData(data)) {
           this.authDataService.setAuthData(data);
-          this.router.navigateByUrl('');
+          this.router.navigateByUrl('dashboard');
         }
       },
       error: (data) => {

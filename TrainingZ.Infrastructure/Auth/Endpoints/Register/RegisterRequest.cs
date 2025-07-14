@@ -1,3 +1,5 @@
-﻿namespace TrainingZ.Infrastructure.Auth.Endpoints.Register;
+﻿using TrainingZ.Application.Common.Models;
 
-public record RegisterRequest(string Email, string Password);
+namespace TrainingZ.Infrastructure.Auth.Endpoints.Register;
+
+public record RegisterRequest(string Email, string Password, Role Role);

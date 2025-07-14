@@ -87,9 +87,15 @@ public class TokenService : RefreshTokenService<TokenRequest, LoginResponse>
         await _context.SaveChangesAsync();
     }
 
-    public override Task SetRenewalPrivilegesAsync(TokenRequest request, UserPrivileges privileges)
+    public override async Task SetRenewalPrivilegesAsync(TokenRequest request, UserPrivileges privileges)
     {
+        var userRole = await _context.AppUsers
+            .Include(appUser => appUser.RefreshTokens)
+            .Where(user => user.Id == Guid.Parse(request.UserId))
+            .Select(user => user.Role)
+            .FirstOrDefaultAsync();
+
         privileges.Claims.Add(new(ClaimTypes.NameIdentifier, request.UserId));
-        return Task.CompletedTask;
+        privileges.Claims.Add(new(ClaimTypes.Role, userRole.ToString()));
     }
 }

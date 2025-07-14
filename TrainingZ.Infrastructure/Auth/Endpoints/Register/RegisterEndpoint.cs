@@ -28,7 +28,7 @@ public class RegisterEndpoint(AppDbContext context, PasswordHashService password
 
         var passwordHash = _passwordHashService.HashPaswordWithSalt(req.Password);
 
-        AppUser appUser = new(req.Email, passwordHash);
+        AppUser appUser = new(req.Email, passwordHash, req.Role);
         await _context.AppUsers.AddAsync(appUser, ct);
 
         await _context.SaveChangesAsync(ct);
