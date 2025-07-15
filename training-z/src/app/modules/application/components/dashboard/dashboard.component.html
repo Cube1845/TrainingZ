@@ -1,0 +1,31 @@
+<div class="flex w-full header">
+    <div class="flex empty"></div>
+
+    <div class="flex w-full justify-content-center align-items-center main-content">
+        <div class="flex tile px-4">
+            <div class="flex align-items-center justify-content-center"><i class="pi pi-home pr-2 text-lg pb-1"></i><p class="text-lg md-only">Home</p></div>
+        </div>
+
+        @if (userRole == 1) {
+            <div class="flex tile px-4">
+                <div class="flex align-items-center justify-content-center"><i class="pi pi-book pr-2 text-lg pb-1"></i><p class="text-lg md-only">Workouts</p></div>
+            </div>
+        } @else {
+            <div class="flex tile px-4">
+                <div class="flex align-items-center justify-content-center"><i class="pi pi-users pr-2 text-lg pb-1"></i><p class="text-lg md-only">Students</p></div>
+            </div>
+        }
+
+        <div class="flex tile px-4">
+            <div class="flex align-items-center justify-content-center"><i class="pi pi-bell pr-2 text-lg pb-1"></i><p class="text-lg md-only">Notifications</p></div>
+        </div>
+
+        <div class="flex tile px-4">
+            <div class="flex align-items-center justify-content-center"><i class="pi pi-cog pr-2 text-lg pb-1"></i><p class="text-lg md-only">Settings</p></div>
+        </div>
+    </div>
+
+    <div class="flex empty justify-content-end mr-3">
+        <div class="flex align-items-center justify-content-center log-out"><i class="pi pi-sign-out pr-2 text-lg pb-1"></i><p class="text-lg md-only">Log out</p></div>
+    </div>
+</div>

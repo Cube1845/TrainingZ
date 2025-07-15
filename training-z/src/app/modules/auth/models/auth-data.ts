@@ -1,4 +1,4 @@
-import { Role } from './roles';
+import { Role } from './role';
 
 export type AuthData = {
   userId: string | null;

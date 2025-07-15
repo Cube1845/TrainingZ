@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthData } from '../models/auth-data';
-import { Role, ROLE_TRAINER, ROLE_USER } from '../models/roles';
+import { Role } from '../models/role';
 
 @Injectable({
   providedIn: 'root',
@@ -11,10 +11,7 @@ export class AuthDataService {
     localStorage.setItem('accessToken', data.accessToken!);
     localStorage.setItem('accessExpiryDateTime', data.accessExpiryDateTime!);
     localStorage.setItem('refreshToken', data.refreshToken!);
-    localStorage.setItem(
-      'role',
-      data.role == Role.Trainer ? ROLE_TRAINER : ROLE_USER
-    );
+    localStorage.setItem('role', data.role.toString());
   }
 
   clearAuthData(): void {
@@ -22,14 +19,12 @@ export class AuthDataService {
   }
 
   getAuthData(): AuthData {
-    const role = localStorage.getItem('role')!;
-
     const data: AuthData = {
       userId: localStorage.getItem('userId'),
       accessToken: localStorage.getItem('accessToken'),
       accessExpiryDateTime: localStorage.getItem('accessExpiryDateTime'),
       refreshToken: localStorage.getItem('refreshToken'),
-      role: role == ROLE_TRAINER ? Role.Trainer : Role.User,
+      role: Number(localStorage.getItem('role')) as Role,
     };
 
     return data;

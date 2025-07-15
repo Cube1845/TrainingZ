@@ -13,7 +13,7 @@ import { RegisterRequestService } from '../../services/register/register-request
 import { AppToastService } from '../../../common/services/app-toast.service';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { RegisterRequest } from '../../services/register/register-request';
-import { Role, ROLE_TRAINER, ROLE_USER } from '../../models/roles';
+import { Role } from '../../models/role';
 
 @Component({
   selector: 'app-register',

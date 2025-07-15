@@ -17,3 +17,11 @@ $breakpoints: (
     @warn "Breakpoint `#{$breakpoint}` not found in $breakpoints map.";
   }
 }
+
+.md-only {
+  display: none;
+
+  @include respond("md") {
+    display: flex;
+  }
+}
