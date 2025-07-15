@@ -1,0 +1,59 @@
+@import "../../../../responsive.scss";
+
+:host {
+    display: flex;
+    background: var(--p-surface-900);
+
+    p, i {
+        color: var(--p-primary-color);
+    }
+
+    i {
+        padding: 0;
+        margin: 1rem;
+
+        @include respond("md") {
+            margin: 0;
+            padding-bottom: 0.25rem;
+            padding-right: 0.5rem;
+        }
+    }
+
+    .empty {
+        flex: 1;
+    }
+
+    .main-content {
+        flex: 5;
+    }
+
+    .log-out {
+        p, i {
+            transition: .2s color;
+            color: var(--p-surface-300);
+        }
+
+        &:hover {
+            p, i {
+                color: var(--p-surface-50);
+            }
+
+            cursor: pointer;
+        }
+    }
+
+    .tile {
+        transition: .2s background-color;
+        border-color: var(--p-primary-900);
+
+        &:hover {
+            background: var(--p-surface-800);
+            cursor: pointer;
+        }
+    }
+
+    .selected {
+        background: var(--p-surface-800) !important;
+        border-color: var(--p-primary-color) !important;
+    }
+}
