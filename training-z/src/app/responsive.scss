@@ -18,10 +18,10 @@ $breakpoints: (
   }
 }
 
-.md-only {
+.lg-only {
   display: none;
 
-  @include respond("md") {
+  @include respond("lg") {
     display: flex;
   }
 }

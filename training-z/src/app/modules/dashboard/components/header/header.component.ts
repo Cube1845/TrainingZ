@@ -4,10 +4,11 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Role } from '../../../auth/models/role';
 import { NavBarItem } from '../../models/nav-bar-item';
 import { filter } from 'rxjs';
+import { ImageModule } from 'primeng/image';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [ImageModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -27,6 +28,14 @@ export class HeaderComponent {
       role: undefined,
     },
     {
+      text: 'Coach',
+      icon: 'pi pi-user',
+      isSelected: signal<boolean>(false),
+      route: '/dashboard/coach',
+      alternativeRoutes: [],
+      role: Role.User,
+    },
+    {
       text: 'Workouts',
       icon: 'pi pi-book',
       isSelected: signal<boolean>(false),
@@ -40,21 +49,13 @@ export class HeaderComponent {
       isSelected: signal<boolean>(false),
       route: '/dashboard/students',
       alternativeRoutes: [],
-      role: Role.Trainer,
+      role: Role.Coach,
     },
     {
       text: 'Notifications',
       icon: 'pi pi-bell',
       isSelected: signal<boolean>(false),
       route: '/dashboard/notifications',
-      alternativeRoutes: [],
-      role: undefined,
-    },
-    {
-      text: 'Settings',
-      icon: 'pi pi-cog',
-      isSelected: signal<boolean>(false),
-      route: '/dashboard/settings',
       alternativeRoutes: [],
       role: undefined,
     },
@@ -80,7 +81,7 @@ export class HeaderComponent {
   }
 
   ngOnInit(): void {
-    this.userRole = this.authDataService.getAuthData().role;
+    this.userRole = this.authDataService.getUserRole();
   }
 
   signOut(): void {

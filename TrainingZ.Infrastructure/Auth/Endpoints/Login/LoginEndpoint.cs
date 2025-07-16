@@ -1,7 +1,6 @@
 ﻿using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
-using TrainingZ.Infrastructure.Auth.Entities;
 using TrainingZ.Infrastructure.Auth.Services;
 using TrainingZ.Infrastructure.Persistence;
 

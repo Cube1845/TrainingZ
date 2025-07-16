@@ -1,3 +1,15 @@
 <div class="flex flex-column w-full align-items-center">
-    <h1>Invite new students</h1>
+    @if (userRole == 2) {
+        <h1 class="m-0 p-0 mt-4">Welcome, user</h1>
+
+        <h2>You're currently coaching 0 people</h2>
+    } @else {
+        <h1 class="m-0 p-0 mt-4">Welcome, user</h1>
+
+        @if (true) {
+            <h2 class="m-0 p-0 mt-4">You're currently coached by: Jan Kowalski</h2>
+        } @else {
+            <h2 class="m-0 p-0 mt-4">You have no coach right now</h2>
+        }
+    }
 </div>

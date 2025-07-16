@@ -39,4 +39,8 @@ export class AuthDataService {
       localStorage.getItem('role') != null
     );
   }
+
+  getUserRole(): Role {
+    return Number(localStorage.getItem('role')) as Role;
+  }
 }

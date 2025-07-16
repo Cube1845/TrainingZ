@@ -34,9 +34,21 @@ export class RegisterComponent {
 
   data = new FormGroup(
     {
+      name: new FormControl<string>('', [
+        Validators.required,
+        Validators.minLength(2),
+      ]),
+      surname: new FormControl<string>('', [
+        Validators.required,
+        Validators.minLength(2),
+      ]),
       email: new FormControl<string>('', [
         Validators.required,
         Validators.email,
+      ]),
+      phoneNumber: new FormControl<string>('', [
+        Validators.maxLength(9),
+        Validators.minLength(9),
       ]),
       password: new FormControl<string>('', [
         Validators.required,
@@ -46,16 +58,26 @@ export class RegisterComponent {
         Validators.required,
         Validators.minLength(6),
       ]),
-      trainerAccount: new FormControl<boolean>(false),
+      coachAccount: new FormControl<boolean>(false),
     },
     passwordsMatchValidator
   );
 
   register(): void {
+    const phoneNumber =
+      this.data.value.phoneNumber != null &&
+      this.data.value.phoneNumber.length == 9 &&
+      this.isOnlyDigits(this.data.value.phoneNumber!)
+        ? this.data.value.phoneNumber
+        : null;
+
     const body: RegisterRequest = {
+      name: this.data.value.name!,
+      surname: this.data.value.surname!,
       email: this.data.value.email!,
+      phoneNumber: phoneNumber,
       password: this.data.value.password!,
-      role: this.data.value.trainerAccount ? Role.Trainer : Role.User,
+      role: this.data.value.coachAccount ? Role.Coach : Role.User,
     };
 
     this.registerRequest.request(body).subscribe((result) => {
@@ -67,5 +89,9 @@ export class RegisterComponent {
 
       this.toastService.error(result.message || 'Failed to register');
     });
+  }
+
+  private isOnlyDigits(str: string): boolean {
+    return /^\d+$/.test(str);
   }
 }

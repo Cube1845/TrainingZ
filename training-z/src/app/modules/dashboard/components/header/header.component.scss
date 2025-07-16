@@ -8,19 +8,33 @@
         color: var(--p-primary-color);
     }
 
+    .secondary-color {
+        color: var(--p-primary-700);
+    }
+
+    .user-box {
+        transition: .2s background-color;
+        border-radius: 10px;
+
+        &:hover {
+            background: var(--p-surface-800);
+            cursor: pointer;
+        }
+    }
+
     i {
         padding: 0;
-        margin: 1rem;
+        margin: 1.25rem;
 
-        @include respond("md") {
+        @include respond("lg") {
             margin: 0;
             padding-bottom: 0.25rem;
             padding-right: 0.5rem;
         }
     }
 
-    .empty {
-        flex: 1;
+    .flex2 {
+        flex: 2;
     }
 
     .main-content {

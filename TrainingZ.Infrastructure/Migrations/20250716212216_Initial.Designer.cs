@@ -12,7 +12,7 @@ using TrainingZ.Infrastructure.Persistence;
 namespace TrainingZ.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250714202103_Initial")]
+    [Migration("20250716212216_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -35,12 +35,26 @@ namespace TrainingZ.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("ProfileImageId")
+                        .HasColumnType("uuid");
+
                     b.Property<int>("Role")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
