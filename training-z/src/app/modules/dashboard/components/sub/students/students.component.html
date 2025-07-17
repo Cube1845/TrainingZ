@@ -1,3 +1,21 @@
-<div class="flex m-3">
+<div class="absolute invite-button flex p-3 border-circle lg:border-round-xl z-1">
+    <i class="pi pi-user-plus text-xl"></i>
+    <h3 class="m-0 p-0 text-lg hidden lg:block pl-2">Invite student</h3>
+</div>
 
+<div class="flex align-items-center flex-column w-full relative">
+    @if (students().length > 0) {
+        @for (student of students(); track $index) {
+            @if ($index > 0) {
+                <p-divider class="m-0 p-0 w-11 lg:w-full" />
+            }
+
+            <div class="flex w-full py-3 px-4 lg:px-6 align-items-center tile">
+                <p-image [src]="student.profileImageUrl" width="50" imageClass="border-circle" />
+                <h2 class="text-xl m-0 p-0 pb-1 pl-3">{{ student.name + ' ' + student.surname }}</h2>
+            </div>
+        }
+    } @else {
+        <h1>You're not coaching anybody yet</h1>
+    }
 </div>
