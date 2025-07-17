@@ -37,10 +37,12 @@ export class RegisterComponent {
       name: new FormControl<string>('', [
         Validators.required,
         Validators.minLength(2),
+        Validators.maxLength(16),
       ]),
       surname: new FormControl<string>('', [
         Validators.required,
         Validators.minLength(2),
+        Validators.maxLength(16),
       ]),
       email: new FormControl<string>('', [
         Validators.required,

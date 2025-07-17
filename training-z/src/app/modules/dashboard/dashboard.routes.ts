@@ -3,6 +3,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HomeComponent } from './components/sub/home/home.component';
 import { StudentsComponent } from './components/sub/students/students.component';
 import { userMustBeCoachGuard } from './guards/user-must-be-coach.guard';
+import { NotificationsComponent } from './components/sub/notifications/notifications.component';
 
 export const routes: Routes = [
   {
@@ -17,6 +18,10 @@ export const routes: Routes = [
         path: 'students',
         component: StudentsComponent,
         canActivate: [userMustBeCoachGuard],
+      },
+      {
+        path: 'notifications',
+        component: NotificationsComponent,
       },
       {
         path: '**',
