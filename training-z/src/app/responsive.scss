@@ -17,11 +17,3 @@ $breakpoints: (
     @warn "Breakpoint `#{$breakpoint}` not found in $breakpoints map.";
   }
 }
-
-.lg-only {
-  display: none;
-
-  @include respond("lg") {
-    display: flex;
-  }
-}

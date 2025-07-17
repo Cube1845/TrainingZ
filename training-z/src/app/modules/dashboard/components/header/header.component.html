@@ -1,7 +1,7 @@
 <div class="flex flex2 align-items-center">
     <div class="flex align-items-center justify-content-center user-box ml-2 px-2 pb-1 pt-2">
         <p-image src="imgs/default_avatar.jpg" width="35" [imageStyle]="{'border-radius': '100px'}" class="p-0 m-0"/>
-        <h3 class="ml-2 mr-3 text-lg secondary-color lg-only m-0 p-0 line-height-1 mb-1">Tadeusz</h3>
+        <h3 class="ml-2 mr-3 text-lg secondary-color m-0 p-0 line-height-1 mb-1 hidden lg:block">Tadeusz</h3>
     </div>
 </div>
 
@@ -9,12 +9,12 @@
     @for (item of navBarItems(); track $index) {
         @if (item.role == undefined || (item.role != undefined && userRole == item.role)) {
             <div [class]="(item.isSelected() ? 'selected ' : '') + 'flex tile px-3 border-bottom-1'" (click)="navigateTo(item.route)">
-                <div class="flex align-items-center justify-content-center"><i [class]="item.icon +  ' text-lg'"></i><p class="text-lg lg-only">{{ item.text }}</p></div>
+                <div class="flex align-items-center justify-content-center"><i [class]="item.icon +  ' text-lg p-0 my-3 lg:m-0 lg:pb-1 lg:pr-2'"></i><p class="text-lg hidden lg:block">{{ item.text }}</p></div>
             </div>
         }
     }
 </div>
 
 <div class="flex flex2 justify-content-end mr-3">
-    <div class="flex align-items-center justify-content-center log-out" (click)="signOut()"><i class="pi pi-sign-out"></i><p class="lg-only">Log out</p></div>
+    <div class="flex align-items-center justify-content-center log-out" (click)="signOut()"><i class="pi pi-sign-out text-lg lg:pr-2"></i><p class="hidden lg:block text-lg">Log out</p></div>
 </div>
