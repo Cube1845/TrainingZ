@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HomeComponent } from './components/sub/home/home.component';
 import { StudentsComponent } from './components/sub/students/students.component';
+import { userMustBeCoachGuard } from './guards/user-must-be-coach.guard';
 
 export const routes: Routes = [
   {
@@ -15,6 +16,7 @@ export const routes: Routes = [
       {
         path: 'students',
         component: StudentsComponent,
+        canActivate: [userMustBeCoachGuard],
       },
       {
         path: '**',

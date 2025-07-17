@@ -9,7 +9,7 @@
     @for (item of navBarItems(); track $index) {
         @if (item.role == undefined || (item.role != undefined && userRole == item.role)) {
             <div [class]="(item.isSelected() ? 'selected ' : '') + 'flex tile px-2 sm:px-3 border-top-1 lg:border-bottom-1 lg:border-top-none'" (click)="navigateTo(item.route)">
-                <div class="flex align-items-center justify-content-center"><i [class]="item.icon +  ' text-2xl lg:text-lg p-0 px-1 my-3 lg:m-0 lg:pb-1 lg:pr-2'"></i><p class="text-lg hidden lg:block">{{ item.text }}</p></div>
+                <div class="flex align-items-center justify-content-center"><i [class]="item.icon +  ' text-2xl lg:text-lg p-0 px-1 my-3 lg:m-0 lg:pb-1 lg:pr-2'"></i><p class="text-lg hidden lg:block font-bold">{{ item.text }}</p></div>
             </div>
         }
     }
