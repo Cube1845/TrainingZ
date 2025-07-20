@@ -7,6 +7,7 @@ import { NotificationsComponent } from './components/sub/notifications/notificat
 import { AccountSettingsComponent } from './components/sub/account-settings/account-settings.component';
 import { CoachComponent } from './components/sub/coach/coach.component';
 import { userMustNotBeCoachGuard } from './guards/user-must-not-be-coach.guard';
+import { WorkoutsComponent } from './components/sub/workouts/workouts.component';
 
 export const routes: Routes = [
   {
@@ -16,6 +17,11 @@ export const routes: Routes = [
       {
         path: '',
         component: HomeComponent,
+      },
+      {
+        path: 'workouts',
+        component: WorkoutsComponent,
+        canActivate: [userMustNotBeCoachGuard],
       },
       {
         path: 'coach',
