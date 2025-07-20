@@ -67,14 +67,10 @@ export class HeaderComponent {
       .subscribe((event: NavigationEnd) => {
         const route = event.urlAfterRedirects;
 
+        this.navBarItems().forEach((x) => x.isSelected.set(false));
         this.navBarItems().forEach((item, index) => {
           if (route == item.route || item.alternativeRoutes.includes(route)) {
-            const navBarItems = this.navBarItems();
-            navBarItems.forEach((x) => x.isSelected.set(false));
-
-            navBarItems[index].isSelected.set(true);
-
-            this.navBarItems.set(navBarItems);
+            this.navBarItems()[index].isSelected.set(true);
           }
         });
       });

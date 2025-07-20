@@ -1,0 +1,17 @@
+@if (userData() != undefined) {
+    <div class="flex p-4 w-full h-full lg:p-6 justify-content-center">
+        <div class="flex flex-column w-full lg:w-6">
+            <div class="flex align-items-center">
+                <p-image [src]="userData()!.profileImageUrl" width="120" imageClass="border-circle" class="pr-3 lg:pr-5" />
+
+                <h1 class="text-4xl m-0 p-0">{{ userData()!.name + ' ' + userData()!.surname}}</h1>
+            </div>
+
+            <p-divider class="m-0 mt-5 mb-3 w-full"/>
+
+            <div class="flex">
+                <h2 class="text-xl">Email: {{ userData()!.email }}</h2>
+            </div>
+        </div>
+    </div>
+}

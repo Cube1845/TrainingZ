@@ -4,6 +4,7 @@ import { HomeComponent } from './components/sub/home/home.component';
 import { StudentsComponent } from './components/sub/students/students.component';
 import { userMustBeCoachGuard } from './guards/user-must-be-coach.guard';
 import { NotificationsComponent } from './components/sub/notifications/notifications.component';
+import { AccountSettingsComponent } from './components/sub/account-settings/account-settings.component';
 
 export const routes: Routes = [
   {
@@ -22,6 +23,10 @@ export const routes: Routes = [
       {
         path: 'notifications',
         component: NotificationsComponent,
+      },
+      {
+        path: 'account-settings',
+        component: AccountSettingsComponent,
       },
       {
         path: '**',

@@ -1,8 +1,7 @@
-import { Component, inject, signal } from '@angular/core';
-import { StudentData } from '../../../models/student-data';
+import { Component, signal } from '@angular/core';
 import { Image } from 'primeng/image';
-import { ProfileImageService } from '../../../services/profile-image.service';
 import { DividerModule } from 'primeng/divider';
+import { UserData } from '../../../models/user-data';
 
 @Component({
   selector: 'app-students',
@@ -11,16 +10,18 @@ import { DividerModule } from 'primeng/divider';
   styleUrl: './students.component.scss',
 })
 export class StudentsComponent {
-  students = signal<StudentData[]>([
+  students = signal<UserData[]>([
     {
       name: 'Antoni',
       surname: 'Pszczoła',
       profileImageUrl: 'imgs/default_avatar.jpg',
+      id: 'awdawdawd-awdawdawd-awdawd-awda',
     },
     {
       name: 'Jan',
       surname: 'Matejko',
       profileImageUrl: 'imgs/default_avatar.jpg',
+      id: 'awdawdawd-awdawdawd-awdawd-awdawdawdga',
     },
   ]);
 }
