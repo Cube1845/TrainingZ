@@ -1,7 +1,7 @@
 <div class="flex flex2 align-items-center">
-    <div class="flex align-items-center justify-content-center user-box ml-2 px-2 pb-1 pt-2 border-round-lg" (click)="navigateTo('dashboard/account-settings')" >
-        <p-image src="imgs/default_avatar.jpg" width="35" imageClass="border-circle" class="p-0 m-0"/>
-        <h3 class="ml-2 mr-3 text-lg m-0 p-0 line-height-1 mb-1 hidden lg:block">Tadeusz</h3>
+    <div [class]="(accountSettingsRouteActive() ? 'selected ' : '') + 'flex align-items-center justify-content-center user-box h-full border-top-1 lg:border-bottom-1 lg:border-top-none account-tile'" (click)="navigateTo('dashboard/account-settings')" >
+        <p-image src="imgs/default_avatar.jpg" width="35" imageClass="border-circle" class="p-0 m-0 px-2 sm:px-3 lg:pr-2 lg:pl-3"/>
+        <h3 class="mr-3 text-lg m-0 p-0 line-height-1 mb-1 hidden lg:block">Tadeusz</h3>
     </div>
 </div>
 

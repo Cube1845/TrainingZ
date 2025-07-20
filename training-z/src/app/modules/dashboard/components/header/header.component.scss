@@ -14,6 +14,7 @@
 
     .user-box {
         transition: .2s background-color;
+        border-color: var(--p-surface-500);
 
         &:hover {
             background: var(--p-surface-800);
@@ -58,7 +59,7 @@
         background: var(--p-surface-800) !important;
         border-color: var(--p-primary-color) !important;
 
-        p, i {
+        p, i, h3 {
             color: var(--p-primary-color) !important;
         }
     }

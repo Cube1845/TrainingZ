@@ -18,6 +18,9 @@ export class HeaderComponent {
 
   userRole?: Role;
 
+  private readonly accountSettingsRoute = '/dashboard/account-settings';
+  accountSettingsRouteActive = signal<boolean>(false);
+
   readonly navBarItems = signal<NavBarItem[]>([
     {
       text: 'Home',
@@ -68,6 +71,12 @@ export class HeaderComponent {
         const route = event.urlAfterRedirects;
 
         this.navBarItems().forEach((x) => x.isSelected.set(false));
+        this.accountSettingsRouteActive.set(false);
+
+        if (route == this.accountSettingsRoute) {
+          this.accountSettingsRouteActive.set(true);
+        }
+
         this.navBarItems().forEach((item, index) => {
           if (route == item.route || item.alternativeRoutes.includes(route)) {
             this.navBarItems()[index].isSelected.set(true);

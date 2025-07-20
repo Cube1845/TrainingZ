@@ -1,0 +1,35 @@
+:host {
+    h2 {
+        color: var(--p-surface-200);
+        word-break: break-all;
+    }
+
+    h3 {
+        color: var(--p-surface-400);
+    }
+
+    i {
+        color: var(--p-surface-300);
+        transition: .2s color;
+
+        &:hover {
+            color: var(--p-primary-color);
+            cursor: pointer;
+        }
+    }
+
+    .overlay {
+        cursor: pointer;
+        opacity: 0;
+        transition: opacity .2s ease;
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .overlay:hover {
+        opacity: 1;
+    }
+
+    .overlay i {
+        color: var(--p-surface-0);
+    }
+}

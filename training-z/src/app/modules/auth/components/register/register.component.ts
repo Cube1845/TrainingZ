@@ -49,7 +49,7 @@ export class RegisterComponent {
         Validators.email,
       ]),
       phoneNumber: new FormControl<string>('', [
-        Validators.maxLength(9),
+        Validators.maxLength(13),
         Validators.minLength(9),
       ]),
       password: new FormControl<string>('', [
