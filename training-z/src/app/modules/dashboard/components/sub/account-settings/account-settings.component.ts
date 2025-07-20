@@ -18,7 +18,7 @@ export class AccountSettingsComponent {
     name: 'Adam',
     surname: 'Kowalski',
     email: 'adam.kowalski@gmail.com',
-    phoneNumber: '685374274',
+    phoneNumber: '+48 685 374 274',
     id: 'awdawdawd-awdawdghs-srhgsdrgd',
     profileImageUrl: 'imgs/default_avatar.jpg',
   });

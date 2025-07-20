@@ -1,4 +1,8 @@
 :host {
+    h1 {
+        color: var(--p-surface-0);
+    }
+
     h2 {
         color: var(--p-surface-200);
         word-break: break-all;
