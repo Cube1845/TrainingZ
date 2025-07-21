@@ -1,0 +1,22 @@
+:host {
+    h1 {
+        color: var(--p-surface-0);
+    }
+
+    h2 {
+        color: var(--p-surface-200);
+    }
+
+    h3 {
+        color: var(--p-primary-color);
+    }
+
+    i {
+        transition: .2s color;
+
+        &:hover {
+            color: var(--p-primary-color);
+            cursor: pointer;
+        }
+    }
+}
