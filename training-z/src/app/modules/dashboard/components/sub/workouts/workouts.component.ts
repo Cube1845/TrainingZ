@@ -1,9 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { WorkoutPlan } from '../../../models/workoutPlan';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-workouts',
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './workouts.component.html',
   styleUrl: './workouts.component.scss',
 })
