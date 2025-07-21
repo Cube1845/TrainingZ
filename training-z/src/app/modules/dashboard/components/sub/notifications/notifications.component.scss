@@ -1,0 +1,48 @@
+:host {
+    position: relative;
+
+    h2 {
+        color: var(--p-surface-200);
+    }
+
+    p, i {
+        color: var(--p-surface-400);
+    }
+
+    .tile {
+        transition: .2s background-color;
+
+        &:hover {
+            background: var(--p-surface-800);
+        }
+    }
+
+    .lighter-hover {
+        transition: .2s background-color;
+
+        &:hover {
+            background: var(--p-surface-700);
+
+            i {
+                color: var(--p-primary-color);
+            }
+        }
+    }
+
+    .clear-button {
+        bottom: 1.5rem;
+        right: 1.5rem;
+
+        transition: .2s background-color;
+        background: var(--p-primary-800);
+
+        i {
+            color: var(--p-surface-0);
+        }
+
+        &:hover {
+            background: var(--p-primary-500);
+            cursor: pointer;
+        }
+    }
+}

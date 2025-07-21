@@ -13,7 +13,7 @@ export const routes: Routes = [
     path: 'dashboard',
     canActivate: [userMustBeLoggedInGuard],
     loadChildren: () =>
-      import('./modules/application/application.routes').then((x) => x.routes),
+      import('./modules/dashboard/dashboard.routes').then((x) => x.routes),
   },
   {
     path: '',

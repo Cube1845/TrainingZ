@@ -1,0 +1,19 @@
+:host {
+    .tile {
+        background: var(--p-surface-800);
+        transition: .2s background-color;
+
+        &:hover {
+            background: var(--p-surface-700);
+            cursor: pointer;
+        }
+    }
+
+    h1 {
+        color: var(--p-surface-0);
+    }
+
+    h2 {
+        color: var(--p-surface-200);
+    }
+}

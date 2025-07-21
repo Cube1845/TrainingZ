@@ -1,0 +1,23 @@
+<div class="absolute clear-button flex p-4 lg:p-3 border-circle lg:border-round-xl z-1">
+    <i class="pi pi-eraser text-xl"></i>
+    <h3 class="m-0 p-0 text-lg hidden lg:block pl-2">Clear notifications</h3>
+</div>
+
+<div class="flex flex-column align-items-center overflow-auto h-full w-full">
+    @for (notification of notifications(); track $index) {
+        @if ($index > 0) {
+            <p-divider class="m-0 p-0 w-11 lg:w-full" />
+        }
+
+        <div class="flex w-full p-3 align-items-center tile justify-content-between tile">
+            <div class="flex flex-column p-2 pr-4 gap-3">
+                <h2 class="text-lg m-0 p-0 line-height-1">{{ notification.header }}</h2>
+                <p class="m-0 p-0 line-height-1">{{ notification.message }}</p>
+            </div>
+
+            <div class="flex align-items-end justify-content-end lighter-hover border-circle">
+                <i class="pi pi-trash p-2 lg:p-3 text-lg lg:text-xl"></i>
+            </div>
+        </div>
+    }
+</div>
