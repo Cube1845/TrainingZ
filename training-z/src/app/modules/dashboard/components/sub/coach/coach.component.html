@@ -1,12 +1,18 @@
-@if (coachData() != undefined) {
-    @if (coachData() != null) {
-        <div class="absolute message-button flex p-4 lg:p-3 border-circle lg:border-round-xl z-1">
-            <i class="pi pi-envelope text-xl"></i>
-            <h4 class="m-0 p-0 text-lg hidden lg:block pl-2">Send message</h4>
+@if (coachData() !== undefined) {
+    @if (coachData() === null) {
+        <div class="p-4 flex align-items-center justify-content-center w-full flex-column gap-3">
+            <h1 class="m-0 p-0 lg:my-3">Ask your coach for an invitation code</h1>
+            <app-input class="w-full lg:w-3" label="Invitation code" />
+            <app-button label="Accept" [outlined]="true" />
         </div>
-
+    } @else {
         <div class="flex p-4 w-full h-full lg:p-6 justify-content-center">
-            <div class="flex flex-column w-full lg:w-6">
+            <div class="flex flex-column w-full lg:w-6 relative">
+                <div class="absolute message-button flex p-4 lg:p-3 border-circle lg:border-round-xl z-1">
+                    <i class="pi pi-envelope text-xl"></i>
+                    <h4 class="m-0 p-0 text-lg hidden lg:block pl-2">Send message</h4>
+                </div>
+
                 <div class="flex align-items-center">
                     <p-image [src]="coachData()!.profileImageUrl" width="120" imageClass="border-circle" class="mr-4 lg:mr-5" />
 
@@ -25,10 +31,6 @@
                     <h2 class="text-lg lg:text-2xl m-0 p-0 mt-2">{{ coachData()!.phoneNumber == null ? 'Not given' : coachData()!.phoneNumber }}</h2>
                 </div>
             </div>
-        </div>
-    } @else {
-        <div class="p-4 flex align-items-center justify-content-center w-full">
-            <h1>You don't currently have a coach</h1>
         </div>
     }
 }

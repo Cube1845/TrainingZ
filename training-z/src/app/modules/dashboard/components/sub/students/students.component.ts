@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Image } from 'primeng/image';
 import { DividerModule } from 'primeng/divider';
 import { UserData } from '../../../models/user-data';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-students',
@@ -10,6 +11,8 @@ import { UserData } from '../../../models/user-data';
   styleUrl: './students.component.scss',
 })
 export class StudentsComponent {
+  private readonly router = inject(Router);
+
   students = signal<UserData[]>([
     {
       name: 'Antoni',
@@ -24,4 +27,8 @@ export class StudentsComponent {
       id: 'awdawdawd-awdawdawd-awdawd-awdawdawdga',
     },
   ]);
+
+  navigateTo(route: string): void {
+    this.router.navigateByUrl(route);
+  }
 }

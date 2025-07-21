@@ -1,6 +1,4 @@
 :host {
-    position: relative;
-
     h1 {
         color: var(--p-surface-0);
     }
@@ -15,8 +13,8 @@
     }
 
     .message-button {
-        bottom: 1.5rem;
-        right: 1.5rem;
+        bottom: 0;
+        right: 0.6rem;
 
         transition: .2s background-color;
         background: var(--p-primary-800);
