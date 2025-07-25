@@ -7,10 +7,11 @@ using TrainingZ.Infrastructure.Persistence;
 
 namespace TrainingZ.Infrastructure.Auth.Endpoints.Register;
 
-public class RegisterEndpoint(AppDbContext context, PasswordHashService passwordHashService) : Endpoint<RegisterRequest>
+public class RegisterEndpoint(AppDbContext context, PasswordHashService passwordHashService, TimeProvider time) : Endpoint<RegisterRequest>
 {
     private readonly AppDbContext _context = context;
     private readonly PasswordHashService _passwordHashService = passwordHashService;
+    private readonly TimeProvider _time = time;
 
     public override void Configure()
     {
@@ -28,7 +29,17 @@ public class RegisterEndpoint(AppDbContext context, PasswordHashService password
 
         var passwordHash = _passwordHashService.HashPaswordWithSalt(req.Password);
 
-        AppUser appUser = new(req.Name, req.Surname, req.Role, req.Email, passwordHash, req.PhoneNumber);
+        AppUser appUser = new
+        (
+            req.Name,
+            req.Surname,
+            req.Role,
+            req.Email,
+            passwordHash,
+            req.PhoneNumber,
+            _time.GetUtcNow().LocalDateTime
+        );
+
         await _context.AppUsers.AddAsync(appUser, ct);
 
         await _context.SaveChangesAsync(ct);

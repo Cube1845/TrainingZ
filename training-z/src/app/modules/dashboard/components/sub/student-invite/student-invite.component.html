@@ -23,7 +23,7 @@
 
             <div>
                 <h2 class="m-0 p-0 text-3xl lg:text-4xl mb-1">Time left:</h2>
-                <h1 class="m-0 p-0 text-3xl lg:text-4xl">120 seconds</h1>
+                <h1 class="m-0 p-0 text-3xl lg:text-4xl">{{ timer() }} seconds</h1>
             </div>
 
             <app-button label="Cancel" [outlined]="true" [size]="responsiveService.lg() ? 'large' : undefined" (click)="cancelCode()" color="secondary" />

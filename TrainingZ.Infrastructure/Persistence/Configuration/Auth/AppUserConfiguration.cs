@@ -4,7 +4,7 @@ using TrainingZ.Infrastructure.Auth.Entities;
 
 namespace TrainingZ.Infrastructure.Persistence.Configuration.Auth;
 
-public class AppUserConfiguration : IEntityTypeConfiguration<AppUser>
+public class CoachingDataConfiguration : IEntityTypeConfiguration<AppUser>
 {
     public void Configure(EntityTypeBuilder<AppUser> builder)
     {

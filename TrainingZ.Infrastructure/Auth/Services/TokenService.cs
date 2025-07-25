@@ -36,13 +36,13 @@ public class TokenService : RefreshTokenService<TokenRequest, LoginResponse>
         var userId = Guid.Parse(response.UserId);
         var createdAt = response.RefreshExpiryDateTime.Subtract(TimeSpan.FromSeconds(_tokenConfiguration.GetTokenConfiguration().RefreshTokenExpirationSeconds)).ToUniversalTime();
 
-        var refreshToken = new RefreshToken()
-        {
-            OwnerId = userId,
-            Token = response.RefreshToken,
-            CreatedAt = createdAt,
-            ExpiryDate = response.RefreshExpiryDateTime.ToUniversalTime()
-        };
+        RefreshToken refreshToken = new
+        (
+            userId,
+            response.RefreshToken,
+            response.RefreshExpiryDateTime.ToUniversalTime(),
+            _timeProvider.GetUtcNow().LocalDateTime
+        );
 
         await _context.AddAsync(refreshToken);
         await _context.SaveChangesAsync();
