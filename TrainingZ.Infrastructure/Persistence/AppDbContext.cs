@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TrainingZ.Application.Common.Interfaces;
-using TrainingZ.Infrastructure.Auth.Entities;
+using TrainingZ.Domain.Entities;
+using TrainingZ.Infrastructure.Auth.Entites;
 
 namespace TrainingZ.Infrastructure.Persistence;
 
@@ -8,6 +9,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 {
     public DbSet<AppUser> AppUsers { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }
+
+    public DbSet<CoachingData> CoachingDatas { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

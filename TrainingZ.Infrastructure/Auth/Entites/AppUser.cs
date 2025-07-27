@@ -1,10 +1,9 @@
-﻿using TrainingZ.Application.Common.Models;
-using TrainingZ.Domain.Abstract;
-using TrainingZ.Domain.Interfaces;
+﻿using TrainingZ.Domain.Abstract;
+using TrainingZ.Domain.Enums;
 
-namespace TrainingZ.Infrastructure.Auth.Entities;
+namespace TrainingZ.Infrastructure.Auth.Entites;
 
-public class AppUser : BaseEntity, IAppUser
+public class AppUser : BaseEntity
 {
     public string Name { get; set; }
     public string Surname { get; set; }
@@ -15,7 +14,7 @@ public class AppUser : BaseEntity, IAppUser
     public Role Role { get; set; }
     public ICollection<RefreshToken> RefreshTokens { get; set; } = [];
 
-    public AppUser(string name, string surname, Role role, string email, string passwordHash, string? phoneNumber, DateTime now)
+    public AppUser(string name, string surname, Role role, string email, string passwordHash, string? phoneNumber, DateTime createdAt)
     {
         Name = name;
         Surname = surname;
@@ -23,6 +22,6 @@ public class AppUser : BaseEntity, IAppUser
         Email = email;
         PasswordHash = passwordHash;
         Role = role;
-        CreatedAt = now;
+        CreatedAt = createdAt;
     }
 }

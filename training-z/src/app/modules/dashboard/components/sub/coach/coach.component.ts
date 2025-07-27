@@ -2,12 +2,10 @@ import { Component, signal } from '@angular/core';
 import { DividerModule } from 'primeng/divider';
 import { Image } from 'primeng/image';
 import { ExtendedUserData } from '../../../models/extended-user-data';
-import { AppInputComponent } from '../../../../common/components/app-input/app-input.component';
-import { AppButtonComponent } from '../../../../common/components/app-button/app-button.component';
 
 @Component({
   selector: 'app-coach',
-  imports: [Image, DividerModule, AppInputComponent, AppButtonComponent],
+  imports: [Image, DividerModule],
   templateUrl: './coach.component.html',
   styleUrl: './coach.component.scss',
 })
@@ -20,4 +18,17 @@ export class CoachComponent {
     id: 'awdawdawd-awdawdghs-srhgsdrgd',
     profileImageUrl: 'imgs/default_avatar.jpg',
   });
+
+  code = signal<string | undefined>('8gAhklDFG56');
+
+  // copyCode() {
+  //   navigator.clipboard
+  //     .writeText(this.code()!)
+  //     .then(() => {
+  //       this.toastService.success('Copied!');
+  //     })
+  //     .catch((err) => {
+  //       console.error('Failed to copy: ', err);
+  //     });
+  // }
 }

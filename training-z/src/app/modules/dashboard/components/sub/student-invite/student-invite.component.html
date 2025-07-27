@@ -1,44 +1,21 @@
-@if (code() == undefined) {
-    <div class="flex p-4 flex-column gap-5 align-items-center text-center">
-        <h1 class="m-0 p-0 text-4xl">Generate an invitation code</h1>
-
-        <div>
-            <h2 class="m-0 p-0 text-xl mb-1">The code will be active for 2 minutes</h2>
-            <h2 class="m-0 p-0 text-xl">Once someone accepts it, you will have to confirm it here</h2>
+@if (invitedUserData() != null) {
+    <div class="flex p-4 align-items-center justify-content-center flex-column gap-4">
+        <div class="flex align-items-center justify-content-center">
+            <p-image [src]="invitedUserData()!.profileImageUrl" width="120" imageClass="border-circle" />
+            <h1 class="text-4xl m-0 p-0 pb-1 pl-3">{{ invitedUserData()!.name + ' ' + invitedUserData()!.surname }}</h1>
         </div>
 
-        <app-button label="Generate code" [outlined]="true" [size]="responsiveService.lg() ? 'large' : undefined" (click)="generateCode()" />
+        <p-divider class="m-0 p-0 w-full lg:w-4 lg:my-1" />
+
+        <div class="flex">
+            <app-button icon="pi pi-times" [outlined]="true" [size]="responsiveService.lg() ? 'large' : undefined"  color="secondary" class="m-2" label="Reject" />
+            <app-button icon="pi pi-check" [outlined]="true" [size]="responsiveService.lg() ? 'large' : undefined"  class="m-2" label="Invite" />
+        </div>
     </div>
 } @else {
-    @if (invitedUserData() === undefined) {
-        <div class="flex p-4 flex-column gap-4 lg:gap-5 align-items-center text-center">
-            <h1 class="m-0 p-0 text-4xl lg:text-5xl">Invitation code</h1>
-
-            <div class="flex align-items-center">
-                <h3 class="m-0 p-0 text-5xl lg:text-6xl">{{ code() }}</h3>
-                <i class="pi pi-clipboard text-3xl lg:text-4xl ml-2 lg:ml-3" (click)="copyCode()"></i>
-            </div>
-
-            <h2 class="m-0 p-0 text-3xl lg:text-4xl">Send this code to your student</h2>
-
-            <div>
-                <h2 class="m-0 p-0 text-3xl lg:text-4xl mb-1">Time left:</h2>
-                <h1 class="m-0 p-0 text-3xl lg:text-4xl">{{ timer() }} seconds</h1>
-            </div>
-
-            <app-button label="Cancel" [outlined]="true" [size]="responsiveService.lg() ? 'large' : undefined" (click)="cancelCode()" color="secondary" />
-        </div>
-    } @else {
-        <div class="flex p-4 align-items-center justify-content-center flex-column gap-4">
-            <div class="flex align-items-center justify-content-center">
-                <p-image [src]="invitedUserData()!.profileImageUrl" width="120" imageClass="border-circle" />
-                <h1 class="text-4xl m-0 p-0 pb-1 pl-3">{{ invitedUserData()!.name + ' ' + invitedUserData()!.surname }}</h1>
-            </div>
-
-            <div class="flex">
-                <app-button icon="pi pi-times" [outlined]="true" [size]="responsiveService.lg() ? 'large' : undefined" (click)="cancelCode()" color="secondary" class="m-2" label="Reject" />
-                <app-button icon="pi pi-check" [outlined]="true" [size]="responsiveService.lg() ? 'large' : undefined" (click)="cancelCode()" class="m-2" label="Accept" />
-            </div>
-        </div>
-    }
+    <div class="p-4 flex align-items-center justify-content-center w-full flex-column gap-3 text-center">
+        <h1 class="m-0 p-0 lg:my-3">Enter your student's code</h1>
+        <app-input class="w-full lg:w-3" label="Student's code" />
+        <app-button label="Invite" [outlined]="true" />
+    </div>
 }

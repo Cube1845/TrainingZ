@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using TrainingZ.Infrastructure.Auth.Config;
 using TrainingZ.Infrastructure.Auth.Endpoints.Login;
-using TrainingZ.Infrastructure.Auth.Entities;
+using TrainingZ.Infrastructure.Auth.Entites;
 using TrainingZ.Infrastructure.Persistence;
 
 namespace TrainingZ.Infrastructure.Auth.Services;
@@ -41,7 +41,7 @@ public class TokenService : RefreshTokenService<TokenRequest, LoginResponse>
             userId,
             response.RefreshToken,
             response.RefreshExpiryDateTime.ToUniversalTime(),
-            _timeProvider.GetUtcNow().LocalDateTime
+            _timeProvider.GetUtcNow().LocalDateTime.ToUniversalTime()
         );
 
         await _context.AddAsync(refreshToken);

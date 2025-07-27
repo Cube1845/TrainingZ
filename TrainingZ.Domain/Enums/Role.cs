@@ -1,4 +1,4 @@
-﻿namespace TrainingZ.Application.Common.Models;
+﻿namespace TrainingZ.Domain.Enums;
 
 public enum Role
 {

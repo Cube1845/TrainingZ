@@ -1,7 +1,7 @@
 ﻿using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using TrainingZ.Application.Common.Models;
-using TrainingZ.Infrastructure.Auth.Entities;
+using TrainingZ.Infrastructure.Auth.Entites;
 using TrainingZ.Infrastructure.Auth.Services;
 using TrainingZ.Infrastructure.Persistence;
 
@@ -37,7 +37,7 @@ public class RegisterEndpoint(AppDbContext context, PasswordHashService password
             req.Email,
             passwordHash,
             req.PhoneNumber,
-            _time.GetUtcNow().LocalDateTime
+            _time.GetUtcNow().LocalDateTime.ToUniversalTime()
         );
 
         await _context.AppUsers.AddAsync(appUser, ct);

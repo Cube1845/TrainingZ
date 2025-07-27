@@ -1,15 +1,15 @@
 ﻿using TrainingZ.Domain.Abstract;
 
-namespace TrainingZ.Infrastructure.Auth.Entities;
+namespace TrainingZ.Infrastructure.Auth.Entites;
 
 public class RefreshToken : BaseEntity
 {
-    public RefreshToken(Guid ownerId, string token, DateTime expiryDate, DateTime now)
+    public RefreshToken(Guid ownerId, string token, DateTime expiryDate, DateTime createdAt)
     {
         OwnerId = ownerId;
         Token = token;
         ExpiryDate = expiryDate;
-        CreatedAt = now;
+        CreatedAt = createdAt;
     }
 
     public Guid OwnerId { get; set; }
