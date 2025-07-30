@@ -16,6 +16,6 @@
     <div class="p-4 flex align-items-center justify-content-center w-full flex-column gap-3 text-center">
         <h1 class="m-0 p-0 lg:my-3">Enter your student's code</h1>
         <app-input class="w-full lg:w-3" label="Student's code" />
-        <app-button label="Invite" [outlined]="true" />
+        <app-button label="Invite" [outlined]="true" [size]="responsiveService.lg() ? 'large' : undefined" />
     </div>
 }

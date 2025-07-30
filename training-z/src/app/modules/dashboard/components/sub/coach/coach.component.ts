@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { DividerModule } from 'primeng/divider';
 import { Image } from 'primeng/image';
 import { ExtendedUserData } from '../../../models/extended-user-data';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-coach',
@@ -10,25 +11,23 @@ import { ExtendedUserData } from '../../../models/extended-user-data';
   styleUrl: './coach.component.scss',
 })
 export class CoachComponent {
-  coachData = signal<ExtendedUserData | null | undefined>({
-    name: 'Adam',
-    surname: 'Kowalski',
-    email: 'adam.kowalski@gmail.com',
-    phoneNumber: null,
-    id: 'awdawdawd-awdawdghs-srhgsdrgd',
-    profileImageUrl: 'imgs/default_avatar.jpg',
-  });
+  private readonly router = inject(Router);
 
-  code = signal<string | undefined>('8gAhklDFG56');
+  coachData?: WritableSignal<ExtendedUserData>;
 
-  // copyCode() {
-  //   navigator.clipboard
-  //     .writeText(this.code()!)
-  //     .then(() => {
-  //       this.toastService.success('Copied!');
-  //     })
-  //     .catch((err) => {
-  //       console.error('Failed to copy: ', err);
-  //     });
-  // }
+  constructor() {
+    if (true) {
+      this.router.navigateByUrl('dashboard/invitation-code');
+      return;
+    }
+
+    this.coachData = signal<ExtendedUserData>({
+      name: 'Adam',
+      surname: 'Kowalski',
+      email: 'adam.kowalski@gmail.com',
+      phoneNumber: null,
+      id: 'awdawdawd-awdawdghs-srhgsdrgd',
+      profileImageUrl: 'imgs/default_avatar.jpg',
+    });
+  }
 }

@@ -15,14 +15,15 @@ import { DividerModule } from 'primeng/divider';
 })
 export class StudentInviteComponent {
   public readonly responsiveService = inject(ResponsiveService);
-  private readonly toastService = inject(AppToastService);
 
   code = signal<string | undefined>(undefined);
 
-  invitedUserData = signal<UserData | undefined>({
-    name: 'Adam',
-    surname: 'Kowalski',
-    id: 'awdawdawd-awdawdghs-srhgsdrgd',
-    profileImageUrl: 'imgs/default_avatar.jpg',
-  });
+  invitedUserData = signal<UserData | null>(null);
+
+  // {
+  //   name: 'Adam',
+  //   surname: 'Kowalski',
+  //   id: 'awdawdawd-awdawdghs-srhgsdrgd',
+  //   profileImageUrl: 'imgs/default_avatar.jpg',
+  // }
 }

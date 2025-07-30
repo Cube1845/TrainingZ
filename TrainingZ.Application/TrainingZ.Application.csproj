@@ -18,7 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Modules\Coaching\" />
+    <Folder Include="Modules\Coaching\Invite\GetUserData\" />
+    <Folder Include="Modules\Coaching\Invite\AddNewCoaching\" />
+    <Folder Include="Modules\Coaching\Invite\RemoveCoaching\" />
   </ItemGroup>
 
 </Project>

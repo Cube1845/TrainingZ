@@ -35,7 +35,7 @@ export class HeaderComponent {
       icon: 'pi pi-user',
       isSelected: signal<boolean>(false),
       route: '/dashboard/coach',
-      alternativeRoutes: [],
+      alternativeRoutes: ['/dashboard/invitation-code'],
       role: Role.User,
     },
     {

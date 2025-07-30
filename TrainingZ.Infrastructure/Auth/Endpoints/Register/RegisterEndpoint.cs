@@ -1,6 +1,9 @@
 ﻿using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using TrainingZ.Application.Common.Models;
+using TrainingZ.Domain.Entities;
+using TrainingZ.Domain.Enums;
+using TrainingZ.Domain.Services;
 using TrainingZ.Infrastructure.Auth.Entites;
 using TrainingZ.Infrastructure.Auth.Services;
 using TrainingZ.Infrastructure.Persistence;
@@ -41,6 +44,14 @@ public class RegisterEndpoint(AppDbContext context, PasswordHashService password
         );
 
         await _context.AppUsers.AddAsync(appUser, ct);
+
+        if (req.Role == Role.User)
+        {
+            InvitationData invitationDataDb =
+                new(appUser.Id, _time.GetUtcNow().LocalDateTime.ToUniversalTime());
+
+            await _context.InvitationDatas.AddAsync(invitationDataDb, ct);
+        }
 
         await _context.SaveChangesAsync(ct);
 

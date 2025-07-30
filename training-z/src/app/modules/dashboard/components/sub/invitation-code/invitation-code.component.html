@@ -1,0 +1,10 @@
+@if (this.code != undefined) {
+    <div class="p-4 flex align-items-center justify-content-center w-full flex-column gap-5 text-center">
+        <h1 class="m-0 p-0 mt-2">Give your coach this invitation code</h1>
+
+        <div class="flex align-items-center gap-3">
+            <h4 class="m-0 p-0 text-4xl">{{ code!() }}</h4>
+            <i class="pi pi-clipboard text-2xl" (click)="copyCode()"></i>
+        </div>
+    </div>
+}

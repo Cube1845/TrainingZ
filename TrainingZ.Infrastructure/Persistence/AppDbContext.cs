@@ -11,6 +11,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<RefreshToken> RefreshTokens { get; set; }
 
     public DbSet<CoachingData> CoachingDatas { get; set; }
+    public DbSet<InvitationData> InvitationDatas { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

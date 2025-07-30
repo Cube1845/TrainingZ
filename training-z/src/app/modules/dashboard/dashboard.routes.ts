@@ -9,6 +9,7 @@ import { CoachComponent } from './components/sub/coach/coach.component';
 import { userMustNotBeCoachGuard } from './guards/user-must-not-be-coach.guard';
 import { WorkoutsComponent } from './components/sub/workouts/workouts.component';
 import { StudentInviteComponent } from './components/sub/student-invite/student-invite.component';
+import { InvitationCodeComponent } from './components/sub/invitation-code/invitation-code.component';
 
 export const routes: Routes = [
   {
@@ -27,6 +28,11 @@ export const routes: Routes = [
       {
         path: 'coach',
         component: CoachComponent,
+        canActivate: [userMustNotBeCoachGuard],
+      },
+      {
+        path: 'invitation-code',
+        component: InvitationCodeComponent,
         canActivate: [userMustNotBeCoachGuard],
       },
       {
