@@ -1,3 +1,7 @@
 ﻿namespace TrainingZ.Application.Modules.Coaching.Manage.GetUserData;
 
-public record GetUserDataRequest(string Code);
+public class GetUserDataRequest
+{
+    [QueryParam]
+    public string Code { get; set; } = string.Empty;
+}

@@ -3,6 +3,7 @@ import { DividerModule } from 'primeng/divider';
 import { Image } from 'primeng/image';
 import { ExtendedUserData } from '../../../models/extended-user-data';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-coach',

@@ -7,6 +7,7 @@ using TrainingZ.Application.Common.Interfaces;
 using TrainingZ.Infrastructure.Auth.Config;
 using TrainingZ.Infrastructure.Auth.Services;
 using TrainingZ.Infrastructure.Persistence;
+using TrainingZ.Infrastructure.Persistence.Repositories;
 
 namespace TrainingZ.Infrastructure;
 
@@ -30,6 +31,8 @@ public static class DependencyInjection
             .AddAuthorization();
 
         services.Configure<JwtCreationOptions>(o => o.SigningKey = configuration["JwtSettings:SecretKey"]!);
+
+        services.AddScoped<IAppUserRepository, AppUserRepository>();
     }
 
     public static void UseInfrastructureDI(this WebApplication app)

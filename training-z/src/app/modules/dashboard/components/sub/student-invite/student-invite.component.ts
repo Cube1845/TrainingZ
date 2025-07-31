@@ -6,19 +6,45 @@ import { UserData } from '../../../models/user-data';
 import { AppInputComponent } from '../../../../common/components/app-input/app-input.component';
 import { Image } from 'primeng/image';
 import { DividerModule } from 'primeng/divider';
+import { HttpClient } from '@angular/common/http';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { GetUserDataService } from '../../../services/requests/get-user-data/get-user-data.service';
+import { ProfileImageService } from '../../../services/profile-image.service';
 
 @Component({
   selector: 'app-student-invite',
-  imports: [AppButtonComponent, AppInputComponent, Image, DividerModule],
+  imports: [
+    AppButtonComponent,
+    AppInputComponent,
+    Image,
+    DividerModule,
+    ReactiveFormsModule,
+  ],
   templateUrl: './student-invite.component.html',
   styleUrl: './student-invite.component.scss',
 })
 export class StudentInviteComponent {
   public readonly responsiveService = inject(ResponsiveService);
 
-  code = signal<string | undefined>(undefined);
+  private readonly getUserDataRequest = inject(GetUserDataService);
+  private readonly profileImageService = inject(ProfileImageService);
+
+  code = new FormControl<string>('', [
+    Validators.required,
+    Validators.minLength(8),
+  ]);
 
   invitedUserData = signal<UserData | null>(null);
+
+  findStudent(): void {
+    this.getUserDataRequest
+      .request(undefined, { code: this.code.value! })
+      .subscribe((plainUserData) =>
+        this.profileImageService
+          .convertProfileImageId(plainUserData.value)
+          .subscribe((userData) => this.invitedUserData.set(userData))
+      );
+  }
 
   // {
   //   name: 'Adam',

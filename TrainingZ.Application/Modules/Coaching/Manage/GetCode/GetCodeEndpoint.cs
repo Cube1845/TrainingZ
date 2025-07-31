@@ -12,7 +12,8 @@ public class GetCodeEndpoint(IAppDbContext context) : EndpointWithoutRequest<Res
 
     public override void Configure()
     {
-        Get("coaching/invite/code");
+        Get("coaching/manage/code");
+        // role User
     }
 
     public override async Task HandleAsync(CancellationToken ct)

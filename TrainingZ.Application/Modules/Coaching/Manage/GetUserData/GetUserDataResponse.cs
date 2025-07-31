@@ -1,6 +1,11 @@
-﻿using TrainingZ.Application.Modules.Common.Models;
+﻿using TrainingZ.Domain.Interfaces;
 
 namespace TrainingZ.Application.Modules.Coaching.Manage.GetUserData;
 
-public record GetUserDataResponse(string name, string surname, Guid id, Guid profileImageId)
-    : UserData(name, surname, id, profileImageId);
+public class GetUserDataResponse(IAppUser appUser)
+{
+    public Guid Id { get; set; } = appUser.Id;
+    public string Name { get; set; } = appUser.Name;
+    public string Surname { get; set; } = appUser.Surname;
+    public Guid? ProfileImageId { get; set; } = appUser.ProfileImageId;
+}

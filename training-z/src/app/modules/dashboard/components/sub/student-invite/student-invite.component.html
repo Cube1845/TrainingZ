@@ -1,7 +1,7 @@
 @if (invitedUserData() != null) {
     <div class="flex p-4 align-items-center justify-content-center flex-column gap-4">
         <div class="flex align-items-center justify-content-center">
-            <p-image [src]="invitedUserData()!.profileImageUrl" width="120" imageClass="border-circle" />
+            <p-image [src]="invitedUserData()!.profileImageUrl!" width="120" imageClass="border-circle" />
             <h1 class="text-4xl m-0 p-0 pb-1 pl-3">{{ invitedUserData()!.name + ' ' + invitedUserData()!.surname }}</h1>
         </div>
 
@@ -15,7 +15,7 @@
 } @else {
     <div class="p-4 flex align-items-center justify-content-center w-full flex-column gap-3 text-center">
         <h1 class="m-0 p-0 lg:my-3">Enter your student's code</h1>
-        <app-input class="w-full lg:w-3" label="Student's code" />
-        <app-button label="Invite" [outlined]="true" [size]="responsiveService.lg() ? 'large' : undefined" />
+        <app-input class="w-full lg:w-3" label="Student's code" [formControl]="code" />
+        <app-button label="Invite" [outlined]="true" [size]="responsiveService.lg() ? 'large' : undefined" (click)="findStudent()" [disabled]="code.invalid" />
     </div>
 }

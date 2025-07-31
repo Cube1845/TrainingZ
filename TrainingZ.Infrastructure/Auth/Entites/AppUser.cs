@@ -1,9 +1,10 @@
 ﻿using TrainingZ.Domain.Abstract;
 using TrainingZ.Domain.Enums;
+using TrainingZ.Domain.Interfaces;
 
 namespace TrainingZ.Infrastructure.Auth.Entites;
 
-public class AppUser : BaseEntity
+public class AppUser : BaseEntity, IExtendedAppUser
 {
     public string Name { get; set; }
     public string Surname { get; set; }
