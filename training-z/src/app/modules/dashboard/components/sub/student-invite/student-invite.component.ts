@@ -10,6 +10,9 @@ import { HttpClient } from '@angular/common/http';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { GetUserDataService } from '../../../services/requests/get-user-data/get-user-data.service';
 import { ProfileImageService } from '../../../services/profile-image.service';
+import { Router } from '@angular/router';
+import { AddCoachingService } from '../../../services/requests/add-coaching/add-coaching.service';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-student-invite',
@@ -27,7 +30,11 @@ export class StudentInviteComponent {
   public readonly responsiveService = inject(ResponsiveService);
 
   private readonly getUserDataRequest = inject(GetUserDataService);
+  private readonly addCoachingRequest = inject(AddCoachingService);
+
   private readonly profileImageService = inject(ProfileImageService);
+  private readonly router = inject(Router);
+  private readonly toastService = inject(AppToastService);
 
   code = new FormControl<string>('', [
     Validators.required,
@@ -39,17 +46,36 @@ export class StudentInviteComponent {
   findStudent(): void {
     this.getUserDataRequest
       .request(undefined, { code: this.code.value! })
-      .subscribe((plainUserData) =>
+      .pipe(catchError((err) => of(err)))
+      .subscribe((result) => {
+        if (!result.isSuccess) {
+          this.toastService.error(result.error.message || 'Invalid code');
+          return;
+        }
+
         this.profileImageService
-          .convertProfileImageId(plainUserData.value)
-          .subscribe((userData) => this.invitedUserData.set(userData))
-      );
+          .convertProfileImageId(result.value)
+          .subscribe((userData) => this.invitedUserData.set(userData));
+      });
   }
 
-  // {
-  //   name: 'Adam',
-  //   surname: 'Kowalski',
-  //   id: 'awdawdawd-awdawdghs-srhgsdrgd',
-  //   profileImageUrl: 'imgs/default_avatar.jpg',
-  // }
+  rejectStudent(): void {
+    this.router.navigateByUrl('dashboard/students');
+  }
+
+  acceptStudent(): void {
+    this.addCoachingRequest
+      .request({ userId: this.invitedUserData()!.id })
+      .pipe(catchError((err) => of(err)))
+      .subscribe((result) => {
+        this.router.navigateByUrl('dashboard/students');
+
+        if (!result.isSuccess) {
+          this.toastService.error(result.message || 'Invalid user');
+          return;
+        }
+
+        this.toastService.success('Added new student');
+      });
+  }
 }

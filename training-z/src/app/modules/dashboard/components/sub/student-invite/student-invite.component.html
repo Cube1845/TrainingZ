@@ -8,8 +8,8 @@
         <p-divider class="m-0 p-0 w-full lg:w-4 lg:my-1" />
 
         <div class="flex">
-            <app-button icon="pi pi-times" [outlined]="true" [size]="responsiveService.lg() ? 'large' : undefined"  color="secondary" class="m-2" label="Reject" />
-            <app-button icon="pi pi-check" [outlined]="true" [size]="responsiveService.lg() ? 'large' : undefined"  class="m-2" label="Invite" />
+            <app-button icon="pi pi-times" [outlined]="true" [size]="responsiveService.lg() ? 'large' : undefined"  color="secondary" class="m-2" label="Reject" (click)="rejectStudent()" />
+            <app-button icon="pi pi-check" [outlined]="true" [size]="responsiveService.lg() ? 'large' : undefined"  class="m-2" label="Invite" (click)="acceptStudent()" />
         </div>
     </div>
 } @else {
