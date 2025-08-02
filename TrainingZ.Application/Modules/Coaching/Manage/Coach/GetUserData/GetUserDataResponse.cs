@@ -1,6 +1,6 @@
 ﻿using TrainingZ.Domain.Interfaces;
 
-namespace TrainingZ.Application.Modules.Coaching.Manage.GetUserData;
+namespace TrainingZ.Application.Modules.Coaching.Manage.Coach.GetUserData;
 
 public class GetUserDataResponse(IAppUser appUser)
 {

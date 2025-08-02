@@ -4,7 +4,7 @@ using TrainingZ.Application.Common.Extensions;
 using TrainingZ.Application.Common.Interfaces;
 using TrainingZ.Application.Common.Models;
 
-namespace TrainingZ.Application.Modules.Coaching.Manage.GetCode;
+namespace TrainingZ.Application.Modules.Coaching.Manage.User.GetCode;
 
 public class GetCodeEndpoint(IAppDbContext context) : EndpointWithoutRequest<Result<GetCodeResponse>>
 {

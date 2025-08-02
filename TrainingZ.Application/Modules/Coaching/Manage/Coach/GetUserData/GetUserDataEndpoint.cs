@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using TrainingZ.Application.Common.Interfaces;
 using TrainingZ.Application.Common.Models;
 
-namespace TrainingZ.Application.Modules.Coaching.Manage.GetUserData;
+namespace TrainingZ.Application.Modules.Coaching.Manage.Coach.GetUserData;
 
 public class GetUserDataEndpoint(IAppUserRepository appUserRepo, IAppDbContext context) : Endpoint<GetUserDataRequest, Result<GetUserDataResponse>>
 {
