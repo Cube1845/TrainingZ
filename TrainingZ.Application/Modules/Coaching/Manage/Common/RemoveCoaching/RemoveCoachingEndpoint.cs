@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using TrainingZ.Application.Common.Extensions;
 using TrainingZ.Application.Common.Interfaces;
 using TrainingZ.Application.Common.Models;
@@ -18,9 +19,28 @@ public class RemoveCoachingEndpoint(IAppDbContext context) : EndpointWithoutRequ
     {
         var userId = User.GetId();
 
-        await _context.CoachingDatas
-            .Where(x => x.CoachId == userId || x.StudentId == userId)
-            .ExecuteDeleteAsync(ct);
+        var coachingData = await _context.CoachingDatas
+            .FirstOrDefaultAsync(x => x.CoachId == userId || x.StudentId == userId, ct);
+
+        if (coachingData == null)
+        {
+            await SendAsync(Result.Error("Invalid user"), StatusCodes.Status400BadRequest, ct);
+            return;
+        }
+
+        var invitationData = await _context.InvitationDatas.FirstAsync(x => x.UserId == coachingData.StudentId, ct);
+
+        invitationData.HasCoach = false;
+
+        do
+        {
+            invitationData.GenerateNewCode();
+        }
+        while (await _context.InvitationDatas.AnyAsync(x => x.Code == invitationData.Code, ct));
+
+        _context.CoachingDatas.Remove(coachingData);
+
+        await _context.SaveChangesAsync(ct);
 
         await SendOkAsync(Result.Success(), ct);
     }

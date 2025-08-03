@@ -47,8 +47,12 @@ public class RegisterEndpoint(AppDbContext context, PasswordHashService password
 
         if (req.Role == Role.User)
         {
-            InvitationData invitationDataDb =
-                new(appUser.Id, _time.GetUtcNow().LocalDateTime.ToUniversalTime());
+            InvitationData invitationDataDb = new(appUser.Id, _time.GetUtcNow().LocalDateTime.ToUniversalTime()); ;
+
+            while (await _context.InvitationDatas.AnyAsync(x => x.Code == invitationDataDb.Code, ct))
+            {
+                invitationDataDb.GenerateNewCode();
+            }
 
             await _context.InvitationDatas.AddAsync(invitationDataDb, ct);
         }

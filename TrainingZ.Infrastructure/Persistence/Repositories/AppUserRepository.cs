@@ -13,6 +13,17 @@ public class AppUserRepository(AppDbContext context) : IAppUserRepository
         return await _context.AppUsers.FindAsync([id], ct);
     }
 
+    public async Task<List<IAppUser>> GetAppUsers(List<Guid> userIds, CancellationToken ct)
+    {
+        var appUsersDb = await _context.AppUsers
+            .Where(x => userIds.Contains(x.Id))
+            .ToListAsync(ct);
+
+        return appUsersDb
+            .Select(x => (IAppUser)x)
+            .ToList();
+    }
+
     public async Task<bool> AppUserExists(Guid id, CancellationToken ct)
     {
         return await _context.AppUsers.AnyAsync(x => x.Id == id, ct);

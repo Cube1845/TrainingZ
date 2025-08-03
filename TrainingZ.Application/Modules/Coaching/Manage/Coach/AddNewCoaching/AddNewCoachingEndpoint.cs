@@ -5,7 +5,7 @@ using TrainingZ.Application.Common.Interfaces;
 using TrainingZ.Application.Common.Models;
 using TrainingZ.Domain.Entities;
 
-namespace TrainingZ.Application.Modules.Coaching.Manage.AddNewCoaching;
+namespace TrainingZ.Application.Modules.Coaching.Manage.Coach.AddNewCoaching;
 
 public class AddNewCoachingEndpoint(IAppDbContext context, IAppUserRepository appUserRepo, TimeProvider time) : Endpoint<AddNewCoachingRequest, Result>
 {
@@ -24,6 +24,12 @@ public class AddNewCoachingEndpoint(IAppDbContext context, IAppUserRepository ap
         if (!await _appUserRepo.AppUserExists(req.UserId, ct))
         {
             await SendAsync(Result.Error("User does not exist"), StatusCodes.Status400BadRequest, ct);
+            return;
+        }
+
+        if (await _context.CoachingDatas.AnyAsync(x => x.StudentId == req.UserId, ct))
+        {
+            await SendAsync(Result.Error("User is already being coached"), StatusCodes.Status400BadRequest, ct);
             return;
         }
 

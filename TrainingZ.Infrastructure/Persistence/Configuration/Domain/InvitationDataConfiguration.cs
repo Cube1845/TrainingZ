@@ -9,5 +9,8 @@ public class InvitationDataConfiguration : IEntityTypeConfiguration<InvitationDa
     public void Configure(EntityTypeBuilder<InvitationData> builder)
     {
         builder.HasKey(x => x.Id);
+
+        builder.HasIndex(x => x.UserId).IsUnique();
+        builder.HasIndex(x => x.Code).IsUnique();
     }
 }
