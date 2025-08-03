@@ -49,7 +49,9 @@ export class StudentInviteComponent {
       .pipe(catchError((err) => of(err)))
       .subscribe((result) => {
         if (!result.isSuccess) {
-          this.toastService.error(result.error.message || 'Invalid code');
+          this.toastService.error(
+            result.error.message || result.message || 'Invalid code'
+          );
           return;
         }
 
@@ -71,7 +73,9 @@ export class StudentInviteComponent {
         this.router.navigateByUrl('dashboard/students');
 
         if (!result.isSuccess) {
-          this.toastService.error(result.message || 'Invalid user');
+          this.toastService.error(
+            result.error.message || result.message || 'Invalid user'
+          );
           return;
         }
 

@@ -23,6 +23,8 @@
                 <h3 class="text-xl lg:text-3xl m-0 p-0">Phone number</h3>
                 <h2 class="text-lg lg:text-2xl m-0 p-0 mt-2">{{ coachData().phoneNumber == null ? 'Not given' : coachData().phoneNumber }}</h2>
             </div>
+
+            <app-button [outlined]="true" color="secondary" label="Resign from coaching" [size]="responsiveService.lg() ? 'large' : undefined" (click)="resignFromCoaching()" />
         </div>
     </div>
 }

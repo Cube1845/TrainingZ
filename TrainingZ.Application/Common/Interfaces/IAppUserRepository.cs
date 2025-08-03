@@ -7,4 +7,5 @@ public interface IAppUserRepository
     Task<IAppUser?> GetAppUser(Guid id, CancellationToken ct = default);
     Task<bool> AppUserExists(Guid id, CancellationToken ct = default);
     Task<List<IAppUser>> GetAppUsers(List<Guid> userIds, CancellationToken ct = default);
+    Task<IExtendedAppUser?> GetExtendedAppUser(Guid id, CancellationToken ct = default);
 }

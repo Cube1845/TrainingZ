@@ -24,6 +24,11 @@ public class AppUserRepository(AppDbContext context) : IAppUserRepository
             .ToList();
     }
 
+    public async Task<IExtendedAppUser?> GetExtendedAppUser(Guid id, CancellationToken ct)
+    {
+        return await _context.AppUsers.FindAsync([id], ct);
+    }
+
     public async Task<bool> AppUserExists(Guid id, CancellationToken ct)
     {
         return await _context.AppUsers.AnyAsync(x => x.Id == id, ct);

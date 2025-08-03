@@ -5,7 +5,7 @@ import { PlainUserData, UserData } from '../../../models/user-data';
 import { Router } from '@angular/router';
 import { GetStudentsService } from '../../../services/requests/get-students/get-students.service';
 import { ProfileImageService } from '../../../services/profile-image.service';
-import { combineLatest, Observable } from 'rxjs';
+import { catchError, combineLatest, Observable, of } from 'rxjs';
 import { RemoveCoachingService } from '../../../services/requests/remove-coaching/remove-coaching.service';
 import { AppDialogService } from '../../../../common/services/app-dialog.service';
 import { AppToastService } from '../../../../common/services/app-toast.service';
@@ -34,6 +34,7 @@ export class StudentsComponent {
   setStudents(): void {
     this.getStudentsRequest.request().subscribe((result) => {
       if (!result.isSuccess) {
+        this.toastService.error(result.message || 'There was an error');
         return;
       }
 
@@ -64,8 +65,17 @@ export class StudentsComponent {
           studentData.surname
       )
       .subscribe(() => {
-        this.removeCoachingRequest.request().subscribe({
-          next: () => {
+        this.removeCoachingRequest
+          .request({ studentId: studentData.id })
+          .pipe(catchError((err) => of(err)))
+          .subscribe((result) => {
+            if (!result.isSuccess) {
+              this.toastService.error(
+                result.error.message || result.message || 'There was an error'
+              );
+              return;
+            }
+
             this.toastService.success(
               'You stopped coaching ' +
                 studentData.name +
@@ -74,8 +84,7 @@ export class StudentsComponent {
             );
 
             this.setStudents();
-          },
-        });
+          });
       });
   }
 

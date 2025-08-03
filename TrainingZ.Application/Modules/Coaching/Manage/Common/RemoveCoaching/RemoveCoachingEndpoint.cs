@@ -6,7 +6,7 @@ using TrainingZ.Application.Common.Models;
 
 namespace TrainingZ.Application.Modules.Coaching.Manage.Common.RemoveCoaching;
 
-public class RemoveCoachingEndpoint(IAppDbContext context) : EndpointWithoutRequest<Result>
+public class RemoveCoachingEndpoint(IAppDbContext context) : Endpoint<RemoveCoachingRequest, Result>
 {
     private readonly IAppDbContext _context = context;
 
@@ -15,9 +15,9 @@ public class RemoveCoachingEndpoint(IAppDbContext context) : EndpointWithoutRequ
         Delete("coaching/manage");
     }
 
-    public override async Task HandleAsync(CancellationToken ct)
+    public override async Task HandleAsync(RemoveCoachingRequest req, CancellationToken ct)
     {
-        var userId = User.GetId();
+        var userId = req.StudentId == null ? User.GetId() : req.StudentId;
 
         var coachingData = await _context.CoachingDatas
             .FirstOrDefaultAsync(x => x.CoachId == userId || x.StudentId == userId, ct);
