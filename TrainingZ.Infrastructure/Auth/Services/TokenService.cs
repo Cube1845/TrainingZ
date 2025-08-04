@@ -46,6 +46,13 @@ public class TokenService : RefreshTokenService<TokenRequest, LoginResponse>
 
         await _context.AddAsync(refreshToken);
         await _context.SaveChangesAsync();
+
+        var userRole = await _context.AppUsers
+            .Where(x => x.Id == userId)
+            .Select(x => x.Role)
+            .FirstOrDefaultAsync();
+
+        response.Role = userRole;
     }
 
     public override async Task RefreshRequestValidationAsync(TokenRequest req)
@@ -98,7 +105,5 @@ public class TokenService : RefreshTokenService<TokenRequest, LoginResponse>
 
         privileges.Claims.Add(new(ClaimTypes.NameIdentifier, request.UserId));
         privileges.Claims.Add(new(ClaimTypes.Role, userDb.Role.ToString()));
-
-        // response.Role = user.Role;
     }
 }
