@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TrainingZ.Application\TrainingZ.Application.csproj" />
+    <ProjectReference Include="..\TrainingZ.Domain\TrainingZ.Domain.csproj" />
     <ProjectReference Include="..\TrainingZ.Infrastructure\TrainingZ.Infrastructure.csproj" />
   </ItemGroup>
 

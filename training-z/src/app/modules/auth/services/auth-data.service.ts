@@ -11,7 +11,7 @@ export class AuthDataService {
     localStorage.setItem('accessToken', data.accessToken!);
     localStorage.setItem('accessExpiryDateTime', data.accessExpiryDateTime!);
     localStorage.setItem('refreshToken', data.refreshToken!);
-    localStorage.setItem('role', data.role.toString());
+    localStorage.setItem('role', data.role!.toString());
   }
 
   clearAuthData(): void {

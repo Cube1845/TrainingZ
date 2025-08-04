@@ -12,8 +12,8 @@ using TrainingZ.Infrastructure.Persistence;
 namespace TrainingZ.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250716212216_Initial")]
-    partial class Initial
+    [Migration("20250730114559_InvitationSystem")]
+    partial class InvitationSystem
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,11 +25,58 @@ namespace TrainingZ.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("TrainingZ.Infrastructure.Auth.Entities.AppUser", b =>
+            modelBuilder.Entity("TrainingZ.Domain.Entities.CoachingData", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<Guid>("CoachId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CoachingDatas");
+                });
+
+            modelBuilder.Entity("TrainingZ.Domain.Entities.InvitationData", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("HasCoach")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InvitationDatas");
+                });
+
+            modelBuilder.Entity("TrainingZ.Infrastructure.Auth.Entites.AppUser", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -61,13 +108,11 @@ namespace TrainingZ.Infrastructure.Migrations
                     b.ToTable("AppUsers");
                 });
 
-            modelBuilder.Entity("TrainingZ.Infrastructure.Auth.Entities.RefreshToken", b =>
+            modelBuilder.Entity("TrainingZ.Infrastructure.Auth.Entites.RefreshToken", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -89,9 +134,9 @@ namespace TrainingZ.Infrastructure.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
-            modelBuilder.Entity("TrainingZ.Infrastructure.Auth.Entities.RefreshToken", b =>
+            modelBuilder.Entity("TrainingZ.Infrastructure.Auth.Entites.RefreshToken", b =>
                 {
-                    b.HasOne("TrainingZ.Infrastructure.Auth.Entities.AppUser", "Owner")
+                    b.HasOne("TrainingZ.Infrastructure.Auth.Entites.AppUser", "Owner")
                         .WithMany("RefreshTokens")
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -100,7 +145,7 @@ namespace TrainingZ.Infrastructure.Migrations
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("TrainingZ.Infrastructure.Auth.Entities.AppUser", b =>
+            modelBuilder.Entity("TrainingZ.Infrastructure.Auth.Entites.AppUser", b =>
                 {
                     b.Navigation("RefreshTokens");
                 });

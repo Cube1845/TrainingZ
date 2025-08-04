@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using TrainingZ.Infrastructure.Auth.Config;
 using TrainingZ.Infrastructure.Auth.Endpoints.Login;
-using TrainingZ.Infrastructure.Auth.Entities;
+using TrainingZ.Infrastructure.Auth.Entites;
 using TrainingZ.Infrastructure.Persistence;
 
 namespace TrainingZ.Infrastructure.Auth.Services;
@@ -36,16 +36,23 @@ public class TokenService : RefreshTokenService<TokenRequest, LoginResponse>
         var userId = Guid.Parse(response.UserId);
         var createdAt = response.RefreshExpiryDateTime.Subtract(TimeSpan.FromSeconds(_tokenConfiguration.GetTokenConfiguration().RefreshTokenExpirationSeconds)).ToUniversalTime();
 
-        var refreshToken = new RefreshToken()
-        {
-            OwnerId = userId,
-            Token = response.RefreshToken,
-            CreatedAt = createdAt,
-            ExpiryDate = response.RefreshExpiryDateTime.ToUniversalTime()
-        };
+        RefreshToken refreshToken = new
+        (
+            userId,
+            response.RefreshToken,
+            response.RefreshExpiryDateTime.ToUniversalTime(),
+            _timeProvider.GetUtcNow().LocalDateTime.ToUniversalTime()
+        );
 
         await _context.AddAsync(refreshToken);
         await _context.SaveChangesAsync();
+
+        var userRole = await _context.AppUsers
+            .Where(x => x.Id == userId)
+            .Select(x => x.Role)
+            .FirstOrDefaultAsync();
+
+        response.Role = userRole;
     }
 
     public override async Task RefreshRequestValidationAsync(TokenRequest req)
@@ -89,13 +96,14 @@ public class TokenService : RefreshTokenService<TokenRequest, LoginResponse>
 
     public override async Task SetRenewalPrivilegesAsync(TokenRequest request, UserPrivileges privileges)
     {
-        var userRole = await _context.AppUsers
-            .Include(appUser => appUser.RefreshTokens)
-            .Where(user => user.Id == Guid.Parse(request.UserId))
-            .Select(user => user.Role)
-            .FirstOrDefaultAsync();
+        var userDb = await _context.AppUsers.FindAsync(Guid.Parse(request.UserId));
+
+        if (userDb == null)
+        {
+            return;
+        }
 
         privileges.Claims.Add(new(ClaimTypes.NameIdentifier, request.UserId));
-        privileges.Claims.Add(new(ClaimTypes.Role, userRole.ToString()));
+        privileges.Claims.Add(new(ClaimTypes.Role, userDb.Role.ToString()));
     }
 }

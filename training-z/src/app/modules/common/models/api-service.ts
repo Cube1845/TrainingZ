@@ -31,8 +31,7 @@ export abstract class ApiService<T> {
       url += `?${queryString}`;
     }
 
-    const finalHeaders =
-      this.headers || new HttpHeaders({ 'Content-Type': 'application/json' });
+    const finalHeaders = this.headers || undefined;
 
     let request$: Observable<T>;
 

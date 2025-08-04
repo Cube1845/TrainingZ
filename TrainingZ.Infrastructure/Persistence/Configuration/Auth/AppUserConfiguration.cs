@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TrainingZ.Infrastructure.Auth.Entities;
+using TrainingZ.Infrastructure.Auth.Entites;
 
 namespace TrainingZ.Infrastructure.Persistence.Configuration.Auth;
 
-public class AppUserConfiguration : IEntityTypeConfiguration<AppUser>
+public class CoachingDataConfiguration : IEntityTypeConfiguration<AppUser>
 {
     public void Configure(EntityTypeBuilder<AppUser> builder)
     {

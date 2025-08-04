@@ -1,4 +1,4 @@
-﻿using TrainingZ.Application.Common.Models;
+﻿using TrainingZ.Domain.Enums;
 
 namespace TrainingZ.Infrastructure.Auth.Endpoints.Register;
 

@@ -35,7 +35,7 @@ export class HeaderComponent {
       icon: 'pi pi-user',
       isSelected: signal<boolean>(false),
       route: '/dashboard/coach',
-      alternativeRoutes: [],
+      alternativeRoutes: ['/dashboard/invitation-code'],
       role: Role.User,
     },
     {
@@ -51,7 +51,7 @@ export class HeaderComponent {
       icon: 'pi pi-users',
       isSelected: signal<boolean>(false),
       route: '/dashboard/students',
-      alternativeRoutes: [],
+      alternativeRoutes: ['/dashboard/student-invite'],
       role: Role.Coach,
     },
     {
@@ -83,9 +83,7 @@ export class HeaderComponent {
           }
         });
       });
-  }
 
-  ngOnInit(): void {
     this.userRole = this.authDataService.getUserRole();
   }
 
