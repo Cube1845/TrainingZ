@@ -17,25 +17,6 @@ export class ProfileImageService {
 
   private readonly defaultProfileImageUrl = environment.defaultProfileImageUrl;
 
-  getUserProfileImageUrl(imageId: string | null): Observable<string> {
-    return imageId == null
-      ? of(this.defaultProfileImageUrl)
-      : this.imageService.getImageFromApi(imageId).pipe(
-          map((blob) => {
-            if (blob) {
-              const imageFile = new File([blob], 'Image', {
-                type: blob.type,
-              });
-
-              const imageUrl = URL.createObjectURL(imageFile);
-              return imageUrl;
-            } else {
-              return this.defaultProfileImageUrl;
-            }
-          })
-        );
-  }
-
   convertProfileImageId(plainUserData: PlainUserData): Observable<UserData> {
     return this.getUserProfileImageUrl(plainUserData.profileImageId).pipe(
       map((imageUrl) => {
@@ -70,5 +51,24 @@ export class ProfileImageService {
         return userData;
       })
     );
+  }
+
+  private getUserProfileImageUrl(imageId: string | null): Observable<string> {
+    return imageId == null
+      ? of(this.defaultProfileImageUrl)
+      : this.imageService.getImageFromApi(imageId).pipe(
+          map((blob) => {
+            if (blob) {
+              const imageFile = new File([blob], 'Image', {
+                type: blob.type,
+              });
+
+              const imageUrl = URL.createObjectURL(imageFile);
+              return imageUrl;
+            } else {
+              return this.defaultProfileImageUrl;
+            }
+          })
+        );
   }
 }

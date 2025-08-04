@@ -8,7 +8,7 @@ import { Image } from 'primeng/image';
 import { DividerModule } from 'primeng/divider';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { GetUserDataService } from '../../../services/requests/get-user-data/get-user-data.service';
+import { GetUserDataByCodeService } from '../../../services/requests/get-user-data-by-code/get-user-data-by-code.service';
 import { ProfileImageService } from '../../../services/profile-image.service';
 import { Router } from '@angular/router';
 import { AddCoachingService } from '../../../services/requests/add-coaching/add-coaching.service';
@@ -29,7 +29,7 @@ import { catchError, of } from 'rxjs';
 export class StudentInviteComponent {
   public readonly responsiveService = inject(ResponsiveService);
 
-  private readonly getUserDataRequest = inject(GetUserDataService);
+  private readonly getUserDataRequest = inject(GetUserDataByCodeService);
   private readonly addCoachingRequest = inject(AddCoachingService);
 
   private readonly profileImageService = inject(ProfileImageService);

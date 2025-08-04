@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../../../../common/models/api-service';
-import { PlainUserData } from '../../../models/user-data';
 import { Result } from '../../../../common/models/result';
+import { PlainExtendedUserData } from '../../../models/extended-user-data';
 
 @Injectable({
   providedIn: 'root',
 })
-export class GetUserDataService extends ApiService<Result<PlainUserData>> {
+export class GetExtendedUserDataService extends ApiService<
+  Result<PlainExtendedUserData>
+> {
   constructor() {
-    super('GET', 'user');
+    super('GET', 'user/extended');
   }
 }

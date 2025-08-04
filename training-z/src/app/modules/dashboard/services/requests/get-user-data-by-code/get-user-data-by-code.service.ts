@@ -6,8 +6,10 @@ import { Result } from '../../../../common/models/result';
 @Injectable({
   providedIn: 'root',
 })
-export class GetUserDataService extends ApiService<Result<PlainUserData>> {
+export class GetUserDataByCodeService extends ApiService<
+  Result<PlainUserData>
+> {
   constructor() {
-    super('GET', 'user');
+    super('GET', 'coaching/manage');
   }
 }

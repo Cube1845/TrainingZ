@@ -1,9 +1,13 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { Image } from 'primeng/image';
 import { ExtendedUserData } from '../../../models/extended-user-data';
 import { DividerModule } from 'primeng/divider';
 import { AppButtonComponent } from '../../../../common/components/app-button/app-button.component';
 import { ResponsiveService } from '../../../../common/services/responsive.service';
+import { GetExtendedUserDataService } from '../../../services/requests/get-extended-user-data/get-extended-user-data.service';
+import { ProfileImageService } from '../../../services/profile-image.service';
+import { AppToastService } from '../../../../common/services/app-toast.service';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-account-settings',
@@ -14,12 +18,32 @@ import { ResponsiveService } from '../../../../common/services/responsive.servic
 export class AccountSettingsComponent {
   public readonly responsiveService = inject(ResponsiveService);
 
-  userData = signal<ExtendedUserData | undefined>({
-    name: 'Adam',
-    surname: 'Kowalski',
-    email: 'adam.kowalski@gmail.com',
-    phoneNumber: '+48 685 374 274',
-    id: 'awdawdawd-awdawdghs-srhgsdrgd',
-    profileImageUrl: 'imgs/default_avatar.jpg',
-  });
+  private readonly profileImageService = inject(ProfileImageService);
+  private readonly toastService = inject(AppToastService);
+
+  public readonly getExtendedUserDataRequest = inject(
+    GetExtendedUserDataService
+  );
+
+  userData?: WritableSignal<ExtendedUserData>;
+
+  constructor() {
+    this.getExtendedUserDataRequest
+      .request()
+      .pipe(catchError((err) => of(err)))
+      .subscribe((result) => {
+        if (!result.isSuccess) {
+          this.toastService.error(
+            result.error.message || result.message || 'There was an error'
+          );
+          return;
+        }
+
+        this.profileImageService
+          .convertExtendedProfileImageId(result.value)
+          .subscribe((userData) => {
+            this.userData = signal<ExtendedUserData>(userData);
+          });
+      });
+  }
 }
