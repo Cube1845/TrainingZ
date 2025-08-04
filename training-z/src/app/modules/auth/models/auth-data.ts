@@ -5,5 +5,5 @@ export type AuthData = {
   accessToken: string | null;
   accessExpiryDateTime: string | null;
   refreshToken: string | null;
-  role: Role;
+  role: Role | null;
 };

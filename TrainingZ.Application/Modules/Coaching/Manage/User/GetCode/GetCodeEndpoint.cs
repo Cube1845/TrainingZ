@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using TrainingZ.Application.Common.Extensions;
 using TrainingZ.Application.Common.Interfaces;
 using TrainingZ.Application.Common.Models;
+using TrainingZ.Domain.Enums;
 
 namespace TrainingZ.Application.Modules.Coaching.Manage.User.GetCode;
 
@@ -13,7 +14,7 @@ public class GetCodeEndpoint(IAppDbContext context) : EndpointWithoutRequest<Res
     public override void Configure()
     {
         Get("coaching/manage/code");
-        // role User
+        Roles(Role.User.ToString());
     }
 
     public override async Task HandleAsync(CancellationToken ct)

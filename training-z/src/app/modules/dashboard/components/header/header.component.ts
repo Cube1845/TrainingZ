@@ -83,9 +83,7 @@ export class HeaderComponent {
           }
         });
       });
-  }
 
-  ngOnInit(): void {
     this.userRole = this.authDataService.getUserRole();
   }
 

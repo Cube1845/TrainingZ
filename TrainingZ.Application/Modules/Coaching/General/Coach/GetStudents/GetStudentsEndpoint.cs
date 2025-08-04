@@ -2,6 +2,7 @@
 using TrainingZ.Application.Common.Extensions;
 using TrainingZ.Application.Common.Interfaces;
 using TrainingZ.Application.Common.Models;
+using TrainingZ.Domain.Enums;
 
 namespace TrainingZ.Application.Modules.Coaching.General.Coach.GetStudents;
 
@@ -13,7 +14,7 @@ public class GetStudentsEndpoint(IAppDbContext context, IAppUserRepository appUs
     public override void Configure()
     {
         Get("coaching/general/students");
-        // role Coach
+        Roles(Role.Coach.ToString());
     }
 
     public override async Task HandleAsync(CancellationToken ct)

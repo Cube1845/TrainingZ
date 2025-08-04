@@ -4,6 +4,7 @@ using TrainingZ.Application.Common.Extensions;
 using TrainingZ.Application.Common.Interfaces;
 using TrainingZ.Application.Common.Models;
 using TrainingZ.Domain.Entities;
+using TrainingZ.Domain.Enums;
 
 namespace TrainingZ.Application.Modules.Coaching.Manage.Coach.AddNewCoaching;
 
@@ -16,7 +17,7 @@ public class AddNewCoachingEndpoint(IAppDbContext context, IAppUserRepository ap
     public override void Configure()
     {
         Post("coaching/manage");
-        // role Coach
+        Roles(Role.Coach.ToString());
     }
 
     public override async Task HandleAsync(AddNewCoachingRequest req, CancellationToken ct)

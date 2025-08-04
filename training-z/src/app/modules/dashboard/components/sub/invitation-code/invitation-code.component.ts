@@ -2,6 +2,7 @@ import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { AppToastService } from '../../../../common/services/app-toast.service';
 import { Router } from '@angular/router';
 import { GetCodeService } from '../../../services/requests/get-code/get-code.service';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-invitation-code',
@@ -17,14 +18,17 @@ export class InvitationCodeComponent {
   code?: WritableSignal<string>;
 
   constructor() {
-    this.getCodeRequest.request().subscribe((result) => {
-      if (!result.isSuccess) {
-        this.router.navigateByUrl('dashboard/coach');
-        return;
-      }
+    this.getCodeRequest
+      .request()
+      .pipe(catchError((err) => of(err)))
+      .subscribe((result) => {
+        if (!result.isSuccess) {
+          this.router.navigateByUrl('dashboard/coach');
+          return;
+        }
 
-      this.code = signal<string>(result.value.code);
-    });
+        this.code = signal<string>(result.value.code);
+      });
   }
 
   copyCode() {

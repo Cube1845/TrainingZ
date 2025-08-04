@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using TrainingZ.Application.Common.Extensions;
 using TrainingZ.Application.Common.Interfaces;
 using TrainingZ.Application.Common.Models;
+using TrainingZ.Domain.Enums;
 
 namespace TrainingZ.Application.Modules.Coaching.Manage.Common.RemoveCoaching;
 
@@ -13,6 +14,7 @@ public class RemoveCoachingEndpoint(IAppDbContext context) : Endpoint<RemoveCoac
     public override void Configure()
     {
         Delete("coaching/manage");
+        Roles(Role.Coach.ToString(), Role.User.ToString());
     }
 
     public override async Task HandleAsync(RemoveCoachingRequest req, CancellationToken ct)
