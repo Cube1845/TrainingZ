@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Xml.Linq;
 using TrainingZ.Application.Common.Interfaces;
 using TrainingZ.Domain.Interfaces;
 
@@ -32,5 +33,29 @@ public class AppUserRepository(AppDbContext context) : IAppUserRepository
     public async Task<bool> AppUserExists(Guid id, CancellationToken ct)
     {
         return await _context.AppUsers.AnyAsync(x => x.Id == id, ct);
+    }
+
+    public async Task UpdateName(Guid id, string name, string surname, CancellationToken ct)
+    {
+        await _context.AppUsers
+            .Where(x => x.Id == id)
+            .ExecuteUpdateAsync(x => x
+                .SetProperty(p => p.Name, name)
+                .SetProperty(p => p.Surname, surname)
+            , ct);
+    }
+
+    public async Task UpdateEmail(Guid id, string email, CancellationToken ct)
+    {
+        await _context.AppUsers
+            .Where(x => x.Id == id)
+            .ExecuteUpdateAsync(x => x.SetProperty(p => p.Email, email), ct);
+    }
+
+    public async Task UpdatePhoneNumber(Guid id, string? phoneNumber, CancellationToken ct)
+    {
+        await _context.AppUsers
+            .Where(x => x.Id == id)
+            .ExecuteUpdateAsync(x => x.SetProperty(p => p.PhoneNumber, phoneNumber), ct);
     }
 }

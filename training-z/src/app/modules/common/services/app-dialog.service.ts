@@ -6,6 +6,9 @@ import {
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { Observable, Subject } from 'rxjs';
+import { EditDialogComponent } from '../components/edit-dialog/edit-dialog.component';
+import { FormArray } from '@angular/forms';
+import { EditDialogData } from '../models/edit-dialog-data';
 
 @Injectable({
   providedIn: 'root',
@@ -38,6 +41,22 @@ export class AppDialogService {
     };
 
     this.ref = this.dialogService.open(type, config);
+
+    return this.ref.onClose;
+  }
+
+  displayEditDialog(
+    header: string,
+    editDialogData: EditDialogData[]
+  ): Observable<boolean> {
+    const config: DynamicDialogConfig = {
+      header: header,
+      modal: true,
+      closable: true,
+      data: editDialogData,
+    };
+
+    this.ref = this.dialogService.open(EditDialogComponent, config);
 
     return this.ref.onClose;
   }

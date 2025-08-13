@@ -1,0 +1,11 @@
+@import '../../../../responsive.scss';
+
+:host {
+    app-input {
+        width: 250px;
+
+        @include respond('lg') {
+            width: 400px;
+        }
+    }
+}

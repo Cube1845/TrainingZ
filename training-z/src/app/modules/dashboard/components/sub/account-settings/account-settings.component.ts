@@ -8,6 +8,8 @@ import { GetExtendedUserDataService } from '../../../services/requests/get-exten
 import { ProfileImageService } from '../../../services/profile-image.service';
 import { AppToastService } from '../../../../common/services/app-toast.service';
 import { catchError, of } from 'rxjs';
+import { AppDialogService } from '../../../../common/services/app-dialog.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-account-settings',
@@ -20,6 +22,7 @@ export class AccountSettingsComponent {
 
   private readonly profileImageService = inject(ProfileImageService);
   private readonly toastService = inject(AppToastService);
+  private readonly dialogService = inject(AppDialogService);
 
   public readonly getExtendedUserDataRequest = inject(
     GetExtendedUserDataService
@@ -44,6 +47,76 @@ export class AccountSettingsComponent {
           .subscribe((userData) => {
             this.userData = signal<ExtendedUserData>(userData);
           });
+      });
+  }
+
+  editName(): void {
+    var form = new FormGroup({
+      name: new FormControl<string>(this.userData!().name, [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(16),
+      ]),
+      surname: new FormControl<string>(this.userData!().surname, [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(16),
+      ]),
+    });
+
+    this.dialogService
+      .displayEditDialog('Edit your name', [
+        { label: 'Name', form: form.controls.name },
+        { label: 'Surname', form: form.controls.surname },
+      ])
+      .subscribe((save) => {
+        if (!save) {
+          return;
+        }
+
+        //api call
+
+        this.toastService.success('Saved');
+      });
+  }
+
+  editEmail(): void {
+    var form = new FormControl<string>(this.userData!().email, [
+      Validators.required,
+      Validators.email,
+    ]);
+
+    this.dialogService
+      .displayEditDialog('Edit your email', [{ label: 'Email', form: form }])
+      .subscribe((save) => {
+        if (!save) {
+          return;
+        }
+
+        //api call
+
+        this.toastService.success('Saved');
+      });
+  }
+
+  editPhoneNumber(): void {
+    var form = new FormControl<string | null>(this.userData!().phoneNumber, [
+      Validators.minLength(9),
+      Validators.maxLength(13),
+    ]);
+
+    this.dialogService
+      .displayEditDialog('Edit your phone number', [
+        { label: 'Phone number (optional)', form: form },
+      ])
+      .subscribe((save) => {
+        if (!save) {
+          return;
+        }
+
+        //api call
+
+        this.toastService.success('Saved');
       });
   }
 }
