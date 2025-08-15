@@ -10,6 +10,7 @@ import { AppToastService } from '../../../../common/services/app-toast.service';
 import { catchError, of } from 'rxjs';
 import { AppDialogService } from '../../../../common/services/app-dialog.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UpdateEmailService } from '../../../services/requests/update-email/update-email.service';
 
 @Component({
   selector: 'app-account-settings',
@@ -24,9 +25,10 @@ export class AccountSettingsComponent {
   private readonly toastService = inject(AppToastService);
   private readonly dialogService = inject(AppDialogService);
 
-  public readonly getExtendedUserDataRequest = inject(
+  private readonly getExtendedUserDataRequest = inject(
     GetExtendedUserDataService
   );
+  private readonly updateEmailRequest = inject(UpdateEmailService);
 
   userData?: WritableSignal<ExtendedUserData>;
 
@@ -93,9 +95,24 @@ export class AccountSettingsComponent {
           return;
         }
 
-        //api call
+        this.updateEmailRequest
+          .request({ email: form.value })
+          .pipe(catchError((err) => of(err)))
+          .subscribe((result) => {
+            if (!result.isSuccess) {
+              this.toastService.error(
+                result.error.message || result.message || 'There was an error'
+              );
+              return;
+            }
 
-        this.toastService.success('Saved');
+            this.userData?.update((x) => {
+              x.email = form.value!;
+              return x;
+            });
+
+            this.toastService.success('Saved');
+          });
       });
   }
 

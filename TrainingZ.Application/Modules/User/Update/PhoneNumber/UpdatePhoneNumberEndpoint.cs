@@ -11,7 +11,7 @@ public class UpdatePhoneNumberEndpoint(IAppUserRepository appUserRepo) : Endpoin
 
     public override void Configure()
     {
-        Put("user/update/phone");
+        Put("user/phone");
         Roles(Role.Coach.ToString(), Role.User.ToString());
     }
 

@@ -11,7 +11,7 @@ public class UpdateNameEndpoint(IAppUserRepository appUserRepo) : Endpoint<Updat
 
     public override void Configure()
     {
-        Put("user/update/name");
+        Put("user/name");
         Roles(Role.User.ToString(), Role.Coach.ToString());
     }
 
