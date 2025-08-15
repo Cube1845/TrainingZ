@@ -11,6 +11,8 @@ import { catchError, of } from 'rxjs';
 import { AppDialogService } from '../../../../common/services/app-dialog.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UpdateEmailService } from '../../../services/requests/update-email/update-email.service';
+import { UpdateNameService } from '../../../services/requests/update-name/update-name.service';
+import { UpdatePhoneService } from '../../../services/requests/update-phone/update-phone.service';
 
 @Component({
   selector: 'app-account-settings',
@@ -29,6 +31,8 @@ export class AccountSettingsComponent {
     GetExtendedUserDataService
   );
   private readonly updateEmailRequest = inject(UpdateEmailService);
+  private readonly updateNameRequest = inject(UpdateNameService);
+  private readonly updatePhoneRequest = inject(UpdatePhoneService);
 
   userData?: WritableSignal<ExtendedUserData>;
 
@@ -76,9 +80,25 @@ export class AccountSettingsComponent {
           return;
         }
 
-        //api call
+        this.updateNameRequest
+          .request({ name: form.value.name!, surname: form.value.surname! })
+          .pipe(catchError((err) => of(err)))
+          .subscribe((result) => {
+            if (!result.isSuccess) {
+              this.toastService.error(
+                result.error.message || result.message || 'There was an error'
+              );
+              return;
+            }
 
-        this.toastService.success('Saved');
+            this.userData?.update((x) => {
+              x.name = form.value.name!;
+              x.surname = form.value.surname!;
+              return x;
+            });
+
+            this.toastService.success('Saved');
+          });
       });
   }
 
@@ -131,9 +151,24 @@ export class AccountSettingsComponent {
           return;
         }
 
-        //api call
+        this.updatePhoneRequest
+          .request({ email: form.value == '' ? null : form.value })
+          .pipe(catchError((err) => of(err)))
+          .subscribe((result) => {
+            if (!result.isSuccess) {
+              this.toastService.error(
+                result.error.message || result.message || 'There was an error'
+              );
+              return;
+            }
 
-        this.toastService.success('Saved');
+            this.userData?.update((x) => {
+              x.phoneNumber = form.value == '' ? null : form.value;
+              return x;
+            });
+
+            this.toastService.success('Saved');
+          });
       });
   }
 }
