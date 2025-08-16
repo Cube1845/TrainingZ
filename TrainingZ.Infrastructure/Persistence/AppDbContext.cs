@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TrainingZ.Application.Common.Interfaces;
+using TrainingZ.Application.Common.Models;
 using TrainingZ.Domain.Entities;
 using TrainingZ.Infrastructure.Auth.Entites;
 
@@ -9,6 +10,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 {
     public DbSet<AppUser> AppUsers { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }
+
+    public DbSet<Image> Images { get; set; }
 
     public DbSet<CoachingData> CoachingDatas { get; set; }
     public DbSet<InvitationData> InvitationDatas { get; set; }
