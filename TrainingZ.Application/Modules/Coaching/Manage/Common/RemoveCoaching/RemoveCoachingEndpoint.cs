@@ -13,7 +13,7 @@ public class RemoveCoachingEndpoint(IAppDbContext context) : Endpoint<RemoveCoac
 
     public override void Configure()
     {
-        Delete("coaching/manage");
+        Delete("coaching/manage/{StudentId}");
         Roles(Role.Coach.ToString(), Role.User.ToString());
     }
 

@@ -14,7 +14,7 @@ export class ImageService {
   public getImageFromApi(imageId: string | null): Observable<Blob | null> {
     return imageId == null
       ? of(null)
-      : this.http.get(this.apiUrl + 'image/' + imageId, {
+      : this.http.get(this.apiUrl + 'image?imageId=' + imageId, {
           responseType: 'blob',
         });
   }

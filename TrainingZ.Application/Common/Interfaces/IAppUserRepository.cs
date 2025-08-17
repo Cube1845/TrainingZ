@@ -11,4 +11,5 @@ public interface IAppUserRepository
     Task UpdateName(Guid id, string name, string surname, CancellationToken ct = default);
     Task UpdateEmail(Guid id, string email, CancellationToken ct = default);
     Task UpdatePhoneNumber(Guid id, string? phoneNumber, CancellationToken ct = default);
+    Task UpdateProfileImageId(Guid userId, Guid? imageId, CancellationToken ct = default);
 }

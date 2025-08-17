@@ -13,7 +13,7 @@ public class GetUserDataEndpoint(IAppUserRepository appUserRepo, IAppDbContext c
 
     public override void Configure()
     {
-        Get("coaching/manage");
+        Get("coaching/manage/{Code}");
         Roles(Role.Coach.ToString());
     }
 

@@ -15,13 +15,8 @@ public class ImageService(AppDbContext context, TimeProvider time) : IImageServi
         return await _context.Images.AnyAsync(x => x.Id == imageId, ct);
     }
 
-    public async Task<Guid?> AddImage(IFormFile? imageFile, CancellationToken ct)
+    public async Task<Guid> AddImage(IFormFile imageFile, CancellationToken ct)
     {
-        if (imageFile is null)
-        {
-            return null;
-        }
-
         var image = await ToImageDb(imageFile, ct);
 
         await _context.Images.AddAsync(image, ct);

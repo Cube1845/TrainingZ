@@ -45,7 +45,7 @@ export class StudentInviteComponent {
 
   findStudent(): void {
     this.getUserDataRequest
-      .request(undefined, { code: this.code.value! })
+      .request({ code: this.code.value! })
       .pipe(catchError((err) => of(err)))
       .subscribe((result) => {
         if (!result.isSuccess) {

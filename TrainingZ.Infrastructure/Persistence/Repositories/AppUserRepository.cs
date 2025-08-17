@@ -58,4 +58,11 @@ public class AppUserRepository(AppDbContext context) : IAppUserRepository
             .Where(x => x.Id == id)
             .ExecuteUpdateAsync(x => x.SetProperty(p => p.PhoneNumber, phoneNumber), ct);
     }
+
+    public async Task UpdateProfileImageId(Guid userId, Guid? imageId, CancellationToken ct)
+    {
+        await _context.AppUsers
+            .Where(x => x.Id == userId)
+            .ExecuteUpdateAsync(x => x.SetProperty(p => p.ProfileImageId, imageId), ct);
+    }
 }

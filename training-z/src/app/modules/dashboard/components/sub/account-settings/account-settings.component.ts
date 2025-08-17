@@ -15,6 +15,7 @@ import { UpdateNameService } from '../../../services/requests/update-name/update
 import { UpdatePhoneService } from '../../../services/requests/update-phone/update-phone.service';
 import { FileUploadDialogComponent } from '../../../../common/components/file-upload-dialog/file-upload-dialog.component';
 import { environment } from '../../../../../../environments/environment.development';
+import { UpdateProfileImageService } from '../../../services/requests/update-profile-image/update-profile-image.service';
 
 @Component({
   selector: 'app-account-settings',
@@ -35,6 +36,9 @@ export class AccountSettingsComponent {
   private readonly updateEmailRequest = inject(UpdateEmailService);
   private readonly updateNameRequest = inject(UpdateNameService);
   private readonly updatePhoneRequest = inject(UpdatePhoneService);
+  private readonly updateProfileImageRequest = inject(
+    UpdateProfileImageService
+  );
 
   userData?: WritableSignal<ExtendedUserData>;
 
@@ -68,6 +72,10 @@ export class AccountSettingsComponent {
           return;
         }
 
+        if (!this.isFile(imageFile)) {
+          return;
+        }
+
         this.isImageValid(imageFile).subscribe((result) => {
           if (!result) {
             this.toastService.error(
@@ -75,8 +83,29 @@ export class AccountSettingsComponent {
             );
             return;
           }
+
+          const formData = new FormData();
+          formData.append('imageFile', imageFile);
+
+          this.updateProfileImageRequest.requestFormData!(formData)
+            .pipe(catchError((err) => of(err)))
+            .subscribe((result) => {
+              if (!result.isSuccess) {
+                this.toastService.error(
+                  result.error.message || result.message || 'There was an error'
+                );
+                return;
+              }
+
+              this.toastService.success('Profile picture changed');
+            });
         });
       });
+  }
+
+  // Method does not make sense but the logic will not pass here anything else than the File type
+  private isFile(obj: any): obj is File {
+    return true;
   }
 
   editName(): void {
@@ -195,7 +224,7 @@ export class AccountSettingsComponent {
       });
   }
 
-  private isImageValid(imageFile: any): Observable<boolean> {
+  private isImageValid(imageFile: File): Observable<boolean> {
     return from(createImageBitmap(imageFile)).pipe(
       map((bitmap) => {
         const width = bitmap.width;
