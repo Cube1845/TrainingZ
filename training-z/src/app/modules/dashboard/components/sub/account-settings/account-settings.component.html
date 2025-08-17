@@ -5,7 +5,7 @@
                 <div class="relative inline-block mr-4 lg:mr-5">
                     <p-image [src]="userData().profileImageUrl!" width="120" imageClass="border-circle" class="block" />
 
-                    <div class="overlay absolute left-0 top-0 w-full h-full flex align-items-center justify-content-center border-circle">
+                    <div class="overlay absolute left-0 top-0 w-full h-full flex align-items-center justify-content-center border-circle" (click)="editProfileImage()">
                         <i class="pi pi-pencil text-2xl"></i>
                     </div>
                 </div>

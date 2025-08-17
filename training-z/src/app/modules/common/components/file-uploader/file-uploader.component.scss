@@ -1,0 +1,33 @@
+:host {
+    .custom-file-input {
+        transition: .2s background-color;
+        
+        &:hover {
+            transition: .2s background-color;
+            background: var(--p-button-outlined-primary-hover-background);
+        }
+        
+        input[type="file"] {
+            opacity: 0;
+            z-index: -1;
+            width: 0;
+            height: 0;
+        }
+      
+        label {
+            background-color: transparent;
+            color: var(--p-primary-color);
+            border: 1px solid var(--p-primary-700);
+            cursor: pointer !important;
+        }
+    }
+
+    .disabled {
+        color: var(--p-primary-700) !important;
+        border: 1px solid var(--p-primary-800) !important;
+
+        &:hover {
+          background: var(--p-button-outlined-primary-background) !important;
+        }
+    }
+}

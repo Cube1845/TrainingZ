@@ -7,12 +7,14 @@ import { ResponsiveService } from '../../../../common/services/responsive.servic
 import { GetExtendedUserDataService } from '../../../services/requests/get-extended-user-data/get-extended-user-data.service';
 import { ProfileImageService } from '../../../services/profile-image.service';
 import { AppToastService } from '../../../../common/services/app-toast.service';
-import { catchError, of } from 'rxjs';
+import { catchError, from, map, Observable, of } from 'rxjs';
 import { AppDialogService } from '../../../../common/services/app-dialog.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UpdateEmailService } from '../../../services/requests/update-email/update-email.service';
 import { UpdateNameService } from '../../../services/requests/update-name/update-name.service';
 import { UpdatePhoneService } from '../../../services/requests/update-phone/update-phone.service';
+import { FileUploadDialogComponent } from '../../../../common/components/file-upload-dialog/file-upload-dialog.component';
+import { environment } from '../../../../../../environments/environment.development';
 
 @Component({
   selector: 'app-account-settings',
@@ -53,6 +55,27 @@ export class AccountSettingsComponent {
           .subscribe((userData) => {
             this.userData = signal<ExtendedUserData>(userData);
           });
+      });
+  }
+
+  editProfileImage(): void {
+    this.dialogService
+      .displayDialog(FileUploadDialogComponent, 'Upload your profile picture', {
+        acceptedFiles: 'image/*',
+      })
+      .subscribe((imageFile) => {
+        if (!imageFile) {
+          return;
+        }
+
+        this.isImageValid(imageFile).subscribe((result) => {
+          if (!result) {
+            this.toastService.error(
+              'The image must be in 1:1 ratio and cant be larger than 1440px.'
+            );
+            return;
+          }
+        });
       });
   }
 
@@ -170,5 +193,19 @@ export class AccountSettingsComponent {
             this.toastService.success('Saved');
           });
       });
+  }
+
+  private isImageValid(imageFile: any): Observable<boolean> {
+    return from(createImageBitmap(imageFile)).pipe(
+      map((bitmap) => {
+        const width = bitmap.width;
+        const height = bitmap.height;
+
+        const minSize = 16;
+        const maxSize = environment.maxProfileImageSize;
+
+        return width == height && width >= minSize && width <= maxSize;
+      })
+    );
   }
 }
