@@ -13,9 +13,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UpdateEmailService } from '../../../services/requests/update-email/update-email.service';
 import { UpdateNameService } from '../../../services/requests/update-name/update-name.service';
 import { UpdatePhoneService } from '../../../services/requests/update-phone/update-phone.service';
-import { FileUploadDialogComponent } from '../../../../common/components/file-upload-dialog/file-upload-dialog.component';
 import { environment } from '../../../../../../environments/environment.development';
 import { UpdateProfileImageService } from '../../../services/requests/update-profile-image/update-profile-image.service';
+import { Router } from '@angular/router';
+import { ProfileImageUploadDialogComponent } from '../../dialogs/profile-image-upload-dialog/profile-image-upload-dialog.component';
+import { DeleteProfileImageService } from '../../../services/requests/delete-profile-image/delete-profile-image.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-account-settings',
@@ -29,6 +32,7 @@ export class AccountSettingsComponent {
   private readonly profileImageService = inject(ProfileImageService);
   private readonly toastService = inject(AppToastService);
   private readonly dialogService = inject(AppDialogService);
+  private readonly router = inject(Router);
 
   private readonly getExtendedUserDataRequest = inject(
     GetExtendedUserDataService
@@ -38,6 +42,9 @@ export class AccountSettingsComponent {
   private readonly updatePhoneRequest = inject(UpdatePhoneService);
   private readonly updateProfileImageRequest = inject(
     UpdateProfileImageService
+  );
+  private readonly deleteProfileImageRequest = inject(
+    DeleteProfileImageService
   );
 
   userData?: WritableSignal<ExtendedUserData>;
@@ -64,10 +71,44 @@ export class AccountSettingsComponent {
 
   editProfileImage(): void {
     this.dialogService
-      .displayDialog(FileUploadDialogComponent, 'Upload your profile picture', {
-        acceptedFiles: 'image/*',
-      })
+      .displayDialog(
+        ProfileImageUploadDialogComponent,
+        'Upload your profile picture',
+        {
+          acceptedFiles: 'image/*',
+        }
+      )
       .subscribe((imageFile) => {
+        if (imageFile === null) {
+          if (this.userData!().profileImageUrl == null) {
+            this.toastService.error("You don't have a profile picture");
+            return;
+          }
+
+          this.dialogService
+            .displayConfirmation(
+              'Are you sure?',
+              'Do you want to remove your profile picture?'
+            )
+            .subscribe(() => {
+              this.deleteProfileImageRequest
+                .request()
+                .pipe(catchError((err) => of(err)))
+                .subscribe((result) => {
+                  if (!result.isSuccess) {
+                    this.toastService.error(
+                      result.error.message ||
+                        result.message ||
+                        'There was an error'
+                    );
+                    return;
+                  }
+
+                  window.location.reload();
+                });
+            });
+        }
+
         if (!imageFile) {
           return;
         }
@@ -97,7 +138,7 @@ export class AccountSettingsComponent {
                 return;
               }
 
-              this.toastService.success('Profile picture changed');
+              window.location.reload();
             });
         });
       });

@@ -2,4 +2,4 @@
 
 namespace TrainingZ.Application.Modules.User.Update.ProfileImage;
 
-public record UpdateProfileImageRequest(IFormFile? ImageFile);
+public record UpdateProfileImageRequest(IFormFile ImageFile);

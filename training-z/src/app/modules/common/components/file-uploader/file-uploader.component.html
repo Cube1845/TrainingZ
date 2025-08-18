@@ -1,4 +1,4 @@
-<div class="custom-file-input mr-2 relative border-round-md flex flex-row">
+<div class="custom-file-input relative border-round-md flex flex-row">
     <input type="file" [id]="'fileUpload' + uuid" (change)="onUpload($event)" [accept]="acceptedFiles()" [disabled]="uploaderDisabled()" class="" />
     <label [for]="'fileUpload' + uuid" [class]="(uploaderDisabled() ? 'disabled ' : ' ') + ' py-2 px-3 text-xl flex align-items-center justify-content-center border-round-md'">
         <i class="pi pi-upload mr-2"></i>

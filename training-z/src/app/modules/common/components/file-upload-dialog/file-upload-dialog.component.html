@@ -1,8 +1,0 @@
-<div class="flex align-items-center justify-content-center w-full h-full flex-column gap-5">
-    <app-file-uploader [acceptedFiles]="acceptedFiles" [formControl]="fileForm" />
-
-    <div class="flex gap-3">
-        <app-button label="Cancel" [outlined]="true" color="secondary" (click)="closeDialog(false)" />
-        <app-button label="Upload" [outlined]="true"  (click)="closeDialog(true)" />
-    </div>
-</div>

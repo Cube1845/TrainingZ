@@ -30,26 +30,16 @@ public class UpdateProfileImageEndpoint(IImageService imageService, IAppUserRepo
             return;
         }
 
-        Guid? imageId = null;
+        Guid imageId;
 
         if (appUserDb.ProfileImageId == null)
         {
-            if (req.ImageFile != null)
-            {
-                imageId = await _imageService.AddImage(req.ImageFile, ct);
-            }
+            imageId = await _imageService.AddImage(req.ImageFile, ct);
         }
         else
         {
-            if (req.ImageFile == null)
-            {
-                await _imageService.RemoveImage(appUserDb.ProfileImageId.Value, ct);
-            }
-            else
-            {
-                await _imageService.UpdateImageData(appUserDb.ProfileImageId.Value, req.ImageFile, ct);
-                imageId = appUserDb.ProfileImageId;
-            }
+            await _imageService.UpdateImageData(appUserDb.ProfileImageId.Value, req.ImageFile, ct);
+            imageId = appUserDb.ProfileImageId.Value;
         }
 
         await _appUserRepo.UpdateProfileImageId(userId, imageId, ct);
