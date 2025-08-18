@@ -10,13 +10,16 @@ public class InvitationData : BaseEntity
     public Guid UserId { get; set; }
     public string Code { get; set; }
     public bool HasCoach { get; set; }
+    public Guid UserInfoId { get; set; }
+    public UserInfo? UserInfo { get; set; }
 
-    public InvitationData(Guid userId, DateTime createdAt)
+    public InvitationData(Guid userId, DateTime createdAt, Guid userInfoId)
     {
         UserId = userId;
         Code = CodeService.GenerateCode(_codeSize);
         CreatedAt = createdAt;
         HasCoach = false;
+        UserInfoId = userInfoId;
     }
 
     public void GenerateNewCode()

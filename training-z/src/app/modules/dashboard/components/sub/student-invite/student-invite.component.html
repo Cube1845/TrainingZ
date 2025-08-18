@@ -1,15 +1,53 @@
-@if (invitedUserData() != null) {
-    <div class="flex p-4 align-items-center justify-content-center flex-column gap-4">
-        <div class="flex align-items-center justify-content-center">
-            <p-image [src]="invitedUserData()!.profileImageUrl!" width="120" imageClass="border-circle" />
-            <h1 class="text-4xl m-0 p-0 pb-1 pl-3">{{ invitedUserData()!.name + ' ' + invitedUserData()!.surname }}</h1>
-        </div>
+@if (invitedUserData() != undefined) {
+    <div class="flex justify-content-center w-full h-full overflow-auto">
+        <div class="flex p-4 align-items-center flex-column gap-4 lg:w-6 w-full">
+            <div class="flex align-items-center justify-content-center">
+                <p-image [src]="invitedUserData()!.profileImageUrl!" width="120" imageClass="border-circle" />
+                <h1 class="text-4xl m-0 p-0 pb-1 pl-3">{{ invitedUserData()!.name + ' ' + invitedUserData()!.surname }}</h1>
+            </div>
 
-        <p-divider class="m-0 p-0 w-full lg:w-4 lg:my-1" />
+            <p-divider class="m-0 p-0 w-full lg:my-1" />
 
-        <div class="flex">
-            <app-button icon="pi pi-times" [outlined]="true" [size]="responsiveService.lg() ? 'large' : undefined"  color="secondary" class="m-2" label="Reject" (click)="rejectStudent()" />
-            <app-button icon="pi pi-check" [outlined]="true" [size]="responsiveService.lg() ? 'large' : undefined"  class="m-2" label="Accept" (click)="acceptStudent()" />
+            <div class="flex">
+                <app-button icon="pi pi-times" [outlined]="true" [size]="responsiveService.lg() ? 'large' : undefined"  color="secondary" class="m-2" label="Reject" (click)="rejectStudent()" />
+                <app-button icon="pi pi-check" [outlined]="true" [size]="responsiveService.lg() ? 'large' : undefined"  class="m-2" label="Accept" (click)="acceptStudent()" />
+            </div>
+
+            <p-divider class="m-0 p-0 w-full " />
+
+            <h3 class="m-0 p-0 text-4xl">Information</h3>
+
+            <div class="flex w-full flex-column gap-5 pb-5">
+                <div class="flex flex-column w-full gap-1 w-full">
+                    <h2 class="m-0 p-0 text-2xl">What are your current goals?</h2>
+                    <h1 class="m-0 p-0 text-2xl">{{ userInfo()?.goals }}</h1>
+                </div>
+
+                <div class="flex flex-column w-full gap-1 w-full">
+                    <h2 class="m-0 p-0 text-2xl">How well do you sleep? How well is your diet?</h2>
+                    <h1 class="m-0 p-0 text-2xl">{{ userInfo()?.sleepDiet }}</h1>
+                </div>
+
+                <div class="flex flex-column w-full gap-1 w-full">
+                    <h2 class="m-0 p-0 text-2xl">How active are you besides the training?</h2>
+                    <h1 class="m-0 p-0 text-2xl">{{ userInfo()?.activity }}</h1>
+                </div>
+
+                <div class="flex flex-column w-full gap-1 w-full">
+                    <h2 class="m-0 p-0 text-2xl">Do you have or have you had any injuries?</h2>
+                    <h1 class="m-0 p-0 text-2xl">{{ userInfo()?.injuries }}</h1>
+                </div>
+
+                <div class="flex flex-column w-full gap-1 w-full">
+                    <h2 class="m-0 p-0 text-2xl">How much time can you spend training each week?</h2>
+                    <h1 class="m-0 p-0 text-2xl">{{ userInfo()?.timeAvaiable }}</h1>
+                </div>
+
+                <div class="flex flex-column w-full gap-1 w-full">
+                    <h2 class="m-0 p-0 text-2xl">Other information (e.g. What training equipment do you have available?)</h2>
+                    <h1 class="m-0 p-0 text-2xl">{{ userInfo()?.other }}</h1>
+                </div>
+            </div>
         </div>
     </div>
 } @else {

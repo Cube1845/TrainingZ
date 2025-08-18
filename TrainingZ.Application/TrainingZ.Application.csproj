@@ -18,8 +18,4 @@
     <ProjectReference Include="..\TrainingZ.Domain\TrainingZ.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Modules\Coaching\Manage\User\UpdateUserInfo\" />
-  </ItemGroup>
-
 </Project>

@@ -1,11 +1,10 @@
-﻿using TrainingZ.Domain.Interfaces;
+﻿using TrainingZ.Application.Modules.Coaching.Manage.User.Models;
+using TrainingZ.Domain.Interfaces;
 
 namespace TrainingZ.Application.Modules.Coaching.Manage.Coach.GetUserData;
 
-public class GetUserDataResponse(IAppUser appUser)
+public class GetUserDataResponse(IAppUser appUser, UserInfoDto userInfo)
 {
-    public Guid Id { get; set; } = appUser.Id;
-    public string Name { get; set; } = appUser.Name;
-    public string Surname { get; set; } = appUser.Surname;
-    public Guid? ProfileImageId { get; set; } = appUser.ProfileImageId;
+    public IAppUser UserData { get; set; } = appUser;
+    public UserInfoDto UserInfo { get; set; } = userInfo;
 }

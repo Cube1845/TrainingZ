@@ -13,6 +13,7 @@ import { ProfileImageService } from '../../../services/profile-image.service';
 import { Router } from '@angular/router';
 import { AddCoachingService } from '../../../services/requests/add-coaching/add-coaching.service';
 import { catchError, of } from 'rxjs';
+import { UserInfo } from '../../../models/user-info';
 
 @Component({
   selector: 'app-student-invite',
@@ -41,7 +42,8 @@ export class StudentInviteComponent {
     Validators.minLength(8),
   ]);
 
-  invitedUserData = signal<UserData | null>(null);
+  invitedUserData = signal<UserData | undefined>(undefined);
+  userInfo = signal<UserInfo | undefined>(undefined);
 
   findStudent(): void {
     this.getUserDataRequest
@@ -56,8 +58,11 @@ export class StudentInviteComponent {
         }
 
         this.profileImageService
-          .convertProfileImageId(result.value)
-          .subscribe((userData) => this.invitedUserData.set(userData));
+          .convertProfileImageId(result.value.userData)
+          .subscribe((userData) => {
+            this.invitedUserData.set(userData);
+            this.userInfo.set(result.value.userInfo);
+          });
       });
   }
 

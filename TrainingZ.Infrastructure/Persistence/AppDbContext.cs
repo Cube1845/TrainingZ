@@ -15,6 +15,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     public DbSet<CoachingData> CoachingDatas { get; set; }
     public DbSet<InvitationData> InvitationDatas { get; set; }
+    public DbSet<UserInfo> UserInfos { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

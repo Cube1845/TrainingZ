@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using TrainingZ.Application.Common.Interfaces;
 using TrainingZ.Application.Common.Models;
+using TrainingZ.Application.Modules.Coaching.Manage.User.Models;
 using TrainingZ.Domain.Enums;
 
 namespace TrainingZ.Application.Modules.Coaching.Manage.Coach.GetUserData;
@@ -20,6 +21,7 @@ public class GetUserDataEndpoint(IAppUserRepository appUserRepo, IAppDbContext c
     public override async Task HandleAsync(GetUserDataRequest req, CancellationToken ct)
     {
         var invitationDataDb = await _context.InvitationDatas
+            .Include(x => x.UserInfo)
             .FirstOrDefaultAsync(x => x.Code == req.Code, ct);
 
         if (invitationDataDb == null || invitationDataDb.HasCoach)
@@ -36,6 +38,8 @@ public class GetUserDataEndpoint(IAppUserRepository appUserRepo, IAppDbContext c
             return;
         }
 
-        await SendOkAsync(Result<GetUserDataResponse>.Success(new(appUser)), ct);
+        var userInfo = (UserInfoDto)invitationDataDb.UserInfo!;
+
+        await SendOkAsync(Result<GetUserDataResponse>.Success(new(appUser, userInfo)), ct);
     }
 }
