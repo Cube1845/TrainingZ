@@ -1,3 +1,5 @@
+@import "../../../../../responsive.scss";
+
 :host {
     h1 {
         color: var(--p-surface-0);
@@ -16,11 +18,23 @@
         color: var(--p-primary-color);
     }
 
+    h5 {
+        color: var(--p-surface-200);
+    }
+
     i {
         transition: .2s color;
 
         &:hover {
             color: var(--p-primary-color);
         }
+    }
+
+    textarea {
+        resize: none;
+    }
+
+    .form-container {
+        max-width: 90vw;
     }
 }
