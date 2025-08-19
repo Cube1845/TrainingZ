@@ -8,11 +8,12 @@ import { Image } from 'primeng/image';
 import { DividerModule } from 'primeng/divider';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { GetUserDataService } from '../../../services/requests/get-user-data/get-user-data.service';
+import { GetUserDataByCodeService } from '../../../services/requests/get-user-data-by-code/get-user-data-by-code.service';
 import { ProfileImageService } from '../../../services/profile-image.service';
 import { Router } from '@angular/router';
 import { AddCoachingService } from '../../../services/requests/add-coaching/add-coaching.service';
 import { catchError, of } from 'rxjs';
+import { UserInfo } from '../../../models/user-info';
 
 @Component({
   selector: 'app-student-invite',
@@ -29,7 +30,7 @@ import { catchError, of } from 'rxjs';
 export class StudentInviteComponent {
   public readonly responsiveService = inject(ResponsiveService);
 
-  private readonly getUserDataRequest = inject(GetUserDataService);
+  private readonly getUserDataRequest = inject(GetUserDataByCodeService);
   private readonly addCoachingRequest = inject(AddCoachingService);
 
   private readonly profileImageService = inject(ProfileImageService);
@@ -41,11 +42,12 @@ export class StudentInviteComponent {
     Validators.minLength(8),
   ]);
 
-  invitedUserData = signal<UserData | null>(null);
+  invitedUserData = signal<UserData | undefined>(undefined);
+  userInfo = signal<UserInfo | undefined>(undefined);
 
   findStudent(): void {
     this.getUserDataRequest
-      .request(undefined, { code: this.code.value! })
+      .request({ code: this.code.value! })
       .pipe(catchError((err) => of(err)))
       .subscribe((result) => {
         if (!result.isSuccess) {
@@ -56,8 +58,11 @@ export class StudentInviteComponent {
         }
 
         this.profileImageService
-          .convertProfileImageId(result.value)
-          .subscribe((userData) => this.invitedUserData.set(userData));
+          .convertProfileImageId(result.value.userData)
+          .subscribe((userData) => {
+            this.invitedUserData.set(userData);
+            this.userInfo.set(result.value.userInfo);
+          });
       });
   }
 

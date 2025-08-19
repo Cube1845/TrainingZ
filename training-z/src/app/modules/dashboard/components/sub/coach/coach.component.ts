@@ -12,6 +12,7 @@ import { ResponsiveService } from '../../../../common/services/responsive.servic
 import { RemoveCoachingService } from '../../../services/requests/remove-coaching/remove-coaching.service';
 import { AppDialogService } from '../../../../common/services/app-dialog.service';
 import { catchError, of } from 'rxjs';
+import { AuthDataService } from '../../../../auth/services/auth-data.service';
 
 @Component({
   selector: 'app-coach',
@@ -26,6 +27,7 @@ export class CoachComponent {
   private readonly profileImageService = inject(ProfileImageService);
   private readonly toastService = inject(AppToastService);
   private readonly dialogService = inject(AppDialogService);
+  private readonly authDataService = inject(AuthDataService);
 
   private readonly getCoachDataRequest = inject(GetCoachDataService);
   private readonly removeCoachingRequest = inject(RemoveCoachingService);
@@ -67,7 +69,7 @@ export class CoachComponent {
       )
       .subscribe(() => {
         this.removeCoachingRequest
-          .request({ studentId: null })
+          .request({ studentId: this.authDataService.getAuthData().userId })
           .pipe(catchError((err) => of(err)))
           .subscribe((result) => {
             if (!result.isSuccess) {

@@ -1,0 +1,10 @@
+<div class="flex flex-column gap-3 mt-2">
+    @for (data of editDialogData; track $index) {
+        <app-input [label]="data.label" [formControl]="data.form" class="w-full" />
+    }
+
+    <div class="flex justify-content-end gap-3">
+        <app-button label="Cancel" [outlined]="true" (click)="closeDialog(false)" color="secondary" />
+        <app-button label="Save" [outlined]="true" (click)="closeDialog(true)" [disabled]="anyFormInvalid()" />
+    </div>
+</div>

@@ -2,6 +2,5 @@
 
 public class GetUserDataRequest
 {
-    [QueryParam]
     public string Code { get; set; } = string.Empty;
 }

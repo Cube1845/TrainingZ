@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../../../../common/models/api-service';
-import { GetCodeResponse } from './get-code-response';
 import { Result } from '../../../../common/models/result';
 
 @Injectable({
   providedIn: 'root',
 })
-export class GetCodeService extends ApiService<Result<GetCodeResponse>> {
+export class UpdateNameService extends ApiService<Result> {
   constructor() {
-    super('GET', 'coaching/manage/code');
+    super('PUT', 'user/name');
   }
 }

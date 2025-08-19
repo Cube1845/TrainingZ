@@ -1,10 +1,52 @@
 @if (this.code != undefined) {
-    <div class="p-4 flex align-items-center justify-content-center w-full flex-column gap-5 text-center">
-        <h1 class="m-0 p-0 mt-2">Give your coach this invitation code</h1>
+    <div class="flex justify-content-center w-full h-full overflow-auto">
+        <div class="flex flex-column align-items-center m-0 p-0 container w-full lg:w-6">
+            <div class="p-4 pb-0 flex align-items-center justify-content-center w-full flex-column gap-5 text-center">
+                <h1 class="m-0 p-0 mt-2">Give your coach this invitation code</h1>
 
-        <div class="flex align-items-center gap-3">
-            <h4 class="m-0 p-0 text-4xl">{{ code!() }}</h4>
-            <i class="pi pi-clipboard text-2xl" (click)="copyCode()"></i>
+                <div class="flex align-items-center gap-3">
+                    <h4 class="m-0 p-0 text-4xl">{{ code!() }}</h4>
+                    <i class="pi pi-clipboard text-2xl" (click)="copyCode()"></i>
+                </div>
+            </div>
+
+            <p-divider class="m-0 p-0 my-5" />
+
+            <h4 class="text-4xl m-0 p-0 mb-5 text-center mx-3">Take some time to fill in the form below. It might really help your future coach</h4>
+
+            <div class="flex flex-column gap-5 form-container pb-5" [formGroup]="form" >
+                <div class="flex flex-column gap-2">
+                    <h5 class="m-0 p-0 text-xl pl-1">What are your current goals?</h5>
+                    <textarea formControlName="goals" pTextarea variant="filled" [rows]="responsive.lg() ? 2 : responsive.md() ? 3 : 4" [cols]="responsive.lg() ? 60 : responsive.md() ? 45 : 25" ></textarea>
+                </div>
+
+                <div class="flex flex-column gap-2">
+                    <h5 class="m-0 p-0 text-xl pl-1">How well do you sleep? How well is your diet?</h5>
+                    <textarea formControlName="sleepDiet"  pTextarea variant="filled" [rows]="responsive.lg() ? 2 : responsive.md() ? 3 : 4" [cols]="responsive.lg() ? 60 : responsive.md() ? 45 : 25" ></textarea>
+                </div>
+
+                <div class="flex flex-column gap-2">
+                    <h5 class="m-0 p-0 text-xl pl-1">How active are you besides the training?</h5>
+                    <textarea formControlName="activity"  pTextarea variant="filled" [rows]="responsive.lg() ? 2 : responsive.md() ? 3 : 4" [cols]="responsive.lg() ? 60 : responsive.md() ? 45 : 25" ></textarea>
+                </div>
+
+                <div class="flex flex-column gap-2">
+                    <h5 class="m-0 p-0 text-xl pl-1">Do you have or have you had any injuries?</h5>
+                    <textarea formControlName="injuries"  pTextarea variant="filled" [rows]="responsive.lg() ? 2 : responsive.md() ? 3 : 4" [cols]="responsive.lg() ? 60 : responsive.md() ? 45 : 25" ></textarea>
+                </div>
+
+                <div class="flex flex-column gap-2">
+                    <h5 class="m-0 p-0 text-xl pl-1">How much time can you spend training each week?</h5>
+                    <textarea formControlName="timeAvaiable"  pTextarea variant="filled" [rows]="responsive.lg() ? 2 : responsive.md() ? 3 : 4" [cols]="responsive.lg() ? 60 : responsive.md() ? 45 : 25" ></textarea>
+                </div>
+
+                <div class="flex flex-column gap-2">
+                    <h5 class="m-0 p-0 text-xl pl-1">Other information (e.g. What training equipment do you have available?)</h5>
+                    <textarea formControlName="other"  pTextarea variant="filled" [rows]="responsive.lg() ? 2 : responsive.md() ? 3 : 4" [cols]="responsive.lg() ? 60 : responsive.md() ? 45 : 25" ></textarea>
+                </div>
+            </div>
+
+            <app-button label="Save" [outlined]="true" class="pb-5" [size]="responsive.lg() ? 'large' : undefined" (click)="saveUserInfo()" />
         </div>
     </div>
 }

@@ -8,6 +8,6 @@ import { Result } from '../../../../common/models/result';
 })
 export class GetUserDataService extends ApiService<Result<PlainUserData>> {
   constructor() {
-    super('GET', 'coaching/manage');
+    super('GET', 'user');
   }
 }

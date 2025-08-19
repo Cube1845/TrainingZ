@@ -22,6 +22,28 @@ namespace TrainingZ.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("TrainingZ.Application.Common.Models.Image", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<byte[]>("Data")
+                        .IsRequired()
+                        .HasColumnType("bytea");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Images");
+                });
+
             modelBuilder.Entity("TrainingZ.Domain.Entities.CoachingData", b =>
                 {
                     b.Property<Guid>("Id")
@@ -38,6 +60,12 @@ namespace TrainingZ.Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CoachId")
+                        .IsUnique();
+
+                    b.HasIndex("StudentId")
+                        .IsUnique();
 
                     b.ToTable("CoachingDatas");
                 });
@@ -61,9 +89,59 @@ namespace TrainingZ.Infrastructure.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("UserInfoId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.HasIndex("UserInfoId")
+                        .IsUnique();
+
                     b.ToTable("InvitationDatas");
+                });
+
+            modelBuilder.Entity("TrainingZ.Domain.Entities.UserInfo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Activity")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Goals")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Injuries")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Other")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("SleepDiet")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("TimeAvaiable")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserInfos");
                 });
 
             modelBuilder.Entity("TrainingZ.Infrastructure.Auth.Entites.AppUser", b =>
@@ -131,6 +209,17 @@ namespace TrainingZ.Infrastructure.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
+            modelBuilder.Entity("TrainingZ.Domain.Entities.InvitationData", b =>
+                {
+                    b.HasOne("TrainingZ.Domain.Entities.UserInfo", "UserInfo")
+                        .WithOne("InvitationData")
+                        .HasForeignKey("TrainingZ.Domain.Entities.InvitationData", "UserInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserInfo");
+                });
+
             modelBuilder.Entity("TrainingZ.Infrastructure.Auth.Entites.RefreshToken", b =>
                 {
                     b.HasOne("TrainingZ.Infrastructure.Auth.Entites.AppUser", "Owner")
@@ -140,6 +229,11 @@ namespace TrainingZ.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("TrainingZ.Domain.Entities.UserInfo", b =>
+                {
+                    b.Navigation("InvitationData");
                 });
 
             modelBuilder.Entity("TrainingZ.Infrastructure.Auth.Entites.AppUser", b =>

@@ -10,11 +10,13 @@ import { SKIP_AUTH } from './models/http-context-tokens';
 import { AuthDataService } from './services/auth-data.service';
 import { AuthData } from './models/auth-data';
 import { environment } from '../../../environments/environment.development';
+import { Router } from '@angular/router';
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   if (req.context.get(SKIP_AUTH)) {
     return next(req);
   }
 
+  const router = inject(Router);
   const authDataService = inject(AuthDataService);
 
   const authData = authDataService.getAuthData();
@@ -46,6 +48,9 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         return handleRequestWithToken(req, next, newAuthData.accessToken!);
       }),
       catchError(() => {
+        authDataService.clearAuthData();
+        router.navigateByUrl('');
+
         return throwError(() => new Error('Token refresh failed'));
       })
     );

@@ -1,10 +1,14 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { AuthDataService } from '../../../auth/services/auth-data.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { Role } from '../../../auth/models/role';
 import { NavBarItem } from '../../models/nav-bar-item';
-import { filter } from 'rxjs';
+import { catchError, filter, of } from 'rxjs';
 import { ImageModule } from 'primeng/image';
+import { GetUserDataService } from '../../services/requests/get-user-data/get-user-data.service';
+import { ProfileImageService } from '../../services/profile-image.service';
+import { UserData } from '../../models/user-data';
+import { AppToastService } from '../../../common/services/app-toast.service';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +19,12 @@ import { ImageModule } from 'primeng/image';
 export class HeaderComponent {
   private readonly authDataService = inject(AuthDataService);
   private readonly router = inject(Router);
+  private readonly profileImageService = inject(ProfileImageService);
+  private readonly toastService = inject(AppToastService);
+
+  private readonly getUserDataRequest = inject(GetUserDataService);
+
+  userData?: WritableSignal<UserData>;
 
   userRole?: Role;
 
@@ -65,6 +75,24 @@ export class HeaderComponent {
   ]);
 
   constructor() {
+    this.getUserDataRequest
+      .request()
+      .pipe(catchError((err) => of(err)))
+      .subscribe((result) => {
+        if (!result.isSuccess) {
+          this.toastService.error(
+            result.error.message || result.message || 'There was an error'
+          );
+          return;
+        }
+
+        this.profileImageService
+          .convertProfileImageId(result.value)
+          .subscribe((userData) => {
+            this.userData = signal<UserData>(userData);
+          });
+      });
+
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {

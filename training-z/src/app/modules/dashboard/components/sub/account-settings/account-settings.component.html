@@ -1,16 +1,16 @@
-@if (userData() != undefined) {
+@if (userData != undefined) {
     <div class="flex p-4 w-full h-full lg:p-6 justify-content-center">
         <div class="flex flex-column w-full lg:w-6">
             <div class="flex align-items-center">
                 <div class="relative inline-block mr-4 lg:mr-5">
-                    <p-image [src]="userData()!.profileImageUrl!" width="120" imageClass="border-circle" class="block" />
+                    <p-image [src]="userData().profileImageUrl!" width="120" imageClass="border-circle" class="block" />
 
-                    <div class="overlay absolute left-0 top-0 w-full h-full flex align-items-center justify-content-center border-circle">
+                    <div class="overlay absolute left-0 top-0 w-full h-full flex align-items-center justify-content-center border-circle" (click)="editProfileImage()">
                         <i class="pi pi-pencil text-2xl"></i>
                     </div>
                 </div>
 
-                <h1 class="text-4xl m-0 p-0">{{ userData()!.name + ' ' + userData()!.surname}}</h1>
+                <h1 class="text-4xl m-0 p-0">{{ userData().name + ' ' + userData().surname}}</h1>
             </div>
 
             <p-divider class="m-0 my-4 lg:my-6 w-full"/>
@@ -18,20 +18,20 @@
             <div class="flex flex-column mb-4 lg:mb-6">
                 <div class="flex align-items-center" >
                     <h3 class="text-xl lg:text-3xl m-0 p-0">Email</h3>
-                    <i class="pi pi-pencil text-lg lg:text-2xl ml-2 lg:ml-3 mb-1 lg:mb-0"></i>
+                    <i class="pi pi-pencil text-lg lg:text-2xl ml-2 lg:ml-3 mb-1 lg:mb-0" (click)="editEmail()"></i>
                 </div>
-                <h2 class="text-lg lg:text-2xl m-0 p-0 mt-2">{{ userData()!.email }}</h2>
+                <h2 class="text-lg lg:text-2xl m-0 p-0 mt-2">{{ userData().email }}</h2>
             </div>
 
             <div class="flex flex-column mb-4 lg:mb-6">
                 <div class="flex align-items-center" >
                     <h3 class="text-xl lg:text-3xl m-0 p-0">Phone number (optional)</h3>
-                    <i class="pi pi-pencil text-lg lg:text-2xl ml-2 lg:ml-3 mb-1 lg:mb-0"></i>
+                    <i class="pi pi-pencil text-lg lg:text-2xl ml-2 lg:ml-3 mb-1 lg:mb-0" (click)="editPhoneNumber()"></i>
                 </div>
-                <h2 class="text-lg lg:text-2xl m-0 p-0 mt-2">{{ userData()!.phoneNumber == null ? 'Not set' : userData()!.phoneNumber }}</h2>
+                <h2 class="text-lg lg:text-2xl m-0 p-0 mt-2">{{ userData().phoneNumber == null ? 'Not set' : userData().phoneNumber }}</h2>
             </div>
 
-            <app-button [outlined]="true" label="Edit your name" color="secondary" [size]="responsiveService.lg() ? 'large' : undefined" icon="pi pi-pencil" />
+            <app-button [outlined]="true" label="Edit your name" color="secondary" [size]="responsiveService.lg() ? 'large' : undefined" icon="pi pi-pencil" (click)="editName()" />
         </div>
     </div>
 }

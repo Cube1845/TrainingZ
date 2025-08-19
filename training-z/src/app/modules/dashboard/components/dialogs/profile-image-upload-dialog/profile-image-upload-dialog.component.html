@@ -1,0 +1,11 @@
+<div class="flex align-items-center justify-content-center w-full h-full flex-column gap-5">
+    <div class="flex gap-3">
+        <app-button color="secondary" [outlined]="true" icon="pi pi-trash" (click)="closeDialog(true)" />
+        <app-file-uploader [acceptedFiles]="acceptedFiles" [formControl]="fileForm" />
+    </div>
+
+    <div class="flex gap-3">
+        <app-button label="Cancel" [outlined]="true" color="secondary" (click)="closeDialog(false)" />
+        <app-button label="Upload" [outlined]="true"  (click)="closeDialog(true)" [disabled]="fileForm.invalid" />
+    </div>
+</div>
