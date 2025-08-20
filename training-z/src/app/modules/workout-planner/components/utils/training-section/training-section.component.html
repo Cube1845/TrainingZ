@@ -1,1 +1,10 @@
-<p>training-section works!</p>
+<p-accordion>
+    <p-accordion-panel value="0" class="border-round-md">
+        <p-accordion-header>{{ trainingSection().name }}</p-accordion-header>
+        <p-accordion-content>
+            @for (exercise of trainingSection().exercises; track $index) {
+                <app-exercise-panel [exercise]="exercise" />
+            }
+        </p-accordion-content>
+    </p-accordion-panel>
+</p-accordion>
