@@ -8,7 +8,7 @@ export class Exercise {
   intensityType: IntensityType;
   intensity: string;
   rest: string;
-  info: string;
+  info: string | null;
 
   constructor(
     id: string,
@@ -18,7 +18,7 @@ export class Exercise {
     intensityType: IntensityType,
     intensity: string,
     rest: string,
-    info: string
+    info: string | null
   ) {
     this.id = id;
     this.exercise = exercise;

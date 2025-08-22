@@ -2,4 +2,12 @@
     p-accordion-panel {
         border: 2px solid var(--p-surface-800);
     }
+
+    h1 {
+        color: var(--p-surface-200);
+    }
+
+    app-button {
+        align-self: end;
+    }
 }

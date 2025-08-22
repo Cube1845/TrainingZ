@@ -1,11 +1,15 @@
 <p-accordion class="w-full">
     <p-accordion-panel value="0">
-        <p-accordion-header class="text-2xl">{{ trainingUnit().name }}</p-accordion-header>
+        <p-accordion-header><h1 class="m-0 p-0 text-2xl">{{ trainingUnit().name }}</h1></p-accordion-header>
         <p-accordion-content>
-            <div class="flex gap-2 flex-column">
-                @for (section of trainingUnit().sections; track $index) {
-                    <app-training-section [trainingSection]="section" />
-                }
+            <div class="flex flex-column gap-2">
+                <div class="flex gap-2 flex-column">
+                    @for (section of trainingUnit().sections; track $index) {
+                        <app-training-section [trainingSection]="section" />
+                    }
+                </div>
+
+                <app-button label="Add section" icon="pi pi-plus" color="secondary" />
             </div>
         </p-accordion-content>
     </p-accordion-panel>
