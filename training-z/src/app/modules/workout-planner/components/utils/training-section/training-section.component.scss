@@ -3,8 +3,16 @@
         border: 2px solid var(--p-surface-800);
     }
 
-    h1 {
+    h1, i {
         color: var(--p-surface-200);
+    }
+
+    i {
+        transition: .2s color;
+
+        &:hover {
+            color: var(--p-primary-color);
+        }
     }
 
     app-button {

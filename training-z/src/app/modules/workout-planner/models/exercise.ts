@@ -6,7 +6,7 @@ export class Exercise {
   sets: string;
   reps: string;
   intensityType: IntensityType;
-  intensity: string;
+  intensity: number;
   rest: string;
   info: string | null;
 
@@ -16,7 +16,7 @@ export class Exercise {
     sets: string,
     reps: string,
     intensityType: IntensityType,
-    intensity: string,
+    intensity: number,
     rest: string,
     info: string | null
   ) {

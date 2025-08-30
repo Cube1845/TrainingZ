@@ -1,0 +1,26 @@
+<div class="flex flex-column p-2 gap-4" [formGroup]="formGroup">
+    <div class="flex">
+        <app-input label="Exercise" />
+    </div>
+
+    <p-divider class="m-0 p-0" />
+
+    <div class="flex gap-2">
+        <app-input label="Sets" />
+        <app-input label="Reps" />
+    </div>
+    <div class="flex gap-2">
+        <p-select-button [options]="intensityTypes" optionLabel="label" optionValue="value" formControlName="intensityType" />
+        <p-select [options]="formGroup.value.intensityType == 1 ? rirIntensity : rpeIntensity" scrollHeight="120px" class="w-full" placeholder="Intensity" />
+    </div>
+    <div class="flex gap-2">
+        <app-input label="Rest" />
+    </div>
+    <div class="flex gap-2">
+        <textarea pTextarea class="w-full" placeholder="Additional info" rows="4"></textarea>
+    </div>
+    <div class="flex gap-2 button-box">
+        <app-button label="Cancel" [outlined]="true" color="secondary" />
+        <app-button label="Add" [outlined]="true" />
+    </div>
+</div>

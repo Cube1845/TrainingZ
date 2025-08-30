@@ -1,5 +1,10 @@
 :host {
     .panel {
         background-color: var(--p-surface-800);
+        transition: .2s background-color;
+
+        &:hover {
+            background-color: var(--p-surface-700);
+        }
     }
 }
