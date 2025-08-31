@@ -1,24 +1,50 @@
 <div class="flex flex-column p-2 gap-4" [formGroup]="formGroup">
     <div class="flex">
-        <app-input label="Exercise" />
+        <p-select-button [options]="exerciseTypes" optionLabel="label" optionValue="value" formControlName="exerciseType" />
     </div>
+
+    @if (formGroup.value.exerciseType == 1) {
+        <div class="flex">
+            <app-input label="Exercise" />
+        </div>
+    } @else {
+        <div class="flex align-items-center gap-2">
+            <app-input label="Exercise" />
+            <app-button [outlined]="true" color="secondary" label="Add" icon="pi pi-plus" />
+        </div>
+
+        <div class="flex">
+            <p-list-box class="w-full" [options]="getCombo()" [highlightOnSelect]="false" [striped]="true" scrollHeight="150px" [focusOnHover]="false">
+                <ng-template #item let-exercise>
+                    <div class="flex align-items-center gap-2">
+                        <div>{{ exercise.label }}</div>
+                        <i class="pi pi-trash"></i>
+                    </div>
+                </ng-template>
+            </p-list-box>
+        </div>
+    }
 
     <p-divider class="m-0 p-0" />
 
     <div class="flex gap-2">
-        <app-input label="Sets" />
-        <app-input label="Reps" />
+        <app-input label="Sets" pKeyFilter="num" />
+        <app-input label="Reps" pKeyFilter="num" />
     </div>
+
     <div class="flex gap-2">
         <p-select-button [options]="intensityTypes" optionLabel="label" optionValue="value" formControlName="intensityType" />
         <p-select [options]="formGroup.value.intensityType == 1 ? rirIntensity : rpeIntensity" scrollHeight="120px" class="w-full" placeholder="Intensity" />
     </div>
+
     <div class="flex gap-2">
         <app-input label="Rest" />
     </div>
+
     <div class="flex gap-2">
         <textarea pTextarea class="w-full" placeholder="Additional info" rows="4"></textarea>
     </div>
+
     <div class="flex gap-2 button-box">
         <app-button label="Cancel" [outlined]="true" color="secondary" />
         <app-button label="Add" [outlined]="true" />

@@ -1,8 +1,11 @@
+import { Combo } from './combo';
+import { ExerciseType } from './enums/exercise-type';
 import { IntensityType } from './enums/intensity-type';
 
 export class Exercise {
   id: string;
-  exercise: string;
+  exerciseType: ExerciseType;
+  exercise: string | Combo;
   sets: string;
   reps: string;
   intensityType: IntensityType;
@@ -12,7 +15,8 @@ export class Exercise {
 
   constructor(
     id: string,
-    exercise: string,
+    exerciseType: ExerciseType,
+    exercise: string | Combo,
     sets: string,
     reps: string,
     intensityType: IntensityType,
@@ -21,6 +25,7 @@ export class Exercise {
     info: string | null
   ) {
     this.id = id;
+    this.exerciseType = exerciseType;
     this.exercise = exercise;
     this.sets = sets;
     this.reps = reps;

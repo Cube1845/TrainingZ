@@ -3,6 +3,7 @@ import { AccordionModule } from 'primeng/accordion';
 import { TrainingUnitComponent } from '../utils/training-unit/training-unit.component';
 import { TrainingUnit } from '../../models/training-unit';
 import { IntensityType } from '../../models/enums/intensity-type';
+import { ExerciseType } from '../../models/enums/exercise-type';
 
 @Component({
   selector: 'app-workout-planner',
@@ -22,6 +23,7 @@ export class WorkoutPlannerComponent {
           exercises: [
             {
               id: 'awdawdawagaegae',
+              exerciseType: ExerciseType.Regular,
               exercise: 'Straddle Planche Hold',
               sets: '3',
               reps: '5-10s',
@@ -38,6 +40,7 @@ export class WorkoutPlannerComponent {
           exercises: [
             {
               id: 'awdawdawagaegae',
+              exerciseType: ExerciseType.Regular,
               exercise: 'Straddle Planche Press',
               sets: '3',
               reps: '2-3',
@@ -48,6 +51,7 @@ export class WorkoutPlannerComponent {
             },
             {
               id: 'awdawdawagaegae',
+              exerciseType: ExerciseType.Regular,
               exercise: 'Front lever Press',
               sets: '4',
               reps: '2-3',
