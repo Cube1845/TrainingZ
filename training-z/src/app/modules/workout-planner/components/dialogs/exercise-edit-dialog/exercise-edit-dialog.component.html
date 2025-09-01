@@ -5,23 +5,16 @@
 
     @if (formGroup.value.exerciseType == 1) {
         <div class="flex">
-            <app-input label="Exercise" />
+            <app-input label="Exercise" formControlName="exercise" />
         </div>
     } @else {
         <div class="flex align-items-center gap-2">
-            <app-input label="Exercise" />
+            <app-input label="Exercise" formControlName="exercise" />
             <app-button [outlined]="true" color="secondary" label="Add" icon="pi pi-plus" />
         </div>
 
         <div class="flex">
-            <p-list-box class="w-full" [options]="getCombo()" [highlightOnSelect]="false" [striped]="true" scrollHeight="150px" [focusOnHover]="false">
-                <ng-template #item let-exercise>
-                    <div class="flex align-items-center gap-2">
-                        <div>{{ exercise.label }}</div>
-                        <i class="pi pi-trash"></i>
-                    </div>
-                </ng-template>
-            </p-list-box>
+            <app-combo-display [exercises]="combo()" />
         </div>
     }
 

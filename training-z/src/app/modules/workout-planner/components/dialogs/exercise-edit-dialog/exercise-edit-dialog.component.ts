@@ -1,4 +1,4 @@
-import { Component, computed } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { AppInputComponent } from '../../../../common/components/app-input/app-input.component';
 import { AppButtonComponent } from '../../../../common/components/app-button/app-button.component';
 import { SelectButtonModule } from 'primeng/selectbutton';
@@ -16,6 +16,7 @@ import { KeyFilterModule } from 'primeng/keyfilter';
 import { ExerciseType } from '../../../models/enums/exercise-type';
 import { ListboxModule } from 'primeng/listbox';
 import { Combo } from '../../../models/combo';
+import { ComboDisplayComponent } from '../../utils/combo-display/combo-display.component';
 
 @Component({
   selector: 'app-exercise-edit-dialog',
@@ -29,6 +30,7 @@ import { Combo } from '../../../models/combo';
     DividerModule,
     KeyFilterModule,
     ListboxModule,
+    ComboDisplayComponent,
   ],
   templateUrl: './exercise-edit-dialog.component.html',
   styleUrl: './exercise-edit-dialog.component.scss',
@@ -74,16 +76,16 @@ export class ExerciseEditDialogComponent {
       Validators.required
     ),
     exercise: new FormControl<string | null>('', Validators.required),
-    combo: new FormControl<Combo | null>(['Planche Hold', 'Planche press']),
     intensityType: new FormControl<IntensityType | null>(
       IntensityType.RPE,
       Validators.required
     ),
   });
 
-  getCombo = computed(() => {
-    return this.formGroup.value.combo!.map((value) => {
-      return { label: value, value: value };
-    });
-  });
+  combo = signal<Combo>([
+    'Planche Hold',
+    'Planche press',
+    'Planche Negative',
+    'Planche Push up',
+  ]);
 }
