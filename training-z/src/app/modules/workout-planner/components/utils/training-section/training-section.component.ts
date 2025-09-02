@@ -20,7 +20,19 @@ export class TrainingSectionComponent {
   addNewExercise(): void {
     this.dialogService.displayDialog(
       ExerciseEditDialogComponent,
-      'Add new exercise'
+      'Add new exercise',
+      { saveButtonLabel: 'Add' }
+    );
+  }
+
+  editExercise(exerciseIndex: number): void {
+    this.dialogService.displayDialog(
+      ExerciseEditDialogComponent,
+      'Edit exercise',
+      {
+        saveButtonLabel: 'Save',
+        exercise: this.trainingSection().exercises[exerciseIndex],
+      }
     );
   }
 }

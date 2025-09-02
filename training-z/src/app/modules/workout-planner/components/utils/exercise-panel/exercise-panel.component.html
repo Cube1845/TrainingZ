@@ -1,4 +1,4 @@
-<div class="flex flex-column panel p-4 border-round-md">
+<div class="flex flex-column panel p-4 border-round-md" (click)="panelClicked.emit()">
     <h1 class="m-0 p-0 text-xl mb-2">{{ exercise().exercise }}</h1>
 
     <h2 class="m-0 p-0 text-lg font-normal">Sets: {{ exercise().sets }}</h2>

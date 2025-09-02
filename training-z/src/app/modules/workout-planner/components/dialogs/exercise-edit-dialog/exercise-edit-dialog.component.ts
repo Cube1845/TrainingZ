@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { AppInputComponent } from '../../../../common/components/app-input/app-input.component';
 import { AppButtonComponent } from '../../../../common/components/app-button/app-button.component';
 import { SelectButtonModule } from 'primeng/selectbutton';
@@ -18,6 +18,7 @@ import { ListboxModule } from 'primeng/listbox';
 import { Combo } from '../../../models/combo';
 import { ComboDisplayComponent } from '../../utils/combo-display/combo-display.component';
 import { exerciseValidator } from './exerciseValidator';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-exercise-edit-dialog',
@@ -37,6 +38,34 @@ import { exerciseValidator } from './exerciseValidator';
   styleUrl: './exercise-edit-dialog.component.scss',
 })
 export class ExerciseEditDialogComponent {
+  private readonly ref = inject(DynamicDialogRef);
+  private readonly config = inject(DynamicDialogConfig);
+
+  saveButtonLabel = this.config.data.saveButtonLabel;
+
+  constructor() {
+    const exercise = this.config.data.exercise;
+
+    if (!exercise) {
+      return;
+    }
+
+    this.formGroup.setValue({
+      exerciseType: exercise.exerciseType,
+      exercise: typeof exercise.exercise == 'string' ? exercise.exercise : '',
+      sets: exercise.sets,
+      reps: exercise.reps,
+      intensityType: exercise.intensityType,
+      intensity: exercise.intensity,
+      rest: exercise.rest,
+      info: exercise.info,
+    });
+
+    if (typeof exercise.exercise != 'string') {
+      this.combo.set(exercise.exercise);
+    }
+  }
+
   readonly intensityTypes = [
     { label: 'RIR', value: IntensityType.RIR },
     { label: 'RPE', value: IntensityType.RPE },

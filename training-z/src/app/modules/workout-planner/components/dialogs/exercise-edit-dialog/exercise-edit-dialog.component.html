@@ -47,6 +47,6 @@
 
     <div class="flex gap-2 button-box">
         <app-button label="Cancel" [outlined]="true" color="secondary" />
-        <app-button label="Add" [outlined]="true" [disabled]="formGroup.invalid" />
+        <app-button [label]="this.saveButtonLabel || ''" [outlined]="true" [disabled]="formGroup.invalid" />
     </div>
 </div>
