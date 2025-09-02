@@ -10,36 +10,43 @@
     } @else {
         <div class="flex align-items-center gap-2">
             <app-input label="Exercise" formControlName="exercise" />
-            <app-button [outlined]="true" color="secondary" label="Add" icon="pi pi-plus" />
+            <app-button [outlined]="true" color="secondary" label="Add" icon="pi pi-plus" [disabled]="formGroup.controls.exercise.invalid" (click)="addComboItem()" />
         </div>
 
-        <div class="flex">
-            <app-combo-display [exercises]="combo()" />
-        </div>
+        @if (combo().length > 0) {
+            <div class="flex">
+                <app-combo-display
+                    [exercises]="combo()"
+                    (itemDeleted)="removeComboItem($event)"
+                    (itemMovedUp)="moveComboItemUp($event)"
+                    (itemMovedDown)="moveComboItemDown($event)" 
+                />
+            </div>
+        }
     }
 
     <p-divider class="m-0 p-0" />
 
     <div class="flex gap-2">
-        <app-input label="Sets" pKeyFilter="num" />
-        <app-input label="Reps" pKeyFilter="num" />
+        <app-input label="Sets" pKeyFilter="num" formControlName="sets" />
+        <app-input label="Reps" pKeyFilter="num" formControlName="reps" />
     </div>
 
     <div class="flex gap-2">
         <p-select-button [options]="intensityTypes" optionLabel="label" optionValue="value" formControlName="intensityType" />
-        <p-select [options]="formGroup.value.intensityType == 1 ? rirIntensity : rpeIntensity" scrollHeight="120px" class="w-full" placeholder="Intensity" />
+        <p-select [options]="formGroup.value.intensityType == 1 ? rirIntensity : rpeIntensity" scrollHeight="120px" class="w-full" placeholder="Intensity" formControlName="intensity" />
     </div>
 
     <div class="flex gap-2">
-        <app-input label="Rest" />
+        <app-input label="Rest" formControlName="rest" />
     </div>
 
     <div class="flex gap-2">
-        <textarea pTextarea class="w-full" placeholder="Additional info" rows="4"></textarea>
+        <textarea pTextarea class="w-full" placeholder="Additional info" rows="4" formControlName="info" ></textarea>
     </div>
 
     <div class="flex gap-2 button-box">
         <app-button label="Cancel" [outlined]="true" color="secondary" />
-        <app-button label="Add" [outlined]="true" />
+        <app-button label="Add" [outlined]="true" [disabled]="formGroup.invalid" />
     </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { ListboxModule } from 'primeng/listbox';
 import { Combo } from '../../../models/combo';
 
@@ -12,8 +12,12 @@ export class ComboDisplayComponent {
   exercises = input.required<Combo>();
 
   getExercises = computed(() => {
-    return this.exercises().map((x) => {
-      return { label: x, value: x };
+    return this.exercises().map((x, i) => {
+      return { label: x, value: x, index: i };
     });
   });
+
+  itemDeleted = output<number>();
+  itemMovedUp = output<number>();
+  itemMovedDown = output<number>();
 }
