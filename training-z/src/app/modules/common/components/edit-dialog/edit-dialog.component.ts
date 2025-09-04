@@ -15,7 +15,8 @@ export class EditDialogComponent {
   private readonly ref = inject(DynamicDialogRef);
   private readonly config = inject(DynamicDialogConfig);
 
-  editDialogData: EditDialogData[] = this.config.data;
+  editDialogData: EditDialogData[] = this.config.data.editDialogData;
+  saveButtonLabel: string = this.config.data.saveButtonLabel;
 
   anyFormInvalid(): boolean {
     return this.editDialogData.some((x) => x.form.invalid);

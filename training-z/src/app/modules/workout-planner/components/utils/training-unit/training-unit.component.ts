@@ -1,8 +1,11 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { AccordionModule } from 'primeng/accordion';
 import { TrainingUnit } from '../../../models/training-unit';
 import { TrainingSectionComponent } from '../training-section/training-section.component';
 import { AppButtonComponent } from '../../../../common/components/app-button/app-button.component';
+import { AppDialogService } from '../../../../common/services/app-dialog.service';
+import { FormControl, Validators } from '@angular/forms';
+import { TrainingSection } from '../../../models/training-section';
 
 @Component({
   selector: 'app-training-unit',
@@ -11,5 +14,27 @@ import { AppButtonComponent } from '../../../../common/components/app-button/app
   styleUrl: './training-unit.component.scss',
 })
 export class TrainingUnitComponent {
+  private readonly dialogService = inject(AppDialogService);
+
   trainingUnit = input.required<TrainingUnit>();
+
+  addTrainingSection(): void {
+    const form = new FormControl<string | null>('', Validators.required);
+
+    this.dialogService
+      .displayEditDialog(
+        'Add new section',
+        [{ label: 'Section name', form: form }],
+        'Add'
+      )
+      .subscribe((saved) => {
+        if (!saved) {
+          return;
+        }
+
+        this.trainingUnit().addSection(
+          new TrainingSection('agawgasfsdhte', form.value!, [])
+        );
+      });
+  }
 }

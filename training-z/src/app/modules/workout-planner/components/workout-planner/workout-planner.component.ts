@@ -4,6 +4,8 @@ import { TrainingUnitComponent } from '../utils/training-unit/training-unit.comp
 import { TrainingUnit } from '../../models/training-unit';
 import { IntensityType } from '../../models/enums/intensity-type';
 import { ExerciseType } from '../../models/enums/exercise-type';
+import { TrainingSection } from '../../models/training-section';
+import { Exercise } from '../../models/exercise';
 
 @Component({
   selector: 'app-workout-planner',
@@ -13,56 +15,44 @@ import { ExerciseType } from '../../models/enums/exercise-type';
 })
 export class WorkoutPlannerComponent {
   trainingUnits = signal<TrainingUnit[]>([
-    {
-      id: 'aawdawdafawf',
-      name: 'Day 1',
-      sections: [
-        {
-          id: 'awdawdawdaw',
-          name: 'Attempts',
-          exercises: [
-            {
-              id: 'awdawdawagaegae',
-              exerciseType: ExerciseType.Regular,
-              exercise: 'Straddle Planche Hold',
-              sets: '3',
-              reps: '5-10s',
-              intensityType: IntensityType.RPE,
-              intensity: 10,
-              rest: 'Max 5 min',
-              info: null,
-            },
-          ],
-        },
-        {
-          id: 'awdawdaggawgawdaw',
-          name: 'Volume',
-          exercises: [
-            {
-              id: 'awdawdawagaegae',
-              exerciseType: ExerciseType.Regular,
-              exercise: 'Straddle Planche Press',
-              sets: '3',
-              reps: '2-3',
-              intensityType: IntensityType.RPE,
-              intensity: 9,
-              rest: 'Max 5 min',
-              info: '5kg band',
-            },
-            {
-              id: 'awdawdawagaegae',
-              exerciseType: ExerciseType.Regular,
-              exercise: 'Front lever Press',
-              sets: '4',
-              reps: '2-3',
-              intensityType: IntensityType.RPE,
-              intensity: 9,
-              rest: 'Max 5 min',
-              info: null,
-            },
-          ],
-        },
-      ],
-    },
+    new TrainingUnit('aawdawdafawf', 'Day 1', [
+      new TrainingSection('awdawdawdaw', 'Attempts', [
+        new Exercise(
+          'awdawdawagaegae',
+          ExerciseType.Regular,
+          'Straddle Planche Hold',
+          '3',
+          '5-10s',
+          IntensityType.RPE,
+          10,
+          'Max 5 min',
+          null
+        ),
+      ]),
+      new TrainingSection('awdawdaggawgawdaw', 'Volume', [
+        new Exercise(
+          'awdawdawagaegae',
+          ExerciseType.Regular,
+          'Straddle Planche Press',
+          '3',
+          '2-3',
+          IntensityType.RPE,
+          9,
+          'Max 5 min',
+          '5kg Band'
+        ),
+        new Exercise(
+          'awdawdagagawgawagaegae',
+          ExerciseType.Regular,
+          'Front lever Press',
+          '4',
+          '2-3',
+          IntensityType.RPE,
+          9,
+          'Max 5 min',
+          null
+        ),
+      ]),
+    ]),
   ]);
 }

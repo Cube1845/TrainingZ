@@ -12,13 +12,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { DividerModule } from 'primeng/divider';
-import { KeyFilterModule } from 'primeng/keyfilter';
 import { ExerciseType } from '../../../models/enums/exercise-type';
 import { ListboxModule } from 'primeng/listbox';
 import { Combo } from '../../../models/combo';
 import { ComboDisplayComponent } from '../../utils/combo-display/combo-display.component';
 import { exerciseValidator } from './exerciseValidator';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Exercise } from '../../../models/exercise';
 
 @Component({
   selector: 'app-exercise-edit-dialog',
@@ -30,7 +30,6 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
     ReactiveFormsModule,
     TextareaModule,
     DividerModule,
-    KeyFilterModule,
     ListboxModule,
     ComboDisplayComponent,
   ],
@@ -49,6 +48,8 @@ export class ExerciseEditDialogComponent {
     if (!exercise) {
       return;
     }
+
+    this.exerciseId = exercise.id;
 
     this.formGroup.setValue({
       exerciseType: exercise.exerciseType,
@@ -100,6 +101,8 @@ export class ExerciseEditDialogComponent {
     { label: '5', value: 5 },
   ];
 
+  exerciseId!: string | null;
+
   combo = signal<Combo>([]);
 
   formGroup = new FormGroup(
@@ -109,8 +112,8 @@ export class ExerciseEditDialogComponent {
         Validators.required
       ),
       exercise: new FormControl<string | null>(''),
-      sets: new FormControl<number | null>(null, Validators.required),
-      reps: new FormControl<number | null>(null, Validators.required),
+      sets: new FormControl<string | null>('', Validators.required),
+      reps: new FormControl<string | null>('', Validators.required),
       intensityType: new FormControl<IntensityType | null>(
         IntensityType.RPE,
         Validators.required
@@ -170,5 +173,23 @@ export class ExerciseEditDialogComponent {
 
       return combo;
     });
+  }
+
+  saveExercise(): void {
+    this.ref.close(
+      new Exercise(
+        this.exerciseId || 'ghawfawfawfawf',
+        this.formGroup.value.exerciseType!,
+        this.formGroup.value.exerciseType == ExerciseType.Regular
+          ? this.formGroup.value.exercise!
+          : this.combo()!,
+        this.formGroup.value.sets!,
+        this.formGroup.value.reps!,
+        this.formGroup.value.intensityType!,
+        this.formGroup.value.intensity!,
+        this.formGroup.value.rest!,
+        this.formGroup.value.info!
+      )
+    );
   }
 }

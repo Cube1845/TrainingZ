@@ -10,4 +10,8 @@ export class TrainingSection {
     this.name = name;
     this.exercises = exercises;
   }
+
+  addExercise(exercise: Exercise): void {
+    this.exercises.push(exercise);
+  }
 }
