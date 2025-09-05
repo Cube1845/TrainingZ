@@ -45,8 +45,17 @@
         <textarea pTextarea class="w-full" placeholder="Additional info" rows="4" formControlName="info" ></textarea>
     </div>
 
-    <div class="flex gap-2 button-box">
-        <app-button label="Cancel" [outlined]="true" color="secondary" />
-        <app-button [label]="this.saveButtonLabel || 'Save'" [outlined]="true" [disabled]="formGroup.invalid" />
+
+    <div class="flex justify-content-between align-items-center w-full">
+        @if (this.exerciseId != null) {
+            <div>
+                <app-button label="Delete exercise" color="secondary" [outlined]="true" (click)="deleteExercise()" />
+            </div>
+        }  
+
+        <div [class]="'flex gap-2 ' + (this.exerciseId != null ? ' ' : ' justify-content-end w-full')">
+            <app-button label="Cancel" [outlined]="true" color="secondary" (click)="closeDialog()" />
+            <app-button [label]="this.saveButtonLabel || 'Save'" [outlined]="true" [disabled]="formGroup.invalid" (click)="saveExercise()" />
+        </div>
     </div>
 </div>

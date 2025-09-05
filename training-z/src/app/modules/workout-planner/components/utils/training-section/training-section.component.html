@@ -25,7 +25,7 @@
             <div class="flex flex-column gap-2">
                 <div class="flex flex-column gap-2">
                     @for (exercise of trainingSection().exercises; track $index) {
-                        <app-exercise-panel [exercise]="exercise" (panelClicked)="editExercise($index)" />
+                        <app-exercise-panel [exercise]="exercise" (panelClicked)="editExercise($index)" (trashIconClicked)="deleteExercise($index)" />
                     }
                 </div>
 

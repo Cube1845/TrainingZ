@@ -7,4 +7,15 @@
             background-color: var(--p-surface-700);
         }
     }
+
+    .trash-icon {
+        bottom: 0.8rem;
+        right: 1rem;
+        color: var(--p-surface-300);
+        transition: .2s color;
+
+        &:hover {
+            color: var(--p-primary-color);
+        }
+    }
 }

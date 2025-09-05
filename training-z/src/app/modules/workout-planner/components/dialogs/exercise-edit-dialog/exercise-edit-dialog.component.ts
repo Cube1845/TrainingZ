@@ -175,10 +175,21 @@ export class ExerciseEditDialogComponent {
     });
   }
 
+  closeDialog(): void {
+    this.ref.close();
+  }
+
   saveExercise(): void {
+    if (
+      this.formGroup.value.exerciseType == ExerciseType.Combo &&
+      this.combo().length < 2
+    ) {
+      return;
+    }
+
     this.ref.close(
       new Exercise(
-        this.exerciseId || 'ghawfawfawfawf',
+        this.exerciseId || '',
         this.formGroup.value.exerciseType!,
         this.formGroup.value.exerciseType == ExerciseType.Regular
           ? this.formGroup.value.exercise!
@@ -191,5 +202,9 @@ export class ExerciseEditDialogComponent {
         this.formGroup.value.info!
       )
     );
+  }
+
+  deleteExercise(): void {
+    this.ref.close(1);
   }
 }

@@ -18,21 +18,42 @@ export class TrainingSectionComponent {
   trainingSection = input.required<TrainingSection>();
 
   addNewExercise(): void {
-    this.dialogService.displayDialog(
-      ExerciseEditDialogComponent,
-      'Add new exercise',
-      { saveButtonLabel: 'Add' }
-    );
+    this.dialogService
+      .displayDialog(ExerciseEditDialogComponent, 'Add new exercise', {
+        saveButtonLabel: 'Add',
+      })
+      .subscribe((exercise: any) => {
+        if (!exercise) {
+          return;
+        }
+
+        exercise.id = 'oidhgodurng';
+
+        this.trainingSection().addExercise(exercise);
+      });
   }
 
   editExercise(exerciseIndex: number): void {
-    this.dialogService.displayDialog(
-      ExerciseEditDialogComponent,
-      'Edit exercise',
-      {
+    this.dialogService
+      .displayDialog(ExerciseEditDialogComponent, 'Edit exercise', {
         saveButtonLabel: 'Save',
         exercise: this.trainingSection().exercises[exerciseIndex],
-      }
-    );
+      })
+      .subscribe((exercise: any) => {
+        if (!exercise) {
+          return;
+        }
+
+        if (exercise === 1) {
+          this.trainingSection().deleteExercise(exerciseIndex);
+          return;
+        }
+
+        this.trainingSection().editExercise(exerciseIndex, exercise);
+      });
+  }
+
+  deleteExercise(exerciseIndex: number): void {
+    this.trainingSection().deleteExercise(exerciseIndex);
   }
 }

@@ -1,4 +1,4 @@
-<div class="flex flex-column panel p-4 border-round-md" (click)="panelClicked.emit()">
+<div class="flex flex-column panel p-4 border-round-md relative" (click)="panelClicked.emit()">
     <h1 class="m-0 p-0 text-xl mb-2">{{ exercise().exercise }}</h1>
 
     <h2 class="m-0 p-0 text-lg font-normal">Sets: {{ exercise().sets }}</h2>
@@ -9,4 +9,8 @@
     @if (exercise().info) {
         <h2 class="m-0 p-0 text-lg font-normal">Info: {{ exercise().info }}</h2>
     }
+
+    <div class="absolute trash-icon">
+        <i class="pi pi-trash text-xl" (click)="trashIconClickedEvent($event)"></i>
+    </div>
 </div>

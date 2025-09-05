@@ -12,8 +12,14 @@ export class ExercisePanelComponent {
   exercise = input.required<Exercise>();
 
   panelClicked = output<void>();
+  trashIconClicked = output<void>();
 
   getIntensityType(intensityType: IntensityType) {
     return IntensityType[intensityType];
+  }
+
+  trashIconClickedEvent(event: Event): void {
+    this.trashIconClicked.emit();
+    event.stopPropagation();
   }
 }
