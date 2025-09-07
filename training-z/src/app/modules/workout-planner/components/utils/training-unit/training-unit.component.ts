@@ -6,6 +6,7 @@ import { AppButtonComponent } from '../../../../common/components/app-button/app
 import { AppDialogService } from '../../../../common/services/app-dialog.service';
 import { FormControl, Validators } from '@angular/forms';
 import { TrainingSection } from '../../../models/training-section';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-training-unit',
@@ -17,6 +18,21 @@ export class TrainingUnitComponent {
   private readonly dialogService = inject(AppDialogService);
 
   trainingUnit = input.required<TrainingUnit>();
+
+  deleteSectionSubject = new Subject<number>();
+
+  constructor() {
+    this.deleteSectionSubject.asObservable().subscribe((sectionIndex) => {
+      this.dialogService
+        .displayConfirmation(
+          'Are you sure',
+          'Do you want to delete this section'
+        )
+        .subscribe(() => {
+          this.trainingUnit().removeSection(sectionIndex);
+        });
+    });
+  }
 
   addTrainingSection(): void {
     const form = new FormControl<string | null>('', Validators.required);

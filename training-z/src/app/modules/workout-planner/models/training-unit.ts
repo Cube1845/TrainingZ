@@ -14,4 +14,8 @@ export class TrainingUnit {
   addSection(trainingSection: TrainingSection): void {
     this.sections.push(trainingSection);
   }
+
+  removeSection(sectionIndex: number): void {
+    this.sections.splice(sectionIndex, 1);
+  }
 }

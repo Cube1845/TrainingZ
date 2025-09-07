@@ -5,7 +5,7 @@
             <div class="flex flex-column gap-2">
                 <div class="flex gap-2 flex-column">
                     @for (section of trainingUnit().sections; track $index) {
-                        <app-training-section [trainingSection]="section" />
+                        <app-training-section [trainingSection]="section" [deleteSectionSubject]="deleteSectionSubject" [sectionIndex]="$index" />
                     }
                 </div>
 

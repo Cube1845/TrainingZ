@@ -5,6 +5,7 @@ import { ExercisePanelComponent } from '../exercise-panel/exercise-panel.compone
 import { AppButtonComponent } from '../../../../common/components/app-button/app-button.component';
 import { AppDialogService } from '../../../../common/services/app-dialog.service';
 import { ExerciseEditDialogComponent } from '../../dialogs/exercise-edit-dialog/exercise-edit-dialog.component';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-training-section',
@@ -16,6 +17,14 @@ export class TrainingSectionComponent {
   private readonly dialogService = inject(AppDialogService);
 
   trainingSection = input.required<TrainingSection>();
+
+  sectionIndex = input.required<number>();
+  deleteSectionSubject = input.required<Subject<number>>();
+
+  deleteSection(event: Event): void {
+    event.stopPropagation();
+    this.deleteSectionSubject().next(this.sectionIndex());
+  }
 
   addNewExercise(): void {
     this.dialogService
