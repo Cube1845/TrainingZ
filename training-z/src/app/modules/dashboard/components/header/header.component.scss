@@ -4,8 +4,16 @@
     display: flex;
     background: var(--p-surface-900);
 
-    p, i {
+    .container {
+        color: var(--p-surface-800);
+    }
+
+    p {
         color: var(--p-surface-300);
+    }
+
+    i {
+        color: var(--p-surface-400);
     }
 
     h3 {
@@ -14,7 +22,7 @@
 
     .user-box {
         transition: .2s background-color;
-        border-color: var(--p-surface-500);
+        border-color: transparent;
 
         &:hover {
             background: var(--p-surface-800);
@@ -47,7 +55,7 @@
 
     .tile {
         transition: .2s background-color;
-        border-color: var(--p-surface-500);
+        border-color: transparent;
 
         &:hover {
             background: var(--p-surface-800);
