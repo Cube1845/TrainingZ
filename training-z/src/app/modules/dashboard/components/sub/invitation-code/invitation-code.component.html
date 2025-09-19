@@ -12,9 +12,12 @@
 
             <p-divider class="m-0 p-0 my-5" />
 
-            <h4 class="text-4xl m-0 p-0 mb-5 text-center mx-3">Take some time to fill in the form below. It might really help your future coach</h4>
+            <p-card class="w-full mb-5">
+                <h2 class="text-xl m-0 p-0"><i class="pi pi-info-circle pr-2"></i>Info</h2>
+                <p class="text-xl m-0 p-0 mt-2">Take some time to fill in the form below. It might really help your future coach</p>
+            </p-card>
 
-            <div class="flex flex-column gap-5 form-container pb-5" [formGroup]="form" >
+            <div class="flex flex-column gap-5 form-container pb-5 w-full" [formGroup]="form" >
                 <div class="flex flex-column gap-2">
                     <h5 class="m-0 p-0 text-xl pl-1">What are your current goals?</h5>
                     <textarea formControlName="goals" pTextarea variant="filled" [rows]="responsive.lg() ? 2 : responsive.md() ? 3 : 4" [cols]="responsive.lg() ? 60 : responsive.md() ? 45 : 25" ></textarea>
@@ -46,7 +49,7 @@
                 </div>
             </div>
 
-            <div class="flex justify-content-end">
+            <div class="flex justify-content-end w-full">
                 <app-button label="Save" class="pb-5" [size]="responsive.lg() ? 'large' : undefined" (click)="saveUserInfo()" />
             </div>
         </div>
