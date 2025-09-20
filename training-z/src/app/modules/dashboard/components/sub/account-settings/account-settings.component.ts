@@ -2,7 +2,6 @@ import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { Image } from 'primeng/image';
 import { ExtendedUserData } from '../../../models/extended-user-data';
 import { DividerModule } from 'primeng/divider';
-import { AppButtonComponent } from '../../../../common/components/app-button/app-button.component';
 import { ResponsiveService } from '../../../../common/services/responsive.service';
 import { GetExtendedUserDataService } from '../../../services/requests/get-extended-user-data/get-extended-user-data.service';
 import { ProfileImageService } from '../../../services/profile-image.service';
@@ -15,24 +14,19 @@ import { UpdateNameService } from '../../../services/requests/update-name/update
 import { UpdatePhoneService } from '../../../services/requests/update-phone/update-phone.service';
 import { environment } from '../../../../../../environments/environment.development';
 import { UpdateProfileImageService } from '../../../services/requests/update-profile-image/update-profile-image.service';
-import { Router } from '@angular/router';
 import { ProfileImageUploadDialogComponent } from '../../dialogs/profile-image-upload-dialog/profile-image-upload-dialog.component';
 import { DeleteProfileImageService } from '../../../services/requests/delete-profile-image/delete-profile-image.service';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-account-settings',
-  imports: [Image, DividerModule, AppButtonComponent],
+  imports: [Image, DividerModule],
   templateUrl: './account-settings.component.html',
   styleUrl: './account-settings.component.scss',
 })
 export class AccountSettingsComponent {
-  public readonly responsiveService = inject(ResponsiveService);
-
   private readonly profileImageService = inject(ProfileImageService);
   private readonly toastService = inject(AppToastService);
   private readonly dialogService = inject(AppDialogService);
-  private readonly router = inject(Router);
 
   private readonly getExtendedUserDataRequest = inject(
     GetExtendedUserDataService

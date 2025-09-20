@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Xml.Linq;
 using TrainingZ.Application.Common.Interfaces;
 using TrainingZ.Domain.Interfaces;
 
@@ -11,23 +10,20 @@ public class AppUserRepository(AppDbContext context) : IAppUserRepository
 
     public async Task<IAppUser?> GetAppUser(Guid id, CancellationToken ct)
     {
-        return await _context.AppUsers.FindAsync([id], ct);
+        return await _context.AppUsers.Select(x => (IAppUser)x).FirstOrDefaultAsync(x => x.Id == id, ct);
     }
 
     public async Task<List<IAppUser>> GetAppUsers(List<Guid> userIds, CancellationToken ct)
     {
-        var appUsersDb = await _context.AppUsers
+        return await _context.AppUsers
+            .Select(x => (IAppUser)x)
             .Where(x => userIds.Contains(x.Id))
             .ToListAsync(ct);
-
-        return appUsersDb
-            .Select(x => (IAppUser)x)
-            .ToList();
     }
 
     public async Task<IExtendedAppUser?> GetExtendedAppUser(Guid id, CancellationToken ct)
     {
-        return await _context.AppUsers.FindAsync([id], ct);
+        return await _context.AppUsers.Select(x => (IExtendedAppUser)x).FirstOrDefaultAsync(x => x.Id == id, ct);
     }
 
     public async Task<bool> AppUserExists(Guid id, CancellationToken ct)
