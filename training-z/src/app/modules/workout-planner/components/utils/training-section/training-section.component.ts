@@ -6,6 +6,7 @@ import { AppButtonComponent } from '../../../../common/components/app-button/app
 import { AppDialogService } from '../../../../common/services/app-dialog.service';
 import { ExerciseEditDialogComponent } from '../../dialogs/exercise-edit-dialog/exercise-edit-dialog.component';
 import { Subject } from 'rxjs';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-training-section',
@@ -24,6 +25,26 @@ export class TrainingSectionComponent {
   deleteSection(event: Event): void {
     event.stopPropagation();
     this.deleteSectionSubject().next(this.sectionIndex());
+  }
+
+  editSectionName(event: Event): void {
+    event.stopPropagation();
+
+    const form = new FormControl<string>('', Validators.required);
+
+    this.dialogService
+      .displayEditDialog(
+        'Add new section',
+        [{ label: 'Section name', form: form }],
+        'Add'
+      )
+      .subscribe((saved) => {
+        if (!saved) {
+          return;
+        }
+
+        this.trainingSection().editSectionName(form.value!);
+      });
   }
 
   addNewExercise(): void {
@@ -54,7 +75,14 @@ export class TrainingSectionComponent {
         }
 
         if (exercise === 1) {
-          this.trainingSection().deleteExercise(exerciseIndex);
+          this.dialogService
+            .displayConfirmation(
+              'Are you sure?',
+              'Do you want to delete this exercise?'
+            )
+            .subscribe(() => {
+              this.trainingSection().deleteExercise(exerciseIndex);
+            });
           return;
         }
 
@@ -63,6 +91,13 @@ export class TrainingSectionComponent {
   }
 
   deleteExercise(exerciseIndex: number): void {
-    this.trainingSection().deleteExercise(exerciseIndex);
+    this.dialogService
+      .displayConfirmation(
+        'Are you sure?',
+        'Do you want to delete this exercise?'
+      )
+      .subscribe(() => {
+        this.trainingSection().deleteExercise(exerciseIndex);
+      });
   }
 }

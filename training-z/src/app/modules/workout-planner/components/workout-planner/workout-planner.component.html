@@ -1,3 +1,7 @@
+<div class="flex m-4 mb-0 justify-content-end">
+    <app-button label="Add training unit" icon="pi pi-plus" color="secondary"/>
+</div>
+
 <div class="flex gap-4 m-4">
     @for (unit of trainingUnits(); track $index) {
         <app-training-unit [trainingUnit]="unit" class="w-full" />

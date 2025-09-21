@@ -25,8 +25,8 @@ export class TrainingUnitComponent {
     this.deleteSectionSubject.asObservable().subscribe((sectionIndex) => {
       this.dialogService
         .displayConfirmation(
-          'Are you sure',
-          'Do you want to delete this section'
+          'Are you sure?',
+          'Do you want to delete this section?'
         )
         .subscribe(() => {
           this.trainingUnit().removeSection(sectionIndex);

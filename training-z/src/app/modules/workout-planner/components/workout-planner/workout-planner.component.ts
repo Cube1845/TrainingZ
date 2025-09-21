@@ -6,10 +6,11 @@ import { IntensityType } from '../../models/enums/intensity-type';
 import { ExerciseType } from '../../models/enums/exercise-type';
 import { TrainingSection } from '../../models/training-section';
 import { Exercise } from '../../models/exercise';
+import { AppButtonComponent } from '../../../common/components/app-button/app-button.component';
 
 @Component({
   selector: 'app-workout-planner',
-  imports: [AccordionModule, TrainingUnitComponent],
+  imports: [AccordionModule, TrainingUnitComponent, AppButtonComponent],
   templateUrl: './workout-planner.component.html',
   styleUrl: './workout-planner.component.scss',
 })
