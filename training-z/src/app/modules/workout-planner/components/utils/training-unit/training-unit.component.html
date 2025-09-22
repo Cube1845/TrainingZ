@@ -1,8 +1,15 @@
 <p-accordion class="w-full">
     <p-accordion-panel value="0">
-        <p-accordion-header><h1 class="m-0 p-0 text-2xl">{{ trainingUnit().name }}</h1></p-accordion-header>
+        <p-accordion-header>
+            <h1 class="m-0 p-0 text-2xl">{{ trainingUnit().name }}</h1>
+        </p-accordion-header>
         <p-accordion-content>
             <div class="flex flex-column gap-2">
+                <div class="flex gap-2 mb-2">
+                    <app-button [label]="responsive.lg() ? 'Remove unit' : ''" icon="pi pi-trash" color="secondary" (click)="deleteTrainingUnit()" />
+                    <app-button [label]="responsive.lg() ? 'Edit name' : ''" icon="pi pi-pencil" color="secondary" (click)="editTrainingUnitName()" />
+                </div>
+
                 <div class="flex gap-2 flex-column">
                     @for (section of trainingUnit().sections; track $index) {
                         <app-training-section [trainingSection]="section" [deleteSectionSubject]="deleteSectionSubject" [sectionIndex]="$index" />

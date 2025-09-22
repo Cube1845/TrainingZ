@@ -33,11 +33,9 @@ export class TrainingSectionComponent {
     const form = new FormControl<string>('', Validators.required);
 
     this.dialogService
-      .displayEditDialog(
-        'Add new section',
-        [{ label: 'Section name', form: form }],
-        'Add'
-      )
+      .displayEditDialog('Add new section', [
+        { label: 'Section name', form: form },
+      ])
       .subscribe((saved) => {
         if (!saved) {
           return;

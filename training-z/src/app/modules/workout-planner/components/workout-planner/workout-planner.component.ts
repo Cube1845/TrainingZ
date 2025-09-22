@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { AccordionModule } from 'primeng/accordion';
 import { TrainingUnitComponent } from '../utils/training-unit/training-unit.component';
 import { TrainingUnit } from '../../models/training-unit';
@@ -7,6 +7,9 @@ import { ExerciseType } from '../../models/enums/exercise-type';
 import { TrainingSection } from '../../models/training-section';
 import { Exercise } from '../../models/exercise';
 import { AppButtonComponent } from '../../../common/components/app-button/app-button.component';
+import { AppDialogService } from '../../../common/services/app-dialog.service';
+import { FormControl, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-workout-planner',
@@ -15,6 +18,10 @@ import { AppButtonComponent } from '../../../common/components/app-button/app-bu
   styleUrl: './workout-planner.component.scss',
 })
 export class WorkoutPlannerComponent {
+  private readonly dialogService = inject(AppDialogService);
+
+  deleteUnitSubject = new Subject<number>();
+
   trainingUnits = signal<TrainingUnit[]>([
     new TrainingUnit('aawdawdafawf', 'Day 1', [
       new TrainingSection('awdawdawdaw', 'Attempts', [
@@ -56,4 +63,43 @@ export class WorkoutPlannerComponent {
       ]),
     ]),
   ]);
+
+  constructor() {
+    this.deleteUnitSubject.asObservable().subscribe((unitIndex) => {
+      this.dialogService
+        .displayConfirmation(
+          'Are you sure?',
+          'Do you want to delete this training unit?'
+        )
+        .subscribe(() => {
+          this.trainingUnits.update((x) => {
+            const currentWorkout = [...x];
+            currentWorkout.splice(unitIndex, 1);
+            return currentWorkout;
+          });
+        });
+    });
+  }
+
+  addTrainingUnit(): void {
+    const form = new FormControl<string | null>('', Validators.required);
+
+    this.dialogService
+      .displayEditDialog(
+        'Add new training unit',
+        [{ label: 'Unit name', form: form }],
+        'Add'
+      )
+      .subscribe((saved) => {
+        if (!saved) {
+          return;
+        }
+
+        this.trainingUnits.update((x) => {
+          const currentWorkout = [...x];
+          currentWorkout.push(new TrainingUnit('', form.value!, []));
+          return currentWorkout;
+        });
+      });
+  }
 }
