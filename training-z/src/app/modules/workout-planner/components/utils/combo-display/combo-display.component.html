@@ -1,0 +1,12 @@
+<p-list-box class="w-full" [options]="getExercises()" [highlightOnSelect]="false" scrollHeight="145px" [focusOnHover]="false">
+    <ng-template #item let-exercise>
+        <div class="w-full flex align-items-center gap-2 justify-content-between">
+            <h1 class="m-0 p-0 line-height-0 text-lg font-light">{{ exercise.label }}</h1>
+            <div class="flex gap-3">
+                <i class="pi pi-chevron-up" (click)="itemMovedUp.emit(exercise.index)" ></i>
+                <i class="pi pi-chevron-down" (click)="itemMovedDown.emit(exercise.index)" ></i>
+                <i class="pi pi-trash" (click)="itemDeleted.emit(exercise.index)" ></i>
+            </div>
+        </div>
+    </ng-template>
+</p-list-box>

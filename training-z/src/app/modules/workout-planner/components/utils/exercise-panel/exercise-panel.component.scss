@@ -1,0 +1,45 @@
+:host {
+    h1 {
+        text-wrap: wrap;
+    }
+    
+    .panel {
+        background-color: var(--p-surface-800);
+        transition: .2s background-color;
+
+        &:hover {
+            background-color: var(--p-surface-700);
+        }
+
+        table {
+            border-collapse: collapse;
+
+            tr {
+                border: 1px solid var(--p-surface-700);
+            }
+
+            tr:nth-child(even) {
+                background: var(--p-surface-900);
+            }
+
+            tr:nth-child(odd) {
+                background: var(--p-surface-875);
+            }
+        }
+
+        .ex-tile {
+            background: var(--p-surface-750);
+        }
+    }
+
+    .trash-icon {
+        bottom: 0.8rem;
+        right: 1rem;
+        color: var(--p-surface-300);
+        transition: .2s color;
+
+        &:hover {
+            color: var(--p-primary-color);
+        }
+    }
+}

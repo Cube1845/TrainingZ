@@ -1,0 +1,18 @@
+:host {
+    h1 {
+        color: var(--p-surface-0);
+    }
+
+    app-button {
+        align-self: end;
+    }
+
+    i {
+        color: var(--p-surface-200);
+        transition: .2s color;
+        
+        &:hover {
+            color: var(--p-primary-color);
+        }
+    }
+}

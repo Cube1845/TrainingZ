@@ -47,13 +47,17 @@ export class AppDialogService {
 
   displayEditDialog(
     header: string,
-    editDialogData: EditDialogData[]
+    editDialogData: EditDialogData[],
+    saveButtonLabel?: string
   ): Observable<boolean> {
     const config: DynamicDialogConfig = {
       header: header,
       modal: true,
       closable: true,
-      data: editDialogData,
+      data: {
+        editDialogData: editDialogData,
+        saveButtonLabel: saveButtonLabel || 'Save',
+      },
     };
 
     this.ref = this.dialogService.open(EditDialogComponent, config);

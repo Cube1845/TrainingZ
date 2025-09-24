@@ -9,6 +9,7 @@ import { AppButtonComponent } from '../../../../common/components/app-button/app
 import { GetUserInfoService } from '../../../services/requests/get-user-info/get-user-info.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { UpdateUserInfoService } from '../../../services/requests/update-user-info/update-user-info.service';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-invitation-code',
@@ -17,6 +18,7 @@ import { UpdateUserInfoService } from '../../../services/requests/update-user-in
     DividerModule,
     AppButtonComponent,
     ReactiveFormsModule,
+    CardModule,
   ],
   templateUrl: './invitation-code.component.html',
   styleUrl: './invitation-code.component.scss',

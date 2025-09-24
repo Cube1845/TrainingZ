@@ -5,12 +5,14 @@
                 <div class="relative inline-block mr-4 lg:mr-5">
                     <p-image [src]="userData().profileImageUrl!" width="120" imageClass="border-circle" class="block" />
 
-                    <div class="overlay absolute left-0 top-0 w-full h-full flex align-items-center justify-content-center border-circle" (click)="editProfileImage()">
-                        <i class="pi pi-pencil text-2xl"></i>
+                    <div class="overlay absolute flex align-items-center justify-content-center border-round-xl" (click)="editProfileImage()">
+                        <i class="pi pi-pencil text-2xl p-2"></i>
                     </div>
                 </div>
 
                 <h1 class="text-4xl m-0 p-0">{{ userData().name + ' ' + userData().surname}}</h1>
+
+                <i class="pi pi-pencil text-2xl ml-2 lg:ml-3 mb-1 lg:mb-0" (click)="editName()"></i>
             </div>
 
             <p-divider class="m-0 my-4 lg:my-6 w-full"/>
@@ -30,8 +32,6 @@
                 </div>
                 <h2 class="text-lg lg:text-2xl m-0 p-0 mt-2">{{ userData().phoneNumber == null ? 'Not set' : userData().phoneNumber }}</h2>
             </div>
-
-            <app-button [outlined]="true" label="Edit your name" color="secondary" [size]="responsiveService.lg() ? 'large' : undefined" icon="pi pi-pencil" (click)="editName()" />
         </div>
     </div>
 }

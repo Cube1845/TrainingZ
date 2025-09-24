@@ -1,0 +1,25 @@
+import { TrainingSection } from './training-section';
+
+export class TrainingUnit {
+  id: string;
+  name: string;
+  sections: TrainingSection[];
+
+  constructor(id: string, name: string, sections: TrainingSection[]) {
+    this.id = id;
+    this.name = name;
+    this.sections = sections;
+  }
+
+  editName(name: string): void {
+    this.name = name;
+  }
+
+  addSection(trainingSection: TrainingSection): void {
+    this.sections.push(trainingSection);
+  }
+
+  removeSection(sectionIndex: number): void {
+    this.sections.splice(sectionIndex, 1);
+  }
+}

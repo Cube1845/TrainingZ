@@ -1,0 +1,36 @@
+<p-accordion>
+    <p-accordion-panel value="0" class="border-round-md">
+        <p-accordion-header>
+            <div class="flex w-full align-items-center gap-3">
+                <h1 class="text-xl m-0 p-0">{{ trainingSection().name }}</h1> 
+                
+                <div>
+                    <i class="pi pi-trash text-lg" (click)="deleteSection($event)" ></i>
+                </div>
+
+                <div>
+                    <i class="pi pi-pencil text-lg" (click)="editSectionName($event)" ></i>
+                </div>
+            </div>
+
+            <ng-template #toggleicon let-active="active">
+                @if (active) {
+                    <i class="pi pi-chevron-up"></i>
+                } @else {
+                    <i class="pi pi-bars"></i>
+                }
+            </ng-template>
+        </p-accordion-header>
+        <p-accordion-content>
+            <div class="flex flex-column gap-2">
+                <div class="flex flex-column gap-2">
+                    @for (exercise of trainingSection().exercises; track $index) {
+                        <app-exercise-panel [exercise]="exercise" (panelClicked)="editExercise($index)" (trashIconClicked)="deleteExercise($index)" />
+                    }
+                </div>
+
+                <app-button label="Add exercise" icon="pi pi-plus" color="secondary" (click)="addNewExercise()" />
+            </div>
+        </p-accordion-content>
+    </p-accordion-panel>
+</p-accordion>

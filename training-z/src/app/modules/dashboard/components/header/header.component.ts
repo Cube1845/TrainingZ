@@ -9,10 +9,12 @@ import { GetUserDataService } from '../../services/requests/get-user-data/get-us
 import { ProfileImageService } from '../../services/profile-image.service';
 import { UserData } from '../../models/user-data';
 import { AppToastService } from '../../../common/services/app-toast.service';
+import { MenuModule } from 'primeng/menu';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-header',
-  imports: [ImageModule],
+  imports: [ImageModule, MenuModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -30,6 +32,24 @@ export class HeaderComponent {
 
   private readonly accountSettingsRoute = '/dashboard/account-settings';
   accountSettingsRouteActive = signal<boolean>(false);
+
+  userMenuItems: MenuItem[] = [
+    {
+      label: 'Account',
+      items: [
+        {
+          label: 'Log out',
+          icon: 'pi pi-sign-out',
+          command: () => this.signOut(),
+        },
+        {
+          label: 'Settings',
+          icon: 'pi pi-cog',
+          command: () => this.router.navigateByUrl(this.accountSettingsRoute),
+        },
+      ],
+    },
+  ];
 
   readonly navBarItems = signal<NavBarItem[]>([
     {

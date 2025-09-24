@@ -11,6 +11,6 @@ public class InvitationDataConfiguration : IEntityTypeConfiguration<InvitationDa
         builder.HasKey(x => x.Id);
 
         builder.HasIndex(x => x.UserId).IsUnique();
-        builder.HasIndex(x => x.Code).IsUnique();
+        builder.HasIndex(x => x.Code);
     }
 }

@@ -1,0 +1,16 @@
+:host {
+    width: 100%;
+
+    p-list-box {
+        min-height: 44px;
+    }
+
+    i {
+        color: var(--p-surface-200);
+        transition: .2s color;
+
+        &:hover {
+            color: var(--p-primary-color);
+        }
+    }
+}

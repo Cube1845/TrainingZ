@@ -11,6 +11,6 @@ public class CoachingDataConfiguration : IEntityTypeConfiguration<CoachingData>
         builder.HasKey(x => x.Id);
 
         builder.HasIndex(x => x.StudentId).IsUnique();
-        builder.HasIndex(x => x.CoachId).IsUnique();
+        builder.HasIndex(x => x.CoachId);
     }
 }

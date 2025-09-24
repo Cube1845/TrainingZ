@@ -16,6 +16,14 @@ export const routes: Routes = [
       import('./modules/dashboard/dashboard.routes').then((x) => x.routes),
   },
   {
+    path: 'workout-planner',
+    canActivate: [userMustBeLoggedInGuard],
+    loadChildren: () =>
+      import('./modules/workout-planner/workout-planner.routes').then(
+        (x) => x.routes
+      ),
+  },
+  {
     path: '',
     redirectTo: 'auth',
     pathMatch: 'full',
