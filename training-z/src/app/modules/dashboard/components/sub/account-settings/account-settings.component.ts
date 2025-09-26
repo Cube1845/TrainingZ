@@ -2,20 +2,14 @@ import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { Image } from 'primeng/image';
 import { ExtendedUserData } from '../../../models/extended-user-data';
 import { DividerModule } from 'primeng/divider';
-import { ResponsiveService } from '../../../../common/services/responsive.service';
-import { GetExtendedUserDataService } from '../../../services/requests/get-extended-user-data/get-extended-user-data.service';
 import { ProfileImageService } from '../../../services/profile-image.service';
 import { AppToastService } from '../../../../common/services/app-toast.service';
 import { catchError, from, map, Observable, of } from 'rxjs';
 import { AppDialogService } from '../../../../common/services/app-dialog.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { UpdateEmailService } from '../../../services/requests/update-email/update-email.service';
-import { UpdateNameService } from '../../../services/requests/update-name/update-name.service';
-import { UpdatePhoneService } from '../../../services/requests/update-phone/update-phone.service';
 import { environment } from '../../../../../../environments/environment.development';
-import { UpdateProfileImageService } from '../../../services/requests/update-profile-image/update-profile-image.service';
 import { ProfileImageUploadDialogComponent } from '../../dialogs/profile-image-upload-dialog/profile-image-upload-dialog.component';
-import { DeleteProfileImageService } from '../../../services/requests/delete-profile-image/delete-profile-image.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-account-settings',
@@ -28,24 +22,13 @@ export class AccountSettingsComponent {
   private readonly toastService = inject(AppToastService);
   private readonly dialogService = inject(AppDialogService);
 
-  private readonly getExtendedUserDataRequest = inject(
-    GetExtendedUserDataService
-  );
-  private readonly updateEmailRequest = inject(UpdateEmailService);
-  private readonly updateNameRequest = inject(UpdateNameService);
-  private readonly updatePhoneRequest = inject(UpdatePhoneService);
-  private readonly updateProfileImageRequest = inject(
-    UpdateProfileImageService
-  );
-  private readonly deleteProfileImageRequest = inject(
-    DeleteProfileImageService
-  );
+  private readonly userService = inject(UserService);
 
   userData?: WritableSignal<ExtendedUserData>;
 
   constructor() {
-    this.getExtendedUserDataRequest
-      .request()
+    this.userService
+      .getExtendedUserData()
       .pipe(catchError((err) => of(err)))
       .subscribe((result) => {
         if (!result.isSuccess) {
@@ -85,8 +68,8 @@ export class AccountSettingsComponent {
               'Do you want to remove your profile picture?'
             )
             .subscribe(() => {
-              this.deleteProfileImageRequest
-                .request()
+              this.userService
+                .deleteProfileImage()
                 .pipe(catchError((err) => of(err)))
                 .subscribe((result) => {
                   if (!result.isSuccess) {
@@ -119,10 +102,8 @@ export class AccountSettingsComponent {
             return;
           }
 
-          const formData = new FormData();
-          formData.append('imageFile', imageFile);
-
-          this.updateProfileImageRequest.requestFormData!(formData)
+          this.userService
+            .updateProfileImage(imageFile)
             .pipe(catchError((err) => of(err)))
             .subscribe((result) => {
               if (!result.isSuccess) {
@@ -167,8 +148,8 @@ export class AccountSettingsComponent {
           return;
         }
 
-        this.updateNameRequest
-          .request({ name: form.value.name!, surname: form.value.surname! })
+        this.userService
+          .updateName(form.value.name!, form.value.surname!)
           .pipe(catchError((err) => of(err)))
           .subscribe((result) => {
             if (!result.isSuccess) {
@@ -202,8 +183,8 @@ export class AccountSettingsComponent {
           return;
         }
 
-        this.updateEmailRequest
-          .request({ email: form.value })
+        this.userService
+          .updateEmail(form.value!)
           .pipe(catchError((err) => of(err)))
           .subscribe((result) => {
             if (!result.isSuccess) {
@@ -238,8 +219,8 @@ export class AccountSettingsComponent {
           return;
         }
 
-        this.updatePhoneRequest
-          .request({ email: form.value == '' ? null : form.value })
+        this.userService
+          .updatePhoneNumber(form.value == '' ? null : form.value)
           .pipe(catchError((err) => of(err)))
           .subscribe((result) => {
             if (!result.isSuccess) {

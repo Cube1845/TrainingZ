@@ -1,16 +1,16 @@
 import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { AuthDataService } from '../../../auth/services/auth-data.service';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Role } from '../../../auth/models/role';
 import { NavBarItem } from '../../models/nav-bar-item';
 import { catchError, filter, of } from 'rxjs';
 import { ImageModule } from 'primeng/image';
-import { GetUserDataService } from '../../services/requests/get-user-data/get-user-data.service';
 import { ProfileImageService } from '../../services/profile-image.service';
 import { UserData } from '../../models/user-data';
 import { AppToastService } from '../../../common/services/app-toast.service';
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -23,8 +23,9 @@ export class HeaderComponent {
   private readonly router = inject(Router);
   private readonly profileImageService = inject(ProfileImageService);
   private readonly toastService = inject(AppToastService);
+  private readonly activatedRoute = inject(ActivatedRoute);
 
-  private readonly getUserDataRequest = inject(GetUserDataService);
+  private readonly userService = inject(UserService);
 
   userData?: WritableSignal<UserData>;
 
@@ -81,7 +82,10 @@ export class HeaderComponent {
       icon: 'pi pi-users',
       isSelected: signal<boolean>(false),
       route: '/dashboard/students',
-      alternativeRoutes: ['/dashboard/student-invite'],
+      alternativeRoutes: [
+        '/dashboard/student-invite',
+        '/dashboard/student-manage',
+      ],
       role: Role.Coach,
     },
     {
@@ -94,9 +98,26 @@ export class HeaderComponent {
     },
   ]);
 
+  private getUrlWithoutParams(route: ActivatedRoute): string {
+    var urlSegments = [route.firstChild];
+
+    let i = 0;
+
+    while (urlSegments[i]!.children.length > 0) {
+      urlSegments.push(urlSegments[i]!.firstChild);
+      i++;
+    }
+
+    const urlParts = urlSegments
+      .filter((x) => !!x && !!x.snapshot.url[0])
+      .map((x) => x?.snapshot.url[0]);
+
+    return '/' + urlParts.join('/');
+  }
+
   constructor() {
-    this.getUserDataRequest
-      .request()
+    this.userService
+      .getUserData()
       .pipe(catchError((err) => of(err)))
       .subscribe((result) => {
         if (!result.isSuccess) {
@@ -116,10 +137,10 @@ export class HeaderComponent {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
-        const route = event.urlAfterRedirects;
-
         this.navBarItems().forEach((x) => x.isSelected.set(false));
         this.accountSettingsRouteActive.set(false);
+
+        const route = this.getUrlWithoutParams(this.activatedRoute.root);
 
         if (route == this.accountSettingsRoute) {
           this.accountSettingsRouteActive.set(true);

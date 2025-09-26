@@ -1,6 +1,6 @@
 @if (students != undefined) {
     <div [class]="'flex flex-column align-items-center' + (students().length >= 1 ? ' w-full lg:w-6 ' : ' ' )">
-        <div class="invite-button flex p-3 border-round-xl mr-1 my-3" (click)="navigateTo('dashboard/student-invite')">
+        <div class="invite-button flex p-3 border-round-xl mr-4 my-3" (click)="navigateTo('dashboard/student-invite')">
             <i class="pi pi-user-plus text-xl"></i>
             <h3 class="m-0 p-0 text-lg pl-2">Invite student</h3>
         </div>
@@ -12,24 +12,25 @@
             </div>
 
             <div class="flex align-items-center flex-column w-full h-full relative overflow-auto">
-                
+                    <p-divider class="m-0 p-0 w-full lg: w-11" />
+
                     @for (student of students(); track $index) {
                         @if ($index > 0) {
                             <p-divider class="m-0 p-0 w-full lg: w-11" />
                         }
 
-                        <div class="flex w-full py-3 px-4 lg:px-6 align-items-center tile justify-content-between">
+                        <div class="flex w-full py-3 px-4 lg:px-6 align-items-center tile justify-content-between" (click)="navigateTo('dashboard/student-manage/' + student.id)" >
                             <div class="flex align-items-center justify-content-center">
                                 <p-image [src]="student.profileImageUrl!" width="50" imageClass="border-circle" />
                                 <h2 class="text-lg m-0 p-0 pb-1 pl-3">{{ student.name + ' ' + student.surname }}</h2>
                             </div>
-                            <div class="flex align-items-center justify-content-center gap-1 lg:gap-2">
+                            <div class="flex align-items-center justify-content-center gap-2 lg:gap-3">
                                 <div class="lighter-hover border-circle">
-                                    <i class="pi pi-envelope p-2 lg:p-3 text-lg lg:text-xl"></i>
+                                    <i class="pi pi-envelope p-3 lg:p-3 text-xl lg:text-2xl"></i>
                                 </div>
 
-                                <div class="lighter-hover border-circle" (click)="removeStudent(student)">
-                                    <i class="pi pi-user-minus p-2 lg:p-3 text-lg lg:text-xl"></i>
+                                <div class="lighter-hover border-circle" (click)="removeStudent(student, $event)">
+                                    <i class="pi pi-user-minus p-3 lg:p-3 text-xl lg:text-2xl"></i>
                                 </div>
                             </div>
                         </div>

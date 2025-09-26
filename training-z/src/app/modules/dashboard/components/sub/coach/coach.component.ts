@@ -3,16 +3,14 @@ import { DividerModule } from 'primeng/divider';
 import { Image } from 'primeng/image';
 import { ExtendedUserData } from '../../../models/extended-user-data';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { GetCoachDataService } from '../../../services/requests/get-coach-data/get-coach-data.service';
 import { ProfileImageService } from '../../../services/profile-image.service';
 import { AppToastService } from '../../../../common/services/app-toast.service';
 import { AppButtonComponent } from '../../../../common/components/app-button/app-button.component';
 import { ResponsiveService } from '../../../../common/services/responsive.service';
-import { RemoveCoachingService } from '../../../services/requests/remove-coaching/remove-coaching.service';
 import { AppDialogService } from '../../../../common/services/app-dialog.service';
 import { catchError, of } from 'rxjs';
 import { AuthDataService } from '../../../../auth/services/auth-data.service';
+import { CoachingService } from '../../../services/coaching.service';
 
 @Component({
   selector: 'app-coach',
@@ -28,15 +26,13 @@ export class CoachComponent {
   private readonly toastService = inject(AppToastService);
   private readonly dialogService = inject(AppDialogService);
   private readonly authDataService = inject(AuthDataService);
-
-  private readonly getCoachDataRequest = inject(GetCoachDataService);
-  private readonly removeCoachingRequest = inject(RemoveCoachingService);
+  private readonly coachingService = inject(CoachingService);
 
   coachData?: WritableSignal<ExtendedUserData>;
 
   constructor() {
-    this.getCoachDataRequest
-      .request()
+    this.coachingService
+      .getCoachData()
       .pipe(catchError((err) => of(err)))
       .subscribe((result) => {
         if (!result.isSuccess) {
@@ -68,8 +64,8 @@ export class CoachComponent {
         'Do you want to resign from coaching?'
       )
       .subscribe(() => {
-        this.removeCoachingRequest
-          .request({ studentId: this.authDataService.getAuthData().userId })
+        this.coachingService
+          .removeCoaching(this.authDataService.getAuthData().userId!)
           .pipe(catchError((err) => of(err)))
           .subscribe((result) => {
             if (!result.isSuccess) {
