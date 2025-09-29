@@ -7,7 +7,6 @@ import { PlainExtendedUserData } from '../models/extended-user-data';
 import { GetStudentsResponse } from './api-responses/get-students-response';
 import { GetUserDataByCodeResponse } from './api-responses/get-user-data-by-code-response';
 import { GetCodeResponse } from './api-responses/get-user-info-response';
-import { UserInfo } from '../models/user-info';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +30,12 @@ export class CoachingService {
   getStudents(): Observable<Result<GetStudentsResponse>> {
     return this.http.get<Result<GetStudentsResponse>>(
       this.apiUrl + 'coaching/general/students'
+    );
+  }
+
+  getStudentData(studentId: string): Observable<Result<PlainExtendedUserData>> {
+    return this.http.get<Result<PlainExtendedUserData>>(
+      this.apiUrl + 'coaching/general/student-data/' + studentId
     );
   }
 

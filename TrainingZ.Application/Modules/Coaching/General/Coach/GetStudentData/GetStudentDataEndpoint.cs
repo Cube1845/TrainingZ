@@ -16,8 +16,8 @@ public class GetStudentDataEndpoint(IAppUserRepository appUserRepo) : Endpoint<G
 
     public override async Task HandleAsync(GetStudentDataRequest req, CancellationToken ct)
     {
-        var appUser = await _appUserRepo.GetAppUser(req.StudentData, ct);
+        var appUser = await _appUserRepo.GetExtendedAppUser(req.StudentData, ct);
 
-        await SendOkAsync(Result<GetStudentDataResponse>.Success(new(appUser!.Id, appUser.Name, appUser.Surname, appUser.ProfileImageId)), ct);
+        await SendOkAsync(Result<GetStudentDataResponse>.Success(new(appUser!.Id, appUser.Name, appUser.Surname, appUser.ProfileImageId, appUser.PhoneNumber, appUser.Email)), ct);
     }
 }
