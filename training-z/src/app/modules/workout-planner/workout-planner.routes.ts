@@ -3,7 +3,7 @@ import { WorkoutPlannerComponent } from './components/workout-planner/workout-pl
 
 export const routes: Routes = [
   {
-    path: '',
+    path: ':id',
     component: WorkoutPlannerComponent,
     children: [],
   },

@@ -1,14 +1,14 @@
 <div class="flex flex-column panel p-4 border-round-md relative" (click)="panelClicked.emit()">
     @if (exercise().exerciseType == 1) {
-        <div class="px-3 py-2 border-round-md ex-tile mb-2 w-auto lg:w-max">
-            <h1 class="m-0 p-0 text-xl">{{ exercise().exercise }}</h1>
+        <div class="px-3 py-2 border-round-md ex-tile mb-3 w-auto lg:w-max">
+            <h1 class="m-0 p-0 text-2xl">{{ exercise().exercise }}</h1>
         </div>
     } @else {
         <div class="px-3 py-2 border-round-md ex-tile mb-2 w-max">
-            <h1 class="m-0 p-0 text-lg">Combo</h1>
+            <h1 class="m-0 p-0 text-xl">Combo</h1>
         </div>
 
-        <table class="text-lg w-max mb-2 flex gap-1 flex-column m-0">
+        <table class="text-lg w-max mb-3 flex gap-1 flex-column m-0">
             @for (exercise of exercise().exercise; track $index) {
                 <tr class="border-round-md">
                     <td class="px-3 py-2">{{ exercise }}</td>

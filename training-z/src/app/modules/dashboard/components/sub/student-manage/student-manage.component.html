@@ -1,9 +1,9 @@
 @if (studentData() != undefined) {
     <div class="flex flex-column w-full lg:w-6 lg:p-6 p-4">
         <div class="flex align-items-center">
-            <p-image [src]="studentData()!.profileImageUrl!" width="120" imageClass="border-circle" class="mr-4 lg:mr-5" />
+            <p-image [src]="studentData()!.studentData.profileImageUrl!" width="120" imageClass="border-circle" class="mr-4 lg:mr-5" />
 
-            <h1 class="text-4xl m-0 p-0">{{ studentData()!.name! + ' ' + studentData()!.surname!}}</h1>
+            <h1 class="text-4xl m-0 p-0">{{ studentData()!.studentData.name! + ' ' + studentData()!.studentData.surname!}}</h1>
         </div>
 
         <p-divider class="m-0 my-4 lg:my-6 w-full"/>
@@ -11,36 +11,46 @@
         <div class="flex flex-column lg:flex-row">
             <div class="flex flex-column mb-4 lg:mb-0 flex-1">
                 <h3 class="text-xl lg:text-3xl m-0 p-0">Email</h3>
-                <h2 class="text-lg lg:text-2xl m-0 p-0 mt-2">{{ studentData()!.email }}</h2>
+                <h2 class="text-lg lg:text-2xl m-0 p-0 mt-2">{{ studentData()!.studentData.email }}</h2>
             </div>
 
             <div class="flex flex-column flex-1">
                 <h3 class="text-xl lg:text-3xl m-0 p-0">Phone number</h3>
-                <h2 class="text-lg lg:text-2xl m-0 p-0 mt-2">{{ studentData()!.phoneNumber == null ? 'Not given' : studentData()!.phoneNumber }}</h2>
+                <h2 class="text-lg lg:text-2xl m-0 p-0 mt-2">{{ studentData()!.studentData.phoneNumber == null ? 'Not given' : studentData()!.studentData.phoneNumber }}</h2>
             </div>
         </div>
 
         <p-divider class="m-0 my-4 lg:my-6 w-full"/>
 
         <div class="flex flex-column gap-4 pb-4">
-            <h1 class="text-2xl lg:text-4xl m-0 p-0">Current training plan:</h1>
+            <h1 class="text-2xl lg:text-4xl m-0 p-0">Training plans:</h1>
 
-            <div class="flex align-items-center justify-content-center p-4 flex-column workout-tile border-round-lg flex-1">
-                <h2 class="m-0 p-0 text-3xl text-center pb-2">Workout volume phase</h2>
-                <h2 class="m-0 p-0 text-xl text-center">Last modified: 02.03.2025 15:35</h2>
-            </div>
-        </div>
-
-        <div class="flex flex-column gap-4 pb-4">
-            <h1 class="text-2xl lg:text-4xl m-0 p-0">Last workouts:</h1>
-            <div class="flex gap-4 justify-content-center flex-column lg:flex-row">
-                @for (item of [0, 1, 2]; track $index) {
+            <div class="flex flex-column lg:flex-row gap-4">
+                @for (plan of studentData()!.trainingPlans; track $index) {
                     <div class="flex align-items-center justify-content-center p-4 flex-column workout-tile border-round-lg flex-1">
-                        <h2 class="m-0 p-0 text-2xl">02.03.2025</h2>
-                        <h2 class="m-0 p-0 text-xl">15:35</h2>
+                        <h2 class="m-0 p-0 text-3xl text-center pb-2">Workout volume phase</h2>
+                        <h3 class="m-0 p-0 text-xl text-center">Last modified: 02.03.2025 15:35</h3>
                     </div>
                 }
             </div>
+
+            <div class="flex justify-content-end w-full">
+                <app-button label="Add training plan" icon="pi pi-plus" [outlined]="true" color="secondary" />
+            </div>
         </div>
+
+        @if (studentData()!.lastWorkouts.length > 0) {
+            <div class="flex flex-column gap-4 pb-4">
+                <h1 class="text-2xl lg:text-4xl m-0 p-0">Last workouts:</h1>
+                <div class="flex gap-4 justify-content-center flex-column lg:flex-row">
+                    @for (item of studentData()!.lastWorkouts; track $index) {
+                        <div class="flex align-items-center justify-content-center p-4 flex-column workout-tile border-round-lg flex-1">
+                            <h2 class="m-0 p-0 text-2xl">02.03.2025</h2>
+                            <h2 class="m-0 p-0 text-xl">15:35</h2>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
     </div>
 }

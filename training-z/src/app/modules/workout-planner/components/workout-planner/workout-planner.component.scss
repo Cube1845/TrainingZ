@@ -1,5 +1,9 @@
 :host {
-    overflow: auto;
-    display: flex;
-    justify-content: center;
+    .header {
+        background: var(--p-surface-800);
+    }
+
+    .flex-2 {
+        flex: 2;
+    }
 }

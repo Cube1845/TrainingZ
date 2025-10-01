@@ -10,10 +10,16 @@ import { AppButtonComponent } from '../../../common/components/app-button/app-bu
 import { AppDialogService } from '../../../common/services/app-dialog.service';
 import { FormControl, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { AppInputComponent } from '../../../common/components/app-input/app-input.component';
 
 @Component({
   selector: 'app-workout-planner',
-  imports: [AccordionModule, TrainingUnitComponent, AppButtonComponent],
+  imports: [
+    AccordionModule,
+    TrainingUnitComponent,
+    AppButtonComponent,
+    AppInputComponent,
+  ],
   templateUrl: './workout-planner.component.html',
   styleUrl: './workout-planner.component.scss',
 })

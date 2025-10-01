@@ -1,9 +1,27 @@
-<div class="flex gap-4 m-0 mx-4 mt-4 flex-column w-full lg:w-7">
-    <div class="flex justify-content-end">
-        <app-button label="Add training unit" icon="pi pi-plus" color="secondary" (click)="addTrainingUnit()" />
+<div class="flex w-full h-full align-items-center flex-column">
+    <div class="w-full flex header p-4 flex">
+        <div class="flex-1">
+            <app-input label="Name" />
+        </div>
+
+        <div class="flex-2">
+            
+        </div>
+
+        <div class="flex-1">
+            
+        </div>
     </div>
-    
-    @for (unit of trainingUnits(); track $index) {
-        <app-training-unit [trainingUnit]="unit" class="w-full" [deleteUnitSubject]="deleteUnitSubject" [unitIndex]="$index" />
-    }
+
+    <div class="flex w-full justify-content-center overflow-auto">
+        <div class="flex gap-4 m-0 mx-4 mt-4 flex-column w-full lg:w-7">
+            <div class="flex justify-content-end">
+                <app-button label="Add training unit" icon="pi pi-plus" color="secondary" (click)="addTrainingUnit()" />
+            </div>
+            
+            @for (unit of trainingUnits(); track $index) {
+                <app-training-unit [trainingUnit]="unit" class="w-full" [deleteUnitSubject]="deleteUnitSubject" [unitIndex]="$index" />
+            }
+        </div>
+    </div>
 </div>

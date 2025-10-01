@@ -33,11 +33,13 @@ export class CoachingService {
     );
   }
 
-  getStudentData(studentId: string): Observable<Result<PlainExtendedUserData>> {
-    return this.http.get<Result<PlainExtendedUserData>>(
-      this.apiUrl + 'coaching/general/student-data/' + studentId
-    );
-  }
+  // getStudentManageData(
+  //   studentId: string
+  // ): Observable<Result<PlainExtendedUserData>> {
+  //   return this.http.get<Result<PlainExtendedUserData>>(
+  //     this.apiUrl + 'coaching/general/student-data/' + studentId
+  //   );
+  // }
 
   getUserDataByCode(
     code: string

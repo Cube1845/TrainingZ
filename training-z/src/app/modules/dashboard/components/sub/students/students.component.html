@@ -12,11 +12,11 @@
             </div>
 
             <div class="flex align-items-center flex-column w-full h-full relative overflow-auto">
-                    <p-divider class="m-0 p-0 w-full lg: w-11" />
+                    <p-divider class="m-0 p-0 w-full" />
 
                     @for (student of students(); track $index) {
                         @if ($index > 0) {
-                            <p-divider class="m-0 p-0 w-full lg: w-11" />
+                            <p-divider class="m-0 p-0 w-full lg:w-11" />
                         }
 
                         <div class="flex w-full py-3 px-4 lg:px-6 align-items-center tile justify-content-between" (click)="navigateTo('dashboard/student-manage/' + student.id)" >
