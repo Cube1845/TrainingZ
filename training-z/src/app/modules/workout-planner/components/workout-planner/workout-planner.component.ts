@@ -11,15 +11,12 @@ import { AppDialogService } from '../../../common/services/app-dialog.service';
 import { FormControl, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { AppInputComponent } from '../../../common/components/app-input/app-input.component';
+import { Image } from 'primeng/image';
+import { environment } from '../../../../../environments/environment.development';
 
 @Component({
   selector: 'app-workout-planner',
-  imports: [
-    AccordionModule,
-    TrainingUnitComponent,
-    AppButtonComponent,
-    AppInputComponent,
-  ],
+  imports: [AccordionModule, TrainingUnitComponent, AppButtonComponent, Image],
   templateUrl: './workout-planner.component.html',
   styleUrl: './workout-planner.component.scss',
 })
@@ -27,6 +24,8 @@ export class WorkoutPlannerComponent {
   private readonly dialogService = inject(AppDialogService);
 
   deleteUnitSubject = new Subject<number>();
+
+  readonly defaultProfileImageUrl = environment.defaultProfileImageUrl; // to delete
 
   trainingUnits = signal<TrainingUnit[]>([
     new TrainingUnit('aawdawdafawf', 'Day 1', [

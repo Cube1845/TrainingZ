@@ -1,9 +1,38 @@
 :host {
     .header {
         background: var(--p-surface-800);
+        border-bottom: 1px solid var(--p-surface-900);
+
+        i {
+            color: var(--p-surface-300);
+            transition: .2s color;
+
+            &:hover {
+                color: var(--p-primary-color);
+                cursor: pointer;
+            }
+        }
+    }
+
+    h1 {
+        color: var(--p-surface-0);
+    }
+
+    h2 {
+        color: var(--p-surface-200);
     }
 
     .flex-2 {
         flex: 2;
+    }
+
+    .user-tile {
+        background: var(--p-surface-900);
+        transition: .2s background-color;
+
+        &:hover {
+            background: var(--p-surface-850);
+            cursor: pointer;
+        }
     }
 }

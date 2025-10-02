@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CoachingService } from '../../../services/coaching.service';
 import { ProfileImageService } from '../../../services/profile-image.service';
 import { AppToastService } from '../../../../common/services/app-toast.service';
@@ -20,6 +20,7 @@ export class StudentManageComponent {
   private readonly coachingService = inject(CoachingService);
   private readonly profileImageService = inject(ProfileImageService);
   private readonly toastService = inject(AppToastService);
+  private readonly router = inject(Router);
 
   studentId: string = '';
 
@@ -70,5 +71,10 @@ export class StudentManageComponent {
       );
       return;
     }
+
+    //api call
+    const workoutId = 'awhaefgsaefgdtgrftgedrtgerge';
+
+    this.router.navigateByUrl('workout-planner/' + workoutId);
   }
 }
