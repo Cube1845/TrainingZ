@@ -13,6 +13,8 @@ import { Subject } from 'rxjs';
 import { AppInputComponent } from '../../../common/components/app-input/app-input.component';
 import { Image } from 'primeng/image';
 import { environment } from '../../../../../environments/environment.development';
+import { ResponsiveService } from '../../../common/services/responsive.service';
+import { StudentInfoDialogComponent } from '../dialogs/student-info-dialog/student-info-dialog.component';
 
 @Component({
   selector: 'app-workout-planner',
@@ -21,6 +23,8 @@ import { environment } from '../../../../../environments/environment.development
   styleUrl: './workout-planner.component.scss',
 })
 export class WorkoutPlannerComponent {
+  public readonly responsive = inject(ResponsiveService);
+
   private readonly dialogService = inject(AppDialogService);
 
   deleteUnitSubject = new Subject<number>();
@@ -84,6 +88,13 @@ export class WorkoutPlannerComponent {
           });
         });
     });
+  }
+
+  openStudentInfoDialog(): void {
+    this.dialogService.displayDialog(
+      StudentInfoDialogComponent,
+      'Student Info'
+    );
   }
 
   addTrainingUnit(): void {

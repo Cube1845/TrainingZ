@@ -1,12 +1,16 @@
 <div class="flex w-full h-full align-items-center flex-column">
-    <div class="w-full flex header lg:p-2 p-4 flex-column lg:flex-row gap-3">
-        <div class="flex-1 flex align-items-center gap-2 lg:pl-4 p-0">
-            <h1 class="m-0 p-0 line-height-1 text-3xl">Planche volume</h1>
-            <i class="pi pi-pencil text-xl"></i>
+    <div class="w-full flex header lg:p-2 p-3 flex-column lg:flex-row gap-3">
+        <div class="flex-1 align-items-center flex gap-3 lg:gap-2 ml-2 lg:ml-4">
+            <app-button [label]="responsive.lg() ? 'Save' : ''" icon="pi pi-save" color="secondary" />
+
+            <div class="flex align-items-center gap-2 lg:pl-4 p-0">
+                <h1 class="m-0 p-0 line-height-1 text-3xl w-max">Planche volume</h1>
+                <i class="pi pi-pencil text-xl"></i>
+            </div>
         </div>
 
         <div class="flex-2 flex justify-content-start lg:justify-content-center">
-            <div class="flex gap-3 align-items-center justify-content-center lg:justify-content-center user-tile py-2 px-3 border-round-lg w-max">
+            <div class="flex gap-3 align-items-center justify-content-center lg:justify-content-center user-tile py-2 px-3 border-round-lg w-max" (click)="openStudentInfoDialog()">
                 <p-image [src]="defaultProfileImageUrl" width="45" imageClass="border-circle" />
                 <h2 class="m-0 p-0 pb-1 line-height-1">Adrian Down</h2>
             </div>

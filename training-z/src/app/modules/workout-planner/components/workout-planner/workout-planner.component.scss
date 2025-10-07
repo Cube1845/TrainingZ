@@ -1,6 +1,6 @@
 :host {
     .header {
-        background: var(--p-surface-800);
+        background: var(--p-surface-900);
         border-bottom: 1px solid var(--p-surface-900);
 
         i {
@@ -27,11 +27,11 @@
     }
 
     .user-tile {
-        background: var(--p-surface-900);
+        background: var(--p-surface-950);
         transition: .2s background-color;
 
         &:hover {
-            background: var(--p-surface-850);
+            background: var(--p-surface-800);
             cursor: pointer;
         }
     }

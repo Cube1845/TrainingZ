@@ -30,7 +30,10 @@ export class TrainingSectionComponent {
   editSectionName(event: Event): void {
     event.stopPropagation();
 
-    const form = new FormControl<string>('', Validators.required);
+    const form = new FormControl<string>(
+      this.trainingSection().name,
+      Validators.required
+    );
 
     this.dialogService
       .displayEditDialog('Add new section', [
