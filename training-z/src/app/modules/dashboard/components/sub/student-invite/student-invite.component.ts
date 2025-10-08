@@ -10,8 +10,9 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProfileImageService } from '../../../services/profile-image.service';
 import { Router } from '@angular/router';
 import { catchError, of } from 'rxjs';
-import { UserInfo } from '../../../models/user-info';
+import { QuestionKeys, UserInfo } from '../../../models/user-info';
 import { CoachingService } from '../../../services/coaching.service';
+import { UserInfoQuestions } from '../../../models/user-info-questions';
 
 @Component({
   selector: 'app-student-invite',
@@ -41,6 +42,9 @@ export class StudentInviteComponent {
 
   invitedUserData = signal<UserData | undefined>(undefined);
   userInfo = signal<UserInfo | undefined>(undefined);
+
+  questions = UserInfoQuestions;
+  questionKeys = QuestionKeys;
 
   findStudent(): void {
     this.coachingService

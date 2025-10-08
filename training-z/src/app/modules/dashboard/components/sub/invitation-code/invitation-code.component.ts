@@ -9,6 +9,8 @@ import { AppButtonComponent } from '../../../../common/components/app-button/app
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { CoachingService } from '../../../services/coaching.service';
+import { UserInfoQuestions } from '../../../models/user-info-questions';
+import { QuestionKeys } from '../../../models/user-info';
 
 @Component({
   selector: 'app-invitation-code',
@@ -39,6 +41,9 @@ export class InvitationCodeComponent {
     timeAvaiable: new FormControl<string>(''),
     other: new FormControl<string>(''),
   });
+
+  questions = UserInfoQuestions;
+  questionKeys = QuestionKeys;
 
   constructor() {
     this.coachingService

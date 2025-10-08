@@ -1,9 +1,18 @@
 <div class="flex flex-column w-full p-1 lg:p-3">
     <div class="flex align-items-center w-full">
-        <p-image [src]="studentData()!.profileImageUrl!" [width]="responsive.lg() ? '120' : '80'" imageClass="border-circle" class="mr-4" />
+        <p-image [src]="studentData()!.profileImageUrl!" [width]="responsive.lg() ? '120' : '80'" imageClass="border-circle" class="ml-0 mr-2  lg:mx-4" />
 
         <h1 class="text-3xl lg:text-4xl m-0 p-0">{{ studentData()!.name! + ' ' + studentData()!.surname!}}</h1>
     </div>
 
     <p-divider class="m-0 my-4 w-full"/>
+
+    <div class="flex flex-column gap-4">
+        @for (key of questionKeys; track $index) {
+            <div class="flex flex-column">
+                <h2 class="m-0 p-0 text-xl lg:text-2xl">{{ questions[key] }}</h2>
+                <h1 class="m-0 p-0 text-2xl lg:text-3xl">{{ userInfo()![key] == '' ? 'No answer' : userInfo()![key] }}</h1>
+            </div>
+        }
+    </div>
 </div>

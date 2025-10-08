@@ -93,7 +93,9 @@ export class WorkoutPlannerComponent {
   openStudentInfoDialog(): void {
     this.dialogService.displayDialog(
       StudentInfoDialogComponent,
-      'Student Info'
+      'Student Info',
+      {},
+      { width: this.responsive.lg() ? '50vw' : '95vw' }
     );
   }
 

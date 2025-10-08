@@ -6,3 +6,12 @@ export type UserInfo = {
   timeAvaiable: string;
   other: string;
 };
+
+export const QuestionKeys: (keyof UserInfo)[] = [
+  'goals',
+  'sleepDiet',
+  'activity',
+  'injuries',
+  'timeAvaiable',
+  'other',
+];
