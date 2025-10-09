@@ -15,6 +15,7 @@ import { Image } from 'primeng/image';
 import { environment } from '../../../../../environments/environment.development';
 import { ResponsiveService } from '../../../common/services/responsive.service';
 import { StudentInfoDialogComponent } from '../dialogs/student-info-dialog/student-info-dialog.component';
+import { TrainingPlan } from '../../models/training-plan';
 
 @Component({
   selector: 'app-workout-planner',
@@ -31,47 +32,49 @@ export class WorkoutPlannerComponent {
 
   readonly defaultProfileImageUrl = environment.defaultProfileImageUrl; // to delete
 
-  trainingUnits = signal<TrainingUnit[]>([
-    new TrainingUnit('aawdawdafawf', 'Day 1', [
-      new TrainingSection('awdawdawdaw', 'Attempts', [
-        new Exercise(
-          'awdawdawagaegae',
-          ExerciseType.Regular,
-          'Straddle Planche Hold',
-          '3',
-          '5-10s',
-          IntensityType.RPE,
-          10,
-          'Max 5 min',
-          null
-        ),
+  trainingPlan = signal<TrainingPlan>(
+    new TrainingPlan('awgagsegsre', 'Planche volume', [
+      new TrainingUnit('aawdawdafawf', 'Day 1', [
+        new TrainingSection('awdawdawdaw', 'Attempts', [
+          new Exercise(
+            'awdawdawagaegae',
+            ExerciseType.Regular,
+            'Straddle Planche Hold',
+            '3',
+            '5-10s',
+            IntensityType.RPE,
+            10,
+            'Max 5 min',
+            null
+          ),
+        ]),
+        new TrainingSection('awdawdaggawgawdaw', 'Volume', [
+          new Exercise(
+            'awdawdawagaegae',
+            ExerciseType.Regular,
+            'Straddle Planche Press',
+            '3',
+            '2-3',
+            IntensityType.RPE,
+            9,
+            'Max 5 min',
+            '5kg Band'
+          ),
+          new Exercise(
+            'awdawdagagawgawagaegae',
+            ExerciseType.Regular,
+            'Front lever Press',
+            '4',
+            '2-3',
+            IntensityType.RPE,
+            9,
+            'Max 5 min',
+            null
+          ),
+        ]),
       ]),
-      new TrainingSection('awdawdaggawgawdaw', 'Volume', [
-        new Exercise(
-          'awdawdawagaegae',
-          ExerciseType.Regular,
-          'Straddle Planche Press',
-          '3',
-          '2-3',
-          IntensityType.RPE,
-          9,
-          'Max 5 min',
-          '5kg Band'
-        ),
-        new Exercise(
-          'awdawdagagawgawagaegae',
-          ExerciseType.Regular,
-          'Front lever Press',
-          '4',
-          '2-3',
-          IntensityType.RPE,
-          9,
-          'Max 5 min',
-          null
-        ),
-      ]),
-    ]),
-  ]);
+    ])
+  );
 
   constructor() {
     this.deleteUnitSubject.asObservable().subscribe((unitIndex) => {
@@ -81,10 +84,10 @@ export class WorkoutPlannerComponent {
           'Do you want to delete this training unit?'
         )
         .subscribe(() => {
-          this.trainingUnits.update((x) => {
-            const currentWorkout = [...x];
-            currentWorkout.splice(unitIndex, 1);
-            return currentWorkout;
+          this.trainingPlan.update((x) => {
+            const currentUnits = [...x.trainingUnits];
+            currentUnits.splice(unitIndex, 1);
+            return new TrainingPlan(x.id, x.name, currentUnits);
           });
         });
     });
@@ -113,10 +116,10 @@ export class WorkoutPlannerComponent {
           return;
         }
 
-        this.trainingUnits.update((x) => {
-          const currentWorkout = [...x];
-          currentWorkout.push(new TrainingUnit('', form.value!, []));
-          return currentWorkout;
+        this.trainingPlan.update((x) => {
+          const currentUnits = [...x.trainingUnits];
+          currentUnits.push(new TrainingUnit('', form.value!, []));
+          return new TrainingPlan(x.id, x.name, currentUnits);
         });
       });
   }

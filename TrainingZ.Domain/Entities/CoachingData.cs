@@ -9,8 +9,10 @@ public class CoachingData : BaseEntity
         CoachId = coachId;
         StudentId = studentId;
         CreatedAt = createdAt;
+        TrainingPlans = [];
     }
 
     public Guid CoachId { get; set; }
     public Guid StudentId { get; set; }
+    public ICollection<TrainingPlan> TrainingPlans { get; set; }
 }

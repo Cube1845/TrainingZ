@@ -21,7 +21,7 @@
                 @for (key of questionKeys; track $index) {
                     <div class="flex flex-column w-full gap-1 w-full">
                         <h2 class="m-0 p-0 text-xl">{{ questions[key] }}</h2>
-                        <h1 class="m-0 p-0 text-2xl">{{ userInfo()![key] == '' ? 'No answer' : userInfo()?.goals }}</h1>
+                        <h1 class="m-0 p-0 text-2xl">{{ userInfo()![key] == '' ? 'No answer' : userInfo()![key] }}</h1>
                     </div>
                 }
             </div>
