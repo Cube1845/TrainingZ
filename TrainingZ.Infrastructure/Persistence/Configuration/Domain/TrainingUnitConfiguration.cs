@@ -4,12 +4,12 @@ using TrainingZ.Domain.Entities;
 
 namespace TrainingZ.Infrastructure.Persistence.Configuration.Domain;
 
-public class TrainingPlanConfiguration : IEntityTypeConfiguration<TrainingPlan>
+public class TrainingUnitConfiguration : IEntityTypeConfiguration<TrainingUnit>
 {
-    public void Configure(EntityTypeBuilder<TrainingPlan> builder)
+    public void Configure(EntityTypeBuilder<TrainingUnit> builder)
     {
         builder.HasKey(x => x.Id);
 
-        builder.HasOne(x => x.CoachingData).WithMany(x => x.TrainingPlans);
+        builder.HasMany(x => x.TrainingSections).WithOne(x => x.TrainingUnit);
     }
 }

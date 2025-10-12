@@ -8,6 +8,7 @@ public class TrainingUnit : BaseEntity
     public TrainingPlan? TrainingPlan { get; set; }
     public string Name { get; set; }
     public ICollection<TrainingSection> TrainingSections { get; set; } = [];
+    public ICollection<Workout> Workouts { get; set; } = [];
 
     public TrainingUnit(Guid trainingPlanId, string name, DateTime createdAt)
     {
