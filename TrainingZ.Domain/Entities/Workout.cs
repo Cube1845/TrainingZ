@@ -9,11 +9,10 @@ public class Workout : BaseEntity
     public DateTime Finished { get; set; }
     public ICollection<DoneExercise> DoneExercises { get; set; } = [];
 
-    public Workout(Guid trainingUnitId, DateTime finished, ICollection<DoneExercise> doneExercises, DateTime createdAt)
+    public Workout(Guid trainingUnitId, DateTime finished, DateTime createdAt)
     {
         TrainingUnitId = trainingUnitId;
         Finished = finished;
-        DoneExercises = doneExercises;
         CreatedAt = createdAt;
     }
 }

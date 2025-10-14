@@ -3,7 +3,6 @@
         @for (plan of workoutPlans(); track $index) {
             <div class="flex flex-column p-4 lg:p-6 align-items-center justify-content-center h-min w-full lg:w-auto tile border-round-xl">
                 <h1 class="m-0 p-0 text-4xl mb-2">{{ plan.name }}</h1>
-                <h2 class="m-0 p-0 text-lg mb-1">Author: {{ plan.author }}</h2>
                 <h2 class="m-0 p-0 text-lg">Created: {{ plan.createdAt | date: 'dd.MM.yyyy' }}</h2>
             </div>
         }

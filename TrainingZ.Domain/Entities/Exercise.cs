@@ -7,6 +7,7 @@ public class Exercise : BaseEntity
 {
     public Guid TrainingSectionId { get; set; }
     public TrainingSection? TrainingSection { get; set; }
+    public int Index { get; set; }
     public ExerciseType ExerciseType { get; set; }
     public string Name { get; set; }
     public string Sets { get; set; }
@@ -16,9 +17,10 @@ public class Exercise : BaseEntity
     public string Rest { get; set; }
     public string? Info { get; set; }
 
-    public Exercise(Guid trainingSectionId, ExerciseType exerciseType, string name, string sets, string reps, IntensityType intensityType, int intensity, string rest, string? info, DateTime createdAt)
+    public Exercise(Guid trainingSectionId, int index, ExerciseType exerciseType, string name, string sets, string reps, IntensityType intensityType, int intensity, string rest, string? info, DateTime createdAt)
     {
         TrainingSectionId = trainingSectionId;
+        Index = index;
         ExerciseType = exerciseType;
         Name = name;
         Sets = sets;

@@ -53,7 +53,8 @@ export class ExerciseEditDialogComponent {
 
     this.formGroup.setValue({
       exerciseType: exercise.exerciseType,
-      exercise: typeof exercise.exercise == 'string' ? exercise.exercise : '',
+      exercise:
+        exercise.exerciseType == ExerciseType.Combo ? '' : exercise.name,
       sets: exercise.sets,
       reps: exercise.reps,
       intensityType: exercise.intensityType,
@@ -62,8 +63,8 @@ export class ExerciseEditDialogComponent {
       info: exercise.info,
     });
 
-    if (typeof exercise.exercise != 'string') {
-      this.combo.set(exercise.exercise);
+    if (exercise.exerciseType == ExerciseType.Combo) {
+      this.combo.set(exercise.name);
     }
   }
 

@@ -38,8 +38,8 @@ export class WorkoutPlannerComponent {
         new TrainingSection('awdawdawdaw', 'Attempts', [
           new Exercise(
             'awdawdawagaegae',
-            ExerciseType.Regular,
-            'Straddle Planche Hold',
+            ExerciseType.Combo,
+            ['Straddle Planche Hold', 'Straddle Planche Press'],
             '3',
             '5-10s',
             IntensityType.RPE,

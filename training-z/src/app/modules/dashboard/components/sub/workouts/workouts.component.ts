@@ -13,7 +13,6 @@ export class WorkoutsComponent {
     {
       id: 'awdawdafawga=-awfawf',
       name: 'Workout 1',
-      author: 'Jan Brzechwa',
       createdAt: new Date(),
       lastUpdate: new Date(),
     },
