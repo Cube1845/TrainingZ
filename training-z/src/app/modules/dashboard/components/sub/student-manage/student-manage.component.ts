@@ -8,10 +8,12 @@ import { ImageModule } from 'primeng/image';
 import { AppButtonComponent } from '../../../../common/components/app-button/app-button.component';
 import { StudentManageData } from '../../../models/student-manage-data';
 import { environment } from '../../../../../../environments/environment.development';
+import { catchError, of } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-student-manage',
-  imports: [DividerModule, ImageModule, AppButtonComponent],
+  imports: [DividerModule, ImageModule, AppButtonComponent, DatePipe],
   templateUrl: './student-manage.component.html',
   styleUrl: './student-manage.component.scss',
 })
@@ -24,40 +26,33 @@ export class StudentManageComponent {
 
   studentId: string = '';
 
-  studentData = signal<StudentManageData | undefined>({
-    studentData: {
-      name: 'Adrian',
-      surname: 'Down',
-      profileImageUrl: environment.defaultProfileImageUrl,
-      id: 'awdawdawd',
-      phoneNumber: null,
-      email: 'user@test.pl',
-    },
-    trainingPlans: [],
-    lastWorkouts: [],
-  });
+  studentData = signal<StudentManageData | undefined>(undefined);
 
   constructor() {
     this.activatedRoute.params.subscribe((params) => {
       this.studentId = params['id'];
 
-      // this.coachingService
-      //   .getStudentManageData(this.studentId)
-      //   .pipe(catchError((err) => of(err)))
-      //   .subscribe((result) => {
-      //     if (!result.isSuccess) {
-      //       this.toastService.error(
-      //         result.error.message || result.message || 'Invalid code'
-      //       );
-      //       return;
-      //     }
+      this.coachingService
+        .getStudentManageData(this.studentId)
+        .pipe(catchError((err) => of(err)))
+        .subscribe((result) => {
+          if (!result.isSuccess) {
+            this.toastService.error(
+              result.error.message || result.message || 'Invalid code'
+            );
+            return;
+          }
 
-      //     this.profileImageService
-      //       .convertExtendedProfileImageId(result.value)
-      //       .subscribe((userData) => {
-      //         this.studentData.set(userData);
-      //       });
-      //   });
+          this.profileImageService
+            .convertExtendedProfileImageId(result.value.studentData)
+            .subscribe((userData) => {
+              this.studentData.set({
+                studentData: userData,
+                trainingPlans: result.value.trainingPlans,
+                lastWorkouts: result.value.lastWorkouts,
+              });
+            });
+        });
     });
   }
 
@@ -72,9 +67,24 @@ export class StudentManageComponent {
       return;
     }
 
-    //api call
-    const workoutId = 'awhaefgsaefgdtgrftgedrtgerge';
+    this.coachingService
+      .createTrainingPlan(this.studentId)
+      .pipe(catchError((err) => of(err)))
+      .subscribe((result) => {
+        if (!result.isSuccess) {
+          this.toastService.error(
+            result.error.message || result.message || 'Invalid code'
+          );
+          return;
+        }
 
-    this.router.navigateByUrl('workout-planner/' + workoutId);
+        this.router.navigateByUrl(
+          'workout-planner/' + result.value.trainingPlanId
+        );
+      });
+  }
+
+  navigateTo(route: string): void {
+    this.router.navigateByUrl(route);
   }
 }

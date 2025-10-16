@@ -1,3 +1,6 @@
-﻿namespace TrainingZ.Application.Modules.Coaching.General.Coach.GetStudentData;
+﻿using TrainingZ.Application.Modules.Coaching.General.Coach.GetStudentData.Models;
+using TrainingZ.Domain.Interfaces;
 
-public record GetStudentDataResponse(Guid Id, string Name, string Surname, Guid? ProfileImageId, string? PhoneNumber, string Email);
+namespace TrainingZ.Application.Modules.Coaching.General.Coach.GetStudentData;
+
+public record GetStudentDataResponse(IExtendedAppUser StudentData, List<TrainingPlanInfo> TrainingPlans, List<LastWorkoutData> LastWorkouts);

@@ -27,9 +27,9 @@
 
             <div class="flex flex-column lg:flex-row gap-4">
                 @for (plan of studentData()!.trainingPlans; track $index) {
-                    <div class="flex align-items-center justify-content-center p-4 flex-column workout-tile border-round-lg flex-1">
-                        <h2 class="m-0 p-0 text-3xl text-center pb-2">Workout volume phase</h2>
-                        <h3 class="m-0 p-0 text-xl text-center">Last modified: 02.03.2025 15:35</h3>
+                    <div class="flex align-items-center justify-content-center p-4 flex-column workout-tile border-round-lg flex-1" (click)="navigateTo('workout-planner/' + plan.id)">
+                        <h2 class="m-0 p-0 text-3xl text-center pb-2">{{ plan.name }}</h2>
+                        <h3 class="m-0 p-0 text-xl text-center">Last modified: {{ plan.lastModified | date: "dd.MM.yyyy HH:mm" }}</h3>
                     </div>
                 }
             </div>

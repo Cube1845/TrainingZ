@@ -7,6 +7,8 @@ import { PlainExtendedUserData } from '../models/extended-user-data';
 import { GetStudentsResponse } from './api-responses/get-students-response';
 import { GetUserDataByCodeResponse } from './api-responses/get-user-data-by-code-response';
 import { GetCodeResponse } from './api-responses/get-user-info-response';
+import { PlainStudentManageData } from '../models/student-manage-data';
+import { CreateTrainingPlanResponse } from './api-responses/create-training-plan-response';
 
 @Injectable({
   providedIn: 'root',
@@ -33,13 +35,26 @@ export class CoachingService {
     );
   }
 
-  // getStudentManageData(
-  //   studentId: string
-  // ): Observable<Result<PlainExtendedUserData>> {
-  //   return this.http.get<Result<PlainExtendedUserData>>(
-  //     this.apiUrl + 'coaching/general/student-data/' + studentId
-  //   );
-  // }
+  getStudentManageData(
+    studentId: string
+  ): Observable<Result<PlainStudentManageData>> {
+    return this.http.get<Result<PlainStudentManageData>>(
+      this.apiUrl + 'coaching/general/student-data/' + studentId
+    );
+  }
+
+  createTrainingPlan(
+    studentId: string
+  ): Observable<Result<CreateTrainingPlanResponse>> {
+    const body = {
+      studentId: studentId,
+    };
+
+    return this.http.post<Result<CreateTrainingPlanResponse>>(
+      this.apiUrl + 'coaching/general/plan',
+      body
+    );
+  }
 
   getUserDataByCode(
     code: string
