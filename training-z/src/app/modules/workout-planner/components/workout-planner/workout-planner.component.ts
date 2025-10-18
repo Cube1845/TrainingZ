@@ -30,7 +30,7 @@ export class WorkoutPlannerComponent {
 
   deleteUnitSubject = new Subject<number>();
 
-  readonly defaultProfileImageUrl = environment.defaultProfileImageUrl; // to delete
+  readonly defaultProfileImageUrl = environment.defaultProfileImageUrl;
 
   trainingPlan = signal<TrainingPlan>(
     new TrainingPlan('awgagsegsre', 'Planche volume', [
@@ -92,6 +92,8 @@ export class WorkoutPlannerComponent {
         });
     });
   }
+
+  save(): void {}
 
   openStudentInfoDialog(): void {
     this.dialogService.displayDialog(

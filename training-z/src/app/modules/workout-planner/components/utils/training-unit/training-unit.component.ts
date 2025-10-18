@@ -78,7 +78,7 @@ export class TrainingUnitComponent {
         }
 
         this.trainingUnit().addSection(
-          new TrainingSection('agawgasfsdhte', form.value!, [])
+          new TrainingSection('', form.value!, [])
         );
       });
   }

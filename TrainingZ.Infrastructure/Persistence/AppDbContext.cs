@@ -19,7 +19,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     public DbSet<TrainingPlan> TrainingPlans { get; set; }
     public DbSet<TrainingUnit> TrainingUnits { get; set; }
-    public DbSet<TrainingUnit> TrainingSection { get; set; }
+    public DbSet<TrainingSection> TrainingSections { get; set; }
     public DbSet<Exercise> Exercises { get; set; }
     public DbSet<Workout> Workouts { get; set; }
     public DbSet<DoneExercise> DoneExercises { get; set; }

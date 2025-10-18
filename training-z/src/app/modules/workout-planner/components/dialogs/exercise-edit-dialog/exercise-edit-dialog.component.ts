@@ -19,6 +19,7 @@ import { ComboDisplayComponent } from '../../utils/combo-display/combo-display.c
 import { exerciseValidator } from './exerciseValidator';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Exercise } from '../../../models/exercise';
+import { ResponsiveService } from '../../../../common/services/responsive.service';
 
 @Component({
   selector: 'app-exercise-edit-dialog',
@@ -37,6 +38,8 @@ import { Exercise } from '../../../models/exercise';
   styleUrl: './exercise-edit-dialog.component.scss',
 })
 export class ExerciseEditDialogComponent {
+  public readonly responsive = inject(ResponsiveService);
+
   private readonly ref = inject(DynamicDialogRef);
   private readonly config = inject(DynamicDialogConfig);
 

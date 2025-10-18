@@ -58,8 +58,6 @@ export class TrainingSectionComponent {
           return;
         }
 
-        exercise.id = 'oidhgodurng';
-
         this.trainingSection().addExercise(exercise);
       });
   }

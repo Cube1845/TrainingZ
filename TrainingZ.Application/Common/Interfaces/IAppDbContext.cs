@@ -10,7 +10,7 @@ public interface IAppDbContext
     DbSet<UserInfo> UserInfos { get; set; }
     DbSet<TrainingPlan> TrainingPlans { get; set; }
     DbSet<TrainingUnit> TrainingUnits { get; set; }
-    DbSet<TrainingUnit> TrainingSection { get; set; }
+    DbSet<TrainingSection> TrainingSections { get; set; }
     DbSet<Exercise> Exercises { get; set; }
     DbSet<Workout> Workouts { get; set; }
     DbSet<DoneExercise> DoneExercises { get; set; }
