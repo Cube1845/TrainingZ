@@ -10,6 +10,7 @@ import { StudentManageData } from '../../../models/student-manage-data';
 import { environment } from '../../../../../../environments/environment.development';
 import { catchError, of } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { AppDialogService } from '../../../../common/services/app-dialog.service';
 
 @Component({
   selector: 'app-student-manage',
@@ -23,6 +24,7 @@ export class StudentManageComponent {
   private readonly profileImageService = inject(ProfileImageService);
   private readonly toastService = inject(AppToastService);
   private readonly router = inject(Router);
+  private readonly dialogService = inject(AppDialogService);
 
   studentId: string = '';
 
@@ -38,7 +40,7 @@ export class StudentManageComponent {
         .subscribe((result) => {
           if (!result.isSuccess) {
             this.toastService.error(
-              result.error.message || result.message || 'Invalid code'
+              result.error.message || result.message || 'Invalid data'
             );
             return;
           }
@@ -73,7 +75,7 @@ export class StudentManageComponent {
       .subscribe((result) => {
         if (!result.isSuccess) {
           this.toastService.error(
-            result.error.message || result.message || 'Invalid code'
+            result.error.message || result.message || 'Invalid id'
           );
           return;
         }
@@ -81,6 +83,32 @@ export class StudentManageComponent {
         this.router.navigateByUrl(
           'workout-planner/' + result.value.trainingPlanId
         );
+      });
+  }
+
+  deleteWorkoutPlan(event: Event, planIndex: number): void {
+    event.stopPropagation();
+
+    this.dialogService
+      .displayConfirmation(
+        'Are you sure?',
+        'Do you want to delete this training plan (all data related to this plan will also be deleted, e. g. done workouts)?'
+      )
+      .subscribe(() => {
+        this.coachingService
+          .deleteTrainingPlan(this.studentData()!.trainingPlans[planIndex].id)
+          .pipe(catchError((err) => of(err)))
+          .subscribe((result) => {
+            if (!result.isSuccess) {
+              this.toastService.error(
+                result.error.message || result.message || 'Invalid id'
+              );
+              return;
+            }
+
+            this.toastService.success('You removed this training plan');
+            location.reload();
+          });
       });
   }
 

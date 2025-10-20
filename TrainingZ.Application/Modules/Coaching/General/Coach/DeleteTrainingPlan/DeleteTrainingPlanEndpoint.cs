@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using TrainingZ.Application.Common.Extensions;
 using TrainingZ.Application.Common.Interfaces;
 using TrainingZ.Application.Common.Models;
 using TrainingZ.Domain.Enums;
@@ -19,6 +20,7 @@ public class DeleteTrainingPlanEndpoint(IAppDbContext context) : Endpoint<Delete
     public override async Task HandleAsync(DeleteTrainingPlanRequest req, CancellationToken ct)
     {
         var planDb = await _context.TrainingPlans
+            .Include(x => x.CoachingData)
             .Include(x => x.TrainingUnits)
             .ThenInclude(x => x.Workouts)
             .ThenInclude(x => x.DoneExercises)
@@ -30,6 +32,12 @@ public class DeleteTrainingPlanEndpoint(IAppDbContext context) : Endpoint<Delete
         if (planDb == null)
         {
             await SendAsync(Result.Error("Training plan doesn't exist"), StatusCodes.Status400BadRequest, ct);
+            return;
+        }
+
+        if (planDb.CoachingData!.CoachId != User.GetId())
+        {
+            await SendAsync(Result.Error("You cant delete this training plan"), StatusCodes.Status400BadRequest, ct);
             return;
         }
 

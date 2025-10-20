@@ -36,4 +36,15 @@
             color: var(--p-surface-200) !important;
         }
     }
+
+    .trash-icon {
+        bottom: 1rem;
+        right: 1rem;
+        color: var(--p-surface-300);
+        transition: .2s color;
+
+        &:hover {
+            color: var(--p-primary-color);
+        }
+    }
 }

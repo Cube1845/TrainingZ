@@ -56,6 +56,12 @@ export class CoachingService {
     );
   }
 
+  deleteTrainingPlan(planId: string): Observable<Result> {
+    return this.http.delete<Result>(
+      this.apiUrl + 'coaching/general/plan/' + planId
+    );
+  }
+
   getUserDataByCode(
     code: string
   ): Observable<Result<GetUserDataByCodeResponse>> {
