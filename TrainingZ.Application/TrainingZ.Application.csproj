@@ -18,8 +18,4 @@
     <ProjectReference Include="..\TrainingZ.Domain\TrainingZ.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Modules\Coaching\Planner\Coach\Save\" />
-  </ItemGroup>
-
 </Project>

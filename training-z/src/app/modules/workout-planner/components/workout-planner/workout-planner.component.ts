@@ -33,47 +33,52 @@ export class WorkoutPlannerComponent {
   readonly defaultProfileImageUrl = environment.defaultProfileImageUrl;
 
   trainingPlan = signal<TrainingPlan>(
-    new TrainingPlan('awgagsegsre', 'Planche volume', [
-      new TrainingUnit('aawdawdafawf', 'Day 1', [
-        new TrainingSection('awdawdawdaw', 'Attempts', [
-          new Exercise(
-            'awdawdawagaegae',
-            ExerciseType.Combo,
-            ['Straddle Planche Hold', 'Straddle Planche Press'],
-            '3',
-            '5-10s',
-            IntensityType.RPE,
-            10,
-            'Max 5 min',
-            null
-          ),
+    new TrainingPlan(
+      'awgagsegsre',
+      'Planche volume',
+      [
+        new TrainingUnit('aawdawdafawf', 'Day 1', [
+          new TrainingSection('awdawdawdaw', 'Attempts', [
+            new Exercise(
+              'awdawdawagaegae',
+              ExerciseType.Combo,
+              ['Straddle Planche Hold', 'Straddle Planche Press'],
+              '3',
+              '5-10s',
+              IntensityType.RPE,
+              10,
+              'Max 5 min',
+              null
+            ),
+          ]),
+          new TrainingSection('awdawdaggawgawdaw', 'Volume', [
+            new Exercise(
+              'awdawdawagaegae',
+              ExerciseType.Regular,
+              'Straddle Planche Press',
+              '3',
+              '2-3',
+              IntensityType.RPE,
+              9,
+              'Max 5 min',
+              '5kg Band'
+            ),
+            new Exercise(
+              'awdawdagagawgawagaegae',
+              ExerciseType.Regular,
+              'Front lever Press',
+              '4',
+              '2-3',
+              IntensityType.RPE,
+              9,
+              'Max 5 min',
+              null
+            ),
+          ]),
         ]),
-        new TrainingSection('awdawdaggawgawdaw', 'Volume', [
-          new Exercise(
-            'awdawdawagaegae',
-            ExerciseType.Regular,
-            'Straddle Planche Press',
-            '3',
-            '2-3',
-            IntensityType.RPE,
-            9,
-            'Max 5 min',
-            '5kg Band'
-          ),
-          new Exercise(
-            'awdawdagagawgawagaegae',
-            ExerciseType.Regular,
-            'Front lever Press',
-            '4',
-            '2-3',
-            IntensityType.RPE,
-            9,
-            'Max 5 min',
-            null
-          ),
-        ]),
-      ]),
-    ])
+      ],
+      false
+    )
   );
 
   constructor() {
@@ -87,7 +92,7 @@ export class WorkoutPlannerComponent {
           this.trainingPlan.update((x) => {
             const currentUnits = [...x.trainingUnits];
             currentUnits.splice(unitIndex, 1);
-            return new TrainingPlan(x.id, x.name, currentUnits);
+            return new TrainingPlan(x.id, x.name, currentUnits, x.isActive);
           });
         });
     });
@@ -121,7 +126,7 @@ export class WorkoutPlannerComponent {
         this.trainingPlan.update((x) => {
           const currentUnits = [...x.trainingUnits];
           currentUnits.push(new TrainingUnit('', form.value!, []));
-          return new TrainingPlan(x.id, x.name, currentUnits);
+          return new TrainingPlan(x.id, x.name, currentUnits, x.isActive);
         });
       });
   }
