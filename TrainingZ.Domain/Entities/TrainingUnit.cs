@@ -1,4 +1,5 @@
-﻿using TrainingZ.Domain.Abstract;
+﻿using System.Xml.Linq;
+using TrainingZ.Domain.Abstract;
 
 namespace TrainingZ.Domain.Entities;
 
