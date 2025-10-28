@@ -3,4 +3,5 @@ export const environment = {
   defaultProfileImageUrl: 'imgs/default_avatar.png',
   maxProfileImageSize: 1440,
   maxTrainingPlansPerStudent: 2,
+  comboSplitChar: '>',
 };

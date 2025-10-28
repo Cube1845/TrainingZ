@@ -4,6 +4,8 @@ import { environment } from '../../../../environments/environment.development';
 import { Observable } from 'rxjs';
 import { Result } from '../../common/models/result';
 import { TrainingPlan } from '../models/training-plan';
+import { ExerciseType } from '../models/enums/exercise-type';
+import { Combo } from '../models/combo';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +34,9 @@ export class PlannerService {
                 exercises: s.exercises.map((e, i1) => {
                   return {
                     ...e,
+                    name: this.isCombo(e.name, e.exerciseType)
+                      ? e.name.join(environment.comboSplitChar)
+                      : e.name,
                     id: e.id == '' ? this.emptyGuid : e.id,
                     index: i1,
                   };
@@ -44,5 +49,9 @@ export class PlannerService {
     };
 
     return this.http.put<Result>(this.apiUrl + 'coaching/planner', body);
+  }
+
+  isCombo(obj: string | Combo, et: ExerciseType): obj is Combo {
+    return et == ExerciseType.Combo;
   }
 }
