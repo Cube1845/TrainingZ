@@ -19,21 +19,9 @@ export class StudentInfoDialogComponent {
 
   private readonly config = inject(DynamicDialogConfig);
 
-  studentData = signal<UserData | undefined>({
-    name: 'Adrian',
-    surname: 'Down',
-    profileImageUrl: environment.defaultProfileImageUrl,
-    id: 'awdawdawd',
-  });
+  studentData = this.config.data.studentData;
 
-  userInfo = signal<UserInfo | undefined>({
-    goals: 'awdawawd awdawdafg awf a awfd awf a',
-    sleepDiet: 'wfa wf ah ergdftg dsrth drfthj rt',
-    activity: 'hsetr hsrth setrg srg aserg se',
-    injuries: 'rg serg serg syjrtyjaer tyh',
-    timeAvaiable: 'srthj srtj dtuk dyjdstt jsrtjh ',
-    other: 'sryt jsrfyj srtyj tyk ',
-  });
+  userInfo = this.config.data.userInfo;
 
   questions = UserInfoQuestions;
   questionKeys = QuestionKeys;

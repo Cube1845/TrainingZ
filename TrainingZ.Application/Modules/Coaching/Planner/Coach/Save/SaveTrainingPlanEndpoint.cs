@@ -8,7 +8,7 @@ using TrainingZ.Domain.Enums;
 
 namespace TrainingZ.Application.Modules.Coaching.Planner.Coach.Save;
 
-public class SaveTrainingEndpoint(IAppDbContext context, TimeProvider time) : Endpoint<SaveTrainingPlanRequest, Result>
+public class SaveTrainingPlanEndpoint(IAppDbContext context, TimeProvider time) : Endpoint<SaveTrainingPlanRequest, Result>
 {
     private readonly IAppDbContext _context = context;
     private readonly TimeProvider _time = time;

@@ -18,6 +18,10 @@ import { StudentInfoDialogComponent } from '../dialogs/student-info-dialog/stude
 import { TrainingPlan } from '../../models/training-plan';
 import { PlannerService } from '../../services/planner.service';
 import { AppToastService } from '../../../common/services/app-toast.service';
+import { ActivatedRoute } from '@angular/router';
+import { UserData } from '../../../dashboard/models/user-data';
+import { UserInfo } from '../../../dashboard/models/user-info';
+import { ProfileImageService } from '../../../dashboard/services/profile-image.service';
 
 @Component({
   selector: 'app-workout-planner',
@@ -28,24 +32,44 @@ import { AppToastService } from '../../../common/services/app-toast.service';
 export class WorkoutPlannerComponent {
   public readonly responsive = inject(ResponsiveService);
 
+  private readonly activatedRoute = inject(ActivatedRoute);
   private readonly dialogService = inject(AppDialogService);
   private readonly plannerService = inject(PlannerService);
   private readonly toastService = inject(AppToastService);
+  private readonly profileImageService = inject(ProfileImageService);
 
   deleteUnitSubject = new Subject<number>();
 
-  readonly defaultProfileImageUrl = environment.defaultProfileImageUrl;
+  trainingPlan = signal<TrainingPlan | undefined>(undefined);
 
-  trainingPlan = signal<TrainingPlan | undefined>(
-    new TrainingPlan(
-      '019a21d1-8ced-7a12-b782-620909f076b1',
-      'Training plan #01',
-      [],
-      false
-    )
-  );
+  studentData = signal<UserData | undefined>(undefined);
+
+  studentInfo = signal<UserInfo | undefined>(undefined);
 
   constructor() {
+    this.activatedRoute.params.subscribe((params) => {
+      this.plannerService
+        .getTrainingPlan(params['id'])
+        .pipe(catchError((err) => of(err)))
+        .subscribe((result) => {
+          if (!result.isSuccess) {
+            this.toastService.error(
+              result.error.message || result.message || 'Invalid id'
+            );
+            return;
+          }
+
+          this.trainingPlan.set(result.value.trainingPlan);
+          this.studentInfo.set(result.value.studentInfo);
+
+          this.profileImageService
+            .convertProfileImageId(result.value.studentData)
+            .subscribe((userData) => {
+              this.studentData.set(userData);
+            });
+        });
+    });
+
     this.deleteUnitSubject.asObservable().subscribe((unitIndex) => {
       this.dialogService
         .displayConfirmation(
@@ -82,7 +106,7 @@ export class WorkoutPlannerComponent {
     this.dialogService.displayDialog(
       StudentInfoDialogComponent,
       'Student Info',
-      {},
+      { studentData: this.studentData, userInfo: this.studentInfo },
       { width: this.responsive.lg() ? '50vw' : '95vw' }
     );
   }

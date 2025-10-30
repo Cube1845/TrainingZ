@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Result } from '../../common/models/result';
 import { TrainingPlan } from '../models/training-plan';
 import { ExerciseType } from '../models/enums/exercise-type';
 import { Combo } from '../models/combo';
+import { GetTrainingPlanResponse } from './api-responses/get-training-plan-response';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,39 @@ export class PlannerService {
   private readonly apiUrl = environment.apiUrl;
 
   private readonly emptyGuid = '00000000-0000-0000-0000-000000000000';
+
+  getTrainingPlan(id: string): Observable<Result<GetTrainingPlanResponse>> {
+    return this.http
+      .get<Result<GetTrainingPlanResponse>>(
+        this.apiUrl + 'coaching/planner/' + id
+      )
+      .pipe(
+        map((x) => {
+          if (!x.isSuccess || x.value == null) {
+            return x;
+          }
+
+          const newX = { ...x };
+
+          newX.value.trainingPlan.trainingUnits.forEach((u) => {
+            u.trainingSections.forEach((s) => {
+              s.exercises.forEach((e) => {
+                if (
+                  e.exerciseType == ExerciseType.Combo &&
+                  !this.isCombo(e.name, e.exerciseType)
+                ) {
+                  let array: Combo = [];
+                  array = e.name.split('>');
+                  e.name = array;
+                }
+              });
+            });
+          });
+
+          return newX;
+        })
+      );
+  }
 
   saveTrainingPlan(plan: TrainingPlan): Observable<Result> {
     const body = {
@@ -51,7 +85,7 @@ export class PlannerService {
     return this.http.put<Result>(this.apiUrl + 'coaching/planner', body);
   }
 
-  isCombo(obj: string | Combo, et: ExerciseType): obj is Combo {
+  private isCombo(obj: string | Combo, et: ExerciseType): obj is Combo {
     return et == ExerciseType.Combo;
   }
 }
