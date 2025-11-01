@@ -45,6 +45,6 @@ public class GetTrainingPlanEndpoint(IAppDbContext context, IAppUserRepository a
 
         var studentDb = await _appUserRepo.GetAppUser(studentId, ct);
 
-        await SendOkAsync(Result<GetTrainingPlanResponse>.Success(new(planDb, userInfoDb!, studentDb!)), ct);
+        await SendOkAsync(Result<GetTrainingPlanResponse>.Success(new(planDb.DeepCopyWithoutInclusions(), userInfoDb!, studentDb!)), ct);
     }
 }

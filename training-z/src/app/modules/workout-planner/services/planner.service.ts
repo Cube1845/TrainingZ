@@ -18,36 +18,9 @@ export class PlannerService {
   private readonly emptyGuid = '00000000-0000-0000-0000-000000000000';
 
   getTrainingPlan(id: string): Observable<Result<GetTrainingPlanResponse>> {
-    return this.http
-      .get<Result<GetTrainingPlanResponse>>(
-        this.apiUrl + 'coaching/planner/' + id
-      )
-      .pipe(
-        map((x) => {
-          if (!x.isSuccess || x.value == null) {
-            return x;
-          }
-
-          const newX = { ...x };
-
-          newX.value.trainingPlan.trainingUnits.forEach((u) => {
-            u.trainingSections.forEach((s) => {
-              s.exercises.forEach((e) => {
-                if (
-                  e.exerciseType == ExerciseType.Combo &&
-                  !this.isCombo(e.name, e.exerciseType)
-                ) {
-                  let array: Combo = [];
-                  array = e.name.split('>');
-                  e.name = array;
-                }
-              });
-            });
-          });
-
-          return newX;
-        })
-      );
+    return this.http.get<Result<GetTrainingPlanResponse>>(
+      this.apiUrl + 'coaching/planner/' + id
+    );
   }
 
   saveTrainingPlan(plan: TrainingPlan): Observable<Result> {

@@ -22,6 +22,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UserData } from '../../../dashboard/models/user-data';
 import { UserInfo } from '../../../dashboard/models/user-info';
 import { ProfileImageService } from '../../../dashboard/services/profile-image.service';
+import { Combo } from '../../models/combo';
 
 @Component({
   selector: 'app-workout-planner',
@@ -59,7 +60,42 @@ export class WorkoutPlannerComponent {
             return;
           }
 
-          this.trainingPlan.set(result.value.trainingPlan);
+          this.trainingPlan.set(
+            new TrainingPlan(
+              result.value.trainingPlan.id,
+              result.value.trainingPlan.name,
+              result.value.trainingPlan.trainingUnits.map((u: TrainingUnit) => {
+                return new TrainingUnit(
+                  u.id,
+                  u.name,
+                  u.trainingSections.map((s: TrainingSection) => {
+                    return new TrainingSection(
+                      s.id,
+                      s.name,
+                      s.exercises.map((e: Exercise) => {
+                        const name = this.isCombo(e.name, e.exerciseType)
+                          ? e.name.split('>')
+                          : e.name;
+
+                        return new Exercise(
+                          e.id,
+                          e.exerciseType,
+                          name,
+                          e.sets,
+                          e.reps,
+                          e.intensityType,
+                          e.intensity,
+                          e.rest,
+                          e.info
+                        );
+                      })
+                    );
+                  })
+                );
+              }),
+              result.value.trainingPlan.isActive
+            )
+          );
           this.studentInfo.set(result.value.studentInfo);
 
           this.profileImageService
@@ -84,6 +120,10 @@ export class WorkoutPlannerComponent {
           });
         });
     });
+  }
+
+  private isCombo(obj: string | Combo, et: ExerciseType): obj is string {
+    return et == ExerciseType.Combo;
   }
 
   save(): void {

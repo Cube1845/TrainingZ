@@ -134,7 +134,7 @@ public class SaveTrainingPlanEndpoint(IAppDbContext context, TimeProvider time) 
             }
             else if (sectionDb.Exercises.Any(x => x.Id == exercise.Id))
             {
-                var exerciseDb = sectionDb.Exercises.First(x => x.Id == sectionReq.Id);
+                var exerciseDb = sectionDb.Exercises.First(x => x.Id == exercise.Id);
 
                 HandleExistingExercise(exercise, exerciseDb);
             }
