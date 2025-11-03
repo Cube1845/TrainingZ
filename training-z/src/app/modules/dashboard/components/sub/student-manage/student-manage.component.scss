@@ -26,7 +26,7 @@
     }
 
     .selected {
-        background: var(--p-primary-color) !important;
+        background: var(--p-primary-950) !important;
 
         h2 {
             color: var(--p-surface-100) !important;
@@ -40,6 +40,17 @@
     .trash-icon {
         bottom: 1rem;
         right: 1rem;
+        color: var(--p-surface-300);
+        transition: .2s color;
+
+        &:hover {
+            color: var(--p-primary-color);
+        }
+    }
+
+    .activate-icon {
+        bottom: 1rem;
+        right: 3rem;
         color: var(--p-surface-300);
         transition: .2s color;
 

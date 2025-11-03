@@ -11,6 +11,7 @@ import { environment } from '../../../../../../environments/environment.developm
 import { catchError, of } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { AppDialogService } from '../../../../common/services/app-dialog.service';
+import { PlannerService } from '../../../../workout-planner/services/planner.service';
 
 @Component({
   selector: 'app-student-manage',
@@ -25,6 +26,7 @@ export class StudentManageComponent {
   private readonly toastService = inject(AppToastService);
   private readonly router = inject(Router);
   private readonly dialogService = inject(AppDialogService);
+  private readonly plannerService = inject(PlannerService);
 
   studentId: string = '';
 
@@ -54,6 +56,59 @@ export class StudentManageComponent {
                 lastWorkouts: result.value.lastWorkouts,
               });
             });
+        });
+    });
+  }
+
+  changeTrainingPlanActiveState(index: number, event: Event): void {
+    event.stopPropagation();
+
+    const trainingPlan = this.studentData()!.trainingPlans[index];
+
+    var fn = trainingPlan.active
+      ? () =>
+          this.dialogService.displayConfirmation(
+            'Are you sure?',
+            'Do you want to deactivate this training plan? This student will have no training plan active.'
+          )
+      : () =>
+          this.dialogService.displayConfirmation(
+            'Are you sure?',
+            'Do you want to activate this training plan? Other active plans will be deactivated.'
+          );
+
+    fn().subscribe(() => {
+      this.plannerService
+        .changeTrainingPlanActiveState(
+          this.studentData()!.trainingPlans[index].id,
+          this.studentData()!.studentData.id
+        )
+        .pipe(catchError((err) => of(err)))
+        .subscribe((result) => {
+          if (!result.isSuccess) {
+            this.toastService.error(
+              result.error.message || result.message || 'Invalid id'
+            );
+            return;
+          }
+
+          this.studentData.update((x) => {
+            if (x!.trainingPlans![index].active) {
+              x!.trainingPlans![index].active = false;
+              this.toastService.success(
+                "You've deactivated this training plan"
+              );
+            } else {
+              x!.trainingPlans!.forEach((y) => {
+                y.active = false;
+              });
+
+              x!.trainingPlans![index].active = true;
+              this.toastService.success("You've activated this training plan");
+            }
+
+            return x;
+          });
         });
     });
   }

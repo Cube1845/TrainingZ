@@ -126,6 +126,23 @@ export class WorkoutPlannerComponent {
     return et == ExerciseType.Combo;
   }
 
+  editPlanName(): void {
+    const form = new FormControl<string | null>(this.trainingPlan()!.name);
+
+    this.dialogService
+      .displayEditDialog("Edit training plan's name", [
+        { label: 'Name', form: form },
+      ])
+      .subscribe((result) => {
+        if (result) {
+          this.trainingPlan.update((x) => {
+            x!.name = form.value!;
+            return x;
+          });
+        }
+      });
+  }
+
   save(): void {
     this.plannerService
       .saveTrainingPlan(this.trainingPlan()!)

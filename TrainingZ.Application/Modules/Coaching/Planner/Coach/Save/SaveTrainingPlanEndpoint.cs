@@ -40,7 +40,6 @@ public class SaveTrainingPlanEndpoint(IAppDbContext context, TimeProvider time) 
         }
 
         planDb.Name = req.Plan.Name;
-        planDb.IsActive = req.Plan.IsActive;
 
         await HandleTrainingUnitsDb(req.Plan, planDb, ct);
 

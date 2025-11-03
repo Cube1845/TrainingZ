@@ -17,6 +17,21 @@ export class PlannerService {
 
   private readonly emptyGuid = '00000000-0000-0000-0000-000000000000';
 
+  changeTrainingPlanActiveState(
+    planId: string,
+    studentId: string
+  ): Observable<Result> {
+    const body = {
+      trainingPlanId: planId,
+      studentId: studentId,
+    };
+
+    return this.http.put<Result>(
+      this.apiUrl + 'coaching/planner/activity',
+      body
+    );
+  }
+
   getTrainingPlan(id: string): Observable<Result<GetTrainingPlanResponse>> {
     return this.http.get<Result<GetTrainingPlanResponse>>(
       this.apiUrl + 'coaching/planner/' + id
