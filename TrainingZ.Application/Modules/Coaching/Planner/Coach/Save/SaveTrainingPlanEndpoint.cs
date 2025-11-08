@@ -40,6 +40,7 @@ public class SaveTrainingPlanEndpoint(IAppDbContext context, TimeProvider time) 
         }
 
         planDb.Name = req.Plan.Name;
+        planDb.LastModified = _time.GetUtcNow().LocalDateTime.ToUniversalTime();
 
         await HandleTrainingUnitsDb(req.Plan, planDb, ct);
 

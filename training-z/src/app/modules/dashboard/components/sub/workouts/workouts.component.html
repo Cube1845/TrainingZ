@@ -1,17 +1,32 @@
-@if (workoutPlans().length > 0) {
-    <div class="flex p-4 w-full h-full flex-column lg:flex-row gap-4 overflow-auto lg:flex-wrap align-content-start">
-        @for (plan of workoutPlans(); track $index) {
-            <div class="flex flex-column p-4 lg:p-6 align-items-center justify-content-center h-min w-full lg:w-auto tile border-round-xl">
-                <h1 class="m-0 p-0 text-4xl mb-2">{{ plan.name }}</h1>
-                <h2 class="m-0 p-0 text-lg">Created: {{ plan.createdAt | date: 'dd.MM.yyyy' }}</h2>
+@if (workoutsData() != undefined) {
+    <div class="flex align-items-center flex-column w-full lg:w-6 p-4 gap-4">
+        @if (workoutsData()!.hasActiveTrainingPlan) {
+            <div class="p-4 tile hoverable border-round-lg flex flex-column align-items-center">
+                <h1 class="m-0 p-0 text-center">Start new workout</h1>
+                <i class="pi pi-play-circle text-4xl pt-2"></i>
+            </div>
+        } @else {
+            <div class="darker-tile p-4 border-round-lg flex align-items-center flex-column gap-2">
+                <h1 class="m-0 p-0 text-2xl text-center">You don't currently have an active training plan</h1>
+                <h2 class="m-0 p-0 text-xl text-center">Ask your coach about that</h2>
             </div>
         }
+
+        <div class="flex w-full flex-column">
+            <h1 class="m-0 p-0 text-3xl">Your last workouts:</h1>
+
+            <div class="flex flex-column gap-4 mt-3">
+                @for (lastWorkout of workoutsData()!.lastWorkouts; track $index) {
+                    <div class="p-4 tile border-round-lg flex-1 darker-tile hoverable flex align-items-center flex-column">
+                        <h1 class="m-0 p-0 text-3xl">{{ lastWorkout.unitName }}</h1>
+                        <h2 class="m-0 p-0 text-2xl">{{ lastWorkout.date | date: 'dd.MM.yyyy HH:mm' }}</h2>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="flex justify-content-end w-full">
+            <app-button label="See full history" color="secondary" size="large" class="pb-4" />
+        </div>
     </div>
-} @else {
-    <h1 class="m-4">
-        You don't have any workouts plans. 
-    </h1>
-    <h2 class="m-4">
-        Ask your coach about that
-    </h2>
 }

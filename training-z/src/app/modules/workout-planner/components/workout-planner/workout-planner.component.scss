@@ -38,5 +38,9 @@
 
     .info-tile {
         background: var(--p-surface-950);
+        
+        &.selected {
+            background: var(--p-primary-950) !important;
+        }
     }
 }

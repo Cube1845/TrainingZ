@@ -126,6 +126,47 @@ export class WorkoutPlannerComponent {
     return et == ExerciseType.Combo;
   }
 
+  changeTrainingPlanActiveState(): void {
+    var fn = this.trainingPlan()!.isActive
+      ? () =>
+          this.dialogService.displayConfirmation(
+            'Are you sure?',
+            'Do you want to deactivate this training plan? This student will have no training plan active.'
+          )
+      : () =>
+          this.dialogService.displayConfirmation(
+            'Are you sure?',
+            'Do you want to activate this training plan? Other active plans will be deactivated.'
+          );
+
+    fn().subscribe(() => {
+      this.plannerService
+        .changeTrainingPlanActiveState(
+          this.trainingPlan()!.id,
+          this.studentData()!.id
+        )
+        .pipe(catchError((err) => of(err)))
+        .subscribe((result) => {
+          if (!result.isSuccess) {
+            this.toastService.error(
+              result.error.message || result.message || 'Invalid id'
+            );
+            return;
+          }
+
+          this.trainingPlan.update((x) => {
+            x!.isActive = !x!.isActive;
+            return x;
+          });
+          this.toastService.success(
+            this.trainingPlan()!.isActive
+              ? 'You activated this training plan'
+              : 'You deactivated this training plan'
+          );
+        });
+    });
+  }
+
   editPlanName(): void {
     const form = new FormControl<string | null>(this.trainingPlan()!.name);
 
