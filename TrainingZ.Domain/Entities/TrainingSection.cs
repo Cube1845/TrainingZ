@@ -27,7 +27,7 @@ public class TrainingSection : BaseEntity
             Id = Id,
             Index = Index,
             Name = Name,
-            Exercises = Exercises.Select(x => x.DeepCopyWithoutInclusions()).ToList(),
+            Exercises = Exercises.Select(x => x.DeepCopyWithoutInclusions()).OrderBy(x => x.Index).ToList(),
         };
     }
 }

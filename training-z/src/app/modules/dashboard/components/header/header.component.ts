@@ -74,7 +74,7 @@ export class HeaderComponent {
       icon: 'pi pi-book',
       isSelected: signal<boolean>(false),
       route: '/dashboard/workouts',
-      alternativeRoutes: [],
+      alternativeRoutes: ['/dashboard/workout-selection'],
       role: Role.User,
     },
     {

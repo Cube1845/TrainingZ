@@ -27,7 +27,7 @@ public class TrainingUnit : BaseEntity
             Id = Id,
             CreatedAt = CreatedAt,
             Name = Name,
-            TrainingSections = TrainingSections.Select(x => x.DeepCopyWithoutInclusions()).ToList()
+            TrainingSections = TrainingSections.Select(x => x.DeepCopyWithoutInclusions()).OrderBy(x => x.Index).ToList()
         };
     }
 }

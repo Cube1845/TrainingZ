@@ -11,6 +11,7 @@ import { WorkoutsComponent } from './components/sub/workouts/workouts.component'
 import { StudentInviteComponent } from './components/sub/student-invite/student-invite.component';
 import { InvitationCodeComponent } from './components/sub/invitation-code/invitation-code.component';
 import { StudentManageComponent } from './components/sub/student-manage/student-manage.component';
+import { WorkoutSelectionComponent } from './components/sub/workout-selection/workout-selection.component';
 
 export const routes: Routes = [
   {
@@ -24,6 +25,11 @@ export const routes: Routes = [
       {
         path: 'workouts',
         component: WorkoutsComponent,
+        canActivate: [userMustNotBeCoachGuard],
+      },
+      {
+        path: 'workout-selection',
+        component: WorkoutSelectionComponent,
         canActivate: [userMustNotBeCoachGuard],
       },
       {

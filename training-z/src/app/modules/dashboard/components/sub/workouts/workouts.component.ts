@@ -1,8 +1,9 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { LastWorkoutData } from '../../../models/last-workout-data';
 import { WorkoutsData } from '../../../models/workouts-data';
 import { AppButtonComponent } from '../../../../common/components/app-button/app-button.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-workouts',
@@ -11,6 +12,12 @@ import { AppButtonComponent } from '../../../../common/components/app-button/app
   styleUrl: './workouts.component.scss',
 })
 export class WorkoutsComponent {
+  private readonly router = inject(Router);
+
+  goToWorkoutSelection(): void {
+    this.router.navigateByUrl('dashboard/workout-selection');
+  }
+
   workoutsData = signal<WorkoutsData | undefined>({
     hasActiveTrainingPlan: true,
     lastWorkouts: [
