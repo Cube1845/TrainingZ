@@ -18,35 +18,12 @@
             <h3 class="m-0 p-0 text-3xl">Information</h3>
 
             <div class="flex w-full flex-column gap-5 pb-5">
-                <div class="flex flex-column w-full gap-1 w-full">
-                    <h2 class="m-0 p-0 text-xl">What are your current goals?</h2>
-                    <h1 class="m-0 p-0 text-2xl">{{ userInfo()?.goals == '' ? 'No answer' : userInfo()?.goals }}</h1>
-                </div>
-
-                <div class="flex flex-column w-full gap-1 w-full">
-                    <h2 class="m-0 p-0 text-xl">How well do you sleep? How well is your diet?</h2>
-                    <h1 class="m-0 p-0 text-2xl">{{ userInfo()?.sleepDiet == '' ? 'No answer' : userInfo()?.sleepDiet }}</h1>
-                </div>
-
-                <div class="flex flex-column w-full gap-1 w-full">
-                    <h2 class="m-0 p-0 text-xl">How active are you besides the training?</h2>
-                    <h1 class="m-0 p-0 text-2xl">{{ userInfo()?.activity == '' ? 'No answer' : userInfo()?.activity }}</h1>
-                </div>
-
-                <div class="flex flex-column w-full gap-1 w-full">
-                    <h2 class="m-0 p-0 text-xl">Do you have or have you had any injuries?</h2>
-                    <h1 class="m-0 p-0 text-2xl">{{ userInfo()?.injuries == '' ? 'No answer' : userInfo()?.injuries }}</h1>
-                </div>
-
-                <div class="flex flex-column w-full gap-1 w-full">
-                    <h2 class="m-0 p-0 text-xl">How much time can you spend training each week?</h2>
-                    <h1 class="m-0 p-0 text-2xl">{{ userInfo()?.timeAvaiable == '' ? 'No answer' : userInfo()?.timeAvaiable }}</h1>
-                </div>
-
-                <div class="flex flex-column w-full gap-1 w-full">
-                    <h2 class="m-0 p-0 text-xl">Other information (e.g. What training equipment do you have available?)</h2>
-                    <h1 class="m-0 p-0 text-2xl">{{ userInfo()?.other == '' ? 'No answer' : userInfo()?.other }}</h1>
-                </div>
+                @for (key of questionKeys; track $index) {
+                    <div class="flex flex-column w-full gap-1 w-full">
+                        <h2 class="m-0 p-0 text-xl">{{ questions[key] }}</h2>
+                        <h1 class="m-0 p-0 text-2xl">{{ userInfo()![key] == '' ? 'No answer' : userInfo()![key] }}</h1>
+                    </div>
+                }
             </div>
         </div>
     </div>

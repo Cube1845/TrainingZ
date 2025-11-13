@@ -1,0 +1,61 @@
+:host {
+    display: flex;
+    justify-content: center;
+    overflow: auto;
+
+    h1 {
+        color: var(--p-surface-0);
+    }
+
+    h2 {
+        color: var(--p-surface-200);
+    }
+
+    h3 {
+        color: var(--p-surface-400);
+    }
+
+    .workout-tile {
+        background: var(--p-surface-800);
+        transition: .2s background-color;
+
+        &:hover {
+            background: var(--p-surface-700);
+            cursor: pointer;
+        }
+    }
+
+    .selected {
+        background: var(--p-primary-950) !important;
+
+        h2 {
+            color: var(--p-surface-100) !important;
+        }
+
+        h3 {
+            color: var(--p-surface-200) !important;
+        }
+    }
+
+    .trash-icon {
+        bottom: 1rem;
+        right: 1rem;
+        color: var(--p-surface-300);
+        transition: .2s color;
+
+        &:hover {
+            color: var(--p-primary-color);
+        }
+    }
+
+    .activate-icon {
+        bottom: 1rem;
+        right: 3rem;
+        color: var(--p-surface-300);
+        transition: .2s color;
+
+        &:hover {
+            color: var(--p-primary-color);
+        }
+    }
+}

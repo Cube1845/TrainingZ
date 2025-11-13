@@ -6,10 +6,11 @@ import { TextareaModule } from 'primeng/textarea';
 import { DividerModule } from 'primeng/divider';
 import { ResponsiveService } from '../../../../common/services/responsive.service';
 import { AppButtonComponent } from '../../../../common/components/app-button/app-button.component';
-import { GetUserInfoService } from '../../../services/requests/get-user-info/get-user-info.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { UpdateUserInfoService } from '../../../services/requests/update-user-info/update-user-info.service';
 import { CardModule } from 'primeng/card';
+import { CoachingService } from '../../../services/coaching.service';
+import { UserInfoQuestions } from '../../../models/user-info-questions';
+import { QuestionKeys } from '../../../models/user-info';
 
 @Component({
   selector: 'app-invitation-code',
@@ -28,9 +29,7 @@ export class InvitationCodeComponent {
 
   private readonly toastService = inject(AppToastService);
   private readonly router = inject(Router);
-
-  private readonly getUserInfoRequest = inject(GetUserInfoService);
-  private readonly updateUserInfoRequest = inject(UpdateUserInfoService);
+  private readonly coachingService = inject(CoachingService);
 
   code?: WritableSignal<string>;
 
@@ -43,9 +42,12 @@ export class InvitationCodeComponent {
     other: new FormControl<string>(''),
   });
 
+  questions = UserInfoQuestions;
+  questionKeys = QuestionKeys;
+
   constructor() {
-    this.getUserInfoRequest
-      .request()
+    this.coachingService
+      .getUserInfo()
       .pipe(catchError((err) => of(err)))
       .subscribe((result) => {
         if (!result.isSuccess) {
@@ -70,8 +72,8 @@ export class InvitationCodeComponent {
   }
 
   saveUserInfo(): void {
-    this.updateUserInfoRequest
-      .request(this.form.value)
+    this.coachingService
+      .updateUserInfo(this.form.value)
       .pipe(catchError((err) => of(err)))
       .subscribe((result) => {
         if (!result.isSuccess) {

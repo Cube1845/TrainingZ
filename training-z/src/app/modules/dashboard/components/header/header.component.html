@@ -1,4 +1,4 @@
-@if (userData) {
+@if (userData()) {
     <div class="container flex justify-content-center w-full border-top-1 lg:border-bottom-1 lg:border-top-none">
         <div class="flex2"></div>
 
@@ -15,8 +15,8 @@
         <div class="flex flex2 justify-content-end">
             <p-menu #menu [model]="userMenuItems" [popup]="true" appendTo="body" />
             <div [class]="(accountSettingsRouteActive() ? 'selected ' : '') + 'flex align-items-center justify-content-center user-box h-full border-top-1 lg:border-bottom-1 lg:border-top-none account-tile'" (click)="menu.toggle($event)" >
-                <p-image [src]="userData!().profileImageUrl || 'imgs/default_avatar.jpg'" width="35" imageClass="border-circle" class="p-0 m-0 px-2 sm:px-3 lg:pr-2 lg:pl-3"/>
-                <h3 class="mr-3 text-lg m-0 p-0 line-height-1 hidden lg:block">{{ userData!().name || '' }}</h3>
+                <p-image [src]="userData()!.profileImageUrl || 'imgs/default_avatar.jpg'" width="35" imageClass="border-circle" class="p-0 m-0 px-2 sm:px-3 lg:pr-2 lg:pl-3"/>
+                <h3 class="mr-3 text-lg m-0 p-0 line-height-1 hidden lg:block">{{ userData()!.name || '' }}</h3>
             </div>
         </div>
     </div>

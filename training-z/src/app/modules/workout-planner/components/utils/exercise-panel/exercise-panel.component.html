@@ -1,41 +1,40 @@
 <div class="flex flex-column panel p-4 border-round-md relative" (click)="panelClicked.emit()">
     @if (exercise().exerciseType == 1) {
-        <div class="px-3 py-2 border-round-md ex-tile mb-2 w-auto lg:w-max">
-            <h1 class="m-0 p-0 text-xl">{{ exercise().exercise }}</h1>
+        <div class="px-3 py-2 border-round-md ex-tile mb-3 w-auto lg:w-max">
+            <h1 class="m-0 p-0 text-2xl">{{ exercise().name }}</h1>
         </div>
     } @else {
         <div class="px-3 py-2 border-round-md ex-tile mb-2 w-max">
-            <h1 class="m-0 p-0 text-lg">Combo</h1>
+            <h1 class="m-0 p-0 text-xl">Combo</h1>
         </div>
 
-        <table class="text-lg w-max mb-2 flex gap-1 flex-column m-0">
-            @for (exercise of exercise().exercise; track $index) {
-                <tr class="border-round-md">
-                    <td class="px-3 py-2">{{ exercise }}</td>
+        <table class="text-lg w-max mb-3 flex gap-1 flex-column m-0">
+            @for (exercise of exercise().name; track $index) {
+                <tr class="border-round-md flex flex-wrap">
+                    <td class="px-3 py-2"><h3 class="m-0 p-0 line-height-1 text-lg font-normal">{{ exercise }}</h3></td>
                 </tr>
             }
         </table>
     }
-    
 
-    <div class="flex flex gap-4 lg:gap-6">
+    <div class="flex flex gap-4 lg:gap-6 pb-3">
         <div class="flex flex-column gap-2">
             <div class="flex flex-column">
-                <h2 class="m-0 p-0 text-base lg:text-lg font-normal">Sets</h2>
+                <h2 class="m-0 p-0 text-base lg:text-lg font-normal darker">Sets</h2>
                 <h2 class="m-0 p-0 text-xl lg:text-2xl">{{ exercise().sets }}</h2>
             </div>
             <div class="flex flex-column">
-                <h2 class="m-0 p-0 text-base lg:text-lg font-normal">Intensity</h2>
+                <h2 class="m-0 p-0 text-base lg:text-lg font-normal darker">Intensity</h2>
                 <h2 class="m-0 p-0 text-xl lg:text-2xl">{{ getIntensityType(exercise().intensityType) + ' ' + exercise().intensity }}</h2>
             </div>
         </div>
         <div class="flex flex-column gap-2">
             <div class="flex flex-column">
-                <h2 class="m-0 p-0 text-base lg:text-lg font-normal">Reps</h2>
+                <h2 class="m-0 p-0 text-base lg:text-lg font-normal darker">Reps</h2>
                 <h2 class="m-0 p-0 text-xl lg:text-2xl">{{ exercise().reps }}</h2>
             </div>
             <div class="flex flex-column">
-                <h2 class="m-0 p-0 text-base lg:text-lg font-normal">Rest</h2>
+                <h2 class="m-0 p-0 text-base lg:text-lg font-normal darker">Rest</h2>
                 <h2 class="m-0 p-0 text-xl lg:text-2xl">{{ exercise().rest }}</h2>
             </div>
         </div>
@@ -43,7 +42,7 @@
 
     @if (exercise().info) {
         <div class="flex flex-column mt-2">
-            <h2 class="m-0 p-0 text-base lg:text-lg font-normal">Info</h2>
+            <h2 class="m-0 p-0 text-base lg:text-lg font-normal darker">Info</h2>
             <h2 class="m-0 p-0 text-xl lg:text-2xl">{{ exercise().info }}</h2>
         </div>
     }

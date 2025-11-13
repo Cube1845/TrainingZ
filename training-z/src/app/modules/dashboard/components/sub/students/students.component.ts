@@ -1,14 +1,13 @@
 import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { Image } from 'primeng/image';
 import { DividerModule } from 'primeng/divider';
-import { PlainUserData, UserData } from '../../../models/user-data';
+import { UserData } from '../../../models/user-data';
 import { Router } from '@angular/router';
-import { GetStudentsService } from '../../../services/requests/get-students/get-students.service';
 import { ProfileImageService } from '../../../services/profile-image.service';
 import { catchError, combineLatest, Observable, of } from 'rxjs';
-import { RemoveCoachingService } from '../../../services/requests/remove-coaching/remove-coaching.service';
 import { AppDialogService } from '../../../../common/services/app-dialog.service';
 import { AppToastService } from '../../../../common/services/app-toast.service';
+import { CoachingService } from '../../../services/coaching.service';
 
 @Component({
   selector: 'app-students',
@@ -21,9 +20,7 @@ export class StudentsComponent {
   private readonly profileImageService = inject(ProfileImageService);
   private readonly dialogService = inject(AppDialogService);
   private readonly toastService = inject(AppToastService);
-
-  private readonly getStudentsRequest = inject(GetStudentsService);
-  private readonly removeCoachingRequest = inject(RemoveCoachingService);
+  private readonly coachingService = inject(CoachingService);
 
   students?: WritableSignal<UserData[]>;
 
@@ -32,7 +29,7 @@ export class StudentsComponent {
   }
 
   setStudents(): void {
-    this.getStudentsRequest.request().subscribe((result) => {
+    this.coachingService.getStudents().subscribe((result) => {
       if (!result.isSuccess) {
         this.toastService.error(result.message || 'There was an error');
         return;
@@ -55,7 +52,9 @@ export class StudentsComponent {
     });
   }
 
-  removeStudent(studentData: UserData): void {
+  removeStudent(studentData: UserData, event: Event): void {
+    event.stopPropagation();
+
     this.dialogService
       .displayConfirmation(
         'Are you sure?',
@@ -65,8 +64,8 @@ export class StudentsComponent {
           studentData.surname
       )
       .subscribe(() => {
-        this.removeCoachingRequest
-          .request({ studentId: studentData.id })
+        this.coachingService
+          .removeCoaching(studentData.id)
           .pipe(catchError((err) => of(err)))
           .subscribe((result) => {
             if (!result.isSuccess) {

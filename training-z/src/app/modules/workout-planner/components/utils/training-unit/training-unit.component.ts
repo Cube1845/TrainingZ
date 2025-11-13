@@ -45,7 +45,10 @@ export class TrainingUnitComponent {
   }
 
   editTrainingUnitName(): void {
-    const form = new FormControl<string | null>('', Validators.required);
+    const form = new FormControl<string | null>(
+      this.trainingUnit().name,
+      Validators.required
+    );
 
     this.dialogService
       .displayEditDialog('Add new training unit', [
@@ -75,7 +78,7 @@ export class TrainingUnitComponent {
         }
 
         this.trainingUnit().addSection(
-          new TrainingSection('agawgasfsdhte', form.value!, [])
+          new TrainingSection('', form.value!, [])
         );
       });
   }

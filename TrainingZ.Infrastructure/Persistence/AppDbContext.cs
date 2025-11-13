@@ -17,6 +17,14 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<InvitationData> InvitationDatas { get; set; }
     public DbSet<UserInfo> UserInfos { get; set; }
 
+    public DbSet<TrainingPlan> TrainingPlans { get; set; }
+    public DbSet<TrainingUnit> TrainingUnits { get; set; }
+    public DbSet<TrainingSection> TrainingSections { get; set; }
+    public DbSet<Exercise> Exercises { get; set; }
+    public DbSet<Workout> Workouts { get; set; }
+    public DbSet<DoneExercise> DoneExercises { get; set; }
+
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

@@ -3,12 +3,12 @@ import { TrainingSection } from './training-section';
 export class TrainingUnit {
   id: string;
   name: string;
-  sections: TrainingSection[];
+  trainingSections: TrainingSection[];
 
-  constructor(id: string, name: string, sections: TrainingSection[]) {
+  constructor(id: string, name: string, trainingSections: TrainingSection[]) {
     this.id = id;
     this.name = name;
-    this.sections = sections;
+    this.trainingSections = trainingSections;
   }
 
   editName(name: string): void {
@@ -16,10 +16,10 @@ export class TrainingUnit {
   }
 
   addSection(trainingSection: TrainingSection): void {
-    this.sections.push(trainingSection);
+    this.trainingSections.push(trainingSection);
   }
 
   removeSection(sectionIndex: number): void {
-    this.sections.splice(sectionIndex, 1);
+    this.trainingSections.splice(sectionIndex, 1);
   }
 }
