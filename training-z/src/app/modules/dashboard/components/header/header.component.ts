@@ -27,7 +27,7 @@ export class HeaderComponent {
 
   private readonly userService = inject(UserService);
 
-  userData?: WritableSignal<UserData>;
+  userData = signal<UserData | undefined>(undefined);
 
   userRole?: Role;
 
@@ -130,7 +130,7 @@ export class HeaderComponent {
         this.profileImageService
           .convertProfileImageId(result.value)
           .subscribe((userData) => {
-            this.userData = signal<UserData>(userData);
+            this.userData.set(userData);
           });
       });
 

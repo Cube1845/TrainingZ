@@ -9,6 +9,7 @@ import { GetUserDataByCodeResponse } from './api-responses/get-user-data-by-code
 import { GetCodeResponse } from './api-responses/get-user-info-response';
 import { PlainStudentManageData } from '../models/student-manage-data';
 import { CreateTrainingPlanResponse } from './api-responses/create-training-plan-response';
+import { WorkoutsData } from '../models/workouts-data';
 
 @Injectable({
   providedIn: 'root',
@@ -93,5 +94,11 @@ export class CoachingService {
     }>
   ): Observable<Result> {
     return this.http.put<Result>(this.apiUrl + 'user/info', userInfo);
+  }
+
+  getWorkoutsData(): Observable<Result<WorkoutsData>> {
+    return this.http.get<Result<WorkoutsData>>(
+      this.apiUrl + 'coaching/general/workouts-data'
+    );
   }
 }
