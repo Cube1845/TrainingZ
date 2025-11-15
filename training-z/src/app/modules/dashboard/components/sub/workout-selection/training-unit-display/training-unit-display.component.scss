@@ -1,0 +1,34 @@
+:host {
+    h1 {
+        color: var(--p-surface-0);
+    }
+
+    app-button {
+        align-self: end;
+    }
+
+    i {
+        color: var(--p-surface-200);
+        transition: .2s color;
+        
+        &:hover {
+            color: var(--p-primary-color);
+        }
+    }
+
+    .tile {
+        background: var(--p-surface-850);
+    }
+
+    .darker-tile {
+        background: var(--p-surface-875);
+    }
+
+    h3 {
+        color: var(--p-surface-100);
+    }
+
+    h4 {
+        color: var(--p-surface-300);
+    }
+}
