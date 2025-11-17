@@ -4,7 +4,10 @@
             <h1 class="m-0 p-0 text-center">Choose your today's training</h1>
 
             @for (unit of trainingPlan()!.trainingUnits ; track $index) {
-                <app-training-unit-display [trainingUnit]="unit" class="w-full" />
+                <div class="flex w-full flex-column gap-1">
+                    <app-button label="Choose" icon="pi pi-play" color="secondary" styleClass="w-full" size="large" />
+                    <app-training-unit-display [trainingUnit]="unit" class="w-full" />
+                </div>
             }
         </div>
     </div>

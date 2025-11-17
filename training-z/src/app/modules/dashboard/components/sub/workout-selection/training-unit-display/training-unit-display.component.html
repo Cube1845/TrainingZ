@@ -7,18 +7,23 @@
             <div class="flex flex-column gap-2">
                 @for (section of trainingUnit().trainingSections; track $index) {
                     <div class="p-4 darker-tile flex flex-column gap-2 border-round-lg">
-                        <h2 class="m-0 p-0">{{ section.name }}</h2>
+                        <h2 class="m-0 p-0 text-2xl">{{ section.name }}</h2>
 
-                        <div class="flex flex-column tile p-3 border-round-md">
+                        <table>
+                            <tr>
+                                <th class="text-left text-xl p-2 top-left">Exercise</th>
+                                <th class="text-left text-xl p-2">Sets</th>
+                                <th class="text-left text-xl p-2 top-right">Reps</th>
+                            </tr>
+
                             @for (exercise of section.exercises; track $index) {
-                                <h3 class="text-xl m-0 p-0">{{ exercise.name }}</h3>
-
-                                <div class="flex">
-                                    <h4 class="text-lg m-0 p-0 flex-1">Sets {{ exercise.sets }}</h4>
-                                    <h4 class="text-lg m-0 p-0 flex-1">Reps {{ exercise.reps }}</h4>
-                                </div>
+                                <tr>
+                                    <td [class]="'p-2 text-xl ' + ($index + 1 == section.exercises.length ? 'bottom-left' : '')">{{ exercise.exerciseType == 1 ? exercise.name : 'Combo' }}</td>
+                                    <td class="p-2 text-xl">{{ exercise.sets }}</td>
+                                    <td [class]="'p-2 text-xl ' + ($index + 1 == section.exercises.length ? 'bottom-right' : '')">{{ exercise.reps }}</td>
+                                </tr>
                             }
-                        </div>
+                        </table>
                     </div>
                 }
             </div>

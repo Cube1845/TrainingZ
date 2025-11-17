@@ -16,10 +16,6 @@
         }
     }
 
-    .tile {
-        background: var(--p-surface-850);
-    }
-
     .darker-tile {
         background: var(--p-surface-875);
     }
@@ -30,5 +26,41 @@
 
     h4 {
         color: var(--p-surface-300);
+    }
+
+    table {
+        border-collapse: collapse;
+        
+        th {
+            
+            color: var(--p-surface-100);
+        }
+
+        td {
+            
+            color: var(--p-surface-200);
+        }
+
+        td, th {
+            border: 2px solid var(--p-surface-600);
+        }
+
+        tr:first-child th {
+            border-top: none;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        td:first-child,
+        th:first-child {
+            border-left: none;
+        }
+
+        td:last-child,
+        th:last-child {
+            border-right: none;
+        }
     }
 }
