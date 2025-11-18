@@ -46,6 +46,17 @@ export class WorkoutSelectionComponent {
             '2 min',
             null
           ),
+          new Exercise(
+            '',
+            2,
+            ['Straddle Planche Hold', 'Straddle Planche Press'],
+            '1',
+            '1',
+            2,
+            10,
+            '2 min',
+            null
+          ),
         ]),
       ]),
     ],
