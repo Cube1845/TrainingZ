@@ -95,10 +95,4 @@ export class CoachingService {
   ): Observable<Result> {
     return this.http.put<Result>(this.apiUrl + 'user/info', userInfo);
   }
-
-  getWorkoutsData(): Observable<Result<WorkoutsData>> {
-    return this.http.get<Result<WorkoutsData>>(
-      this.apiUrl + 'coaching/general/workouts-data'
-    );
-  }
 }

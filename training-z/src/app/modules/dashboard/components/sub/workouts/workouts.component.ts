@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { CoachingService } from '../../../services/coaching.service';
 import { catchError, of } from 'rxjs';
 import { AppToastService } from '../../../../common/services/app-toast.service';
+import { WorkoutsService } from '../../../services/workouts.service';
 
 @Component({
   selector: 'app-workouts',
@@ -16,11 +17,11 @@ import { AppToastService } from '../../../../common/services/app-toast.service';
 })
 export class WorkoutsComponent {
   private readonly router = inject(Router);
-  private readonly coachingService = inject(CoachingService);
+  private readonly workoutsService = inject(WorkoutsService);
   private readonly toastService = inject(AppToastService);
 
   constructor() {
-    this.coachingService
+    this.workoutsService
       .getWorkoutsData()
       .pipe(catchError((err) => of(err)))
       .subscribe((result) => {

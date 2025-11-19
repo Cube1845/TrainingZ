@@ -5,7 +5,7 @@ using TrainingZ.Application.Common.Models;
 using TrainingZ.Application.Modules.Coaching.General.Coach.GetStudentData.Models;
 using TrainingZ.Domain.Enums;
 
-namespace TrainingZ.Application.Modules.Coaching.General.User.GetWorkoutsData;
+namespace TrainingZ.Application.Modules.Workouts.User.GetWorkoutsData;
 
 public class GetWorkoutsDataEndpoint(IAppDbContext context) : EndpointWithoutRequest<Result<GetWorkoutsDataResponse>>
 {
@@ -13,7 +13,7 @@ public class GetWorkoutsDataEndpoint(IAppDbContext context) : EndpointWithoutReq
 
     public override void Configure()
     {
-        Get("coaching/general/workouts-data");
+        Get("workouts/workouts-data");
         Roles(Role.User.ToString());
     }
 

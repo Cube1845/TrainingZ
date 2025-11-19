@@ -7,6 +7,10 @@ import { TrainingSection } from '../../../../workout-planner/models/training-sec
 import { Exercise } from '../../../../workout-planner/models/exercise';
 import { AppButtonComponent } from '../../../../common/components/app-button/app-button.component';
 import { ResponsiveService } from '../../../../common/services/responsive.service';
+import { WorkoutsService } from '../../../services/workouts.service';
+import { catchError, of } from 'rxjs';
+import { AppToastService } from '../../../../common/services/app-toast.service';
+import { ExerciseType } from '../../../../workout-planner/models/enums/exercise-type';
 
 @Component({
   selector: 'app-workout-selection',
@@ -17,48 +21,35 @@ import { ResponsiveService } from '../../../../common/services/responsive.servic
 export class WorkoutSelectionComponent {
   public readonly responsive = inject(ResponsiveService);
 
-  trainingPlan = signal<TrainingPlan | undefined>({
-    id: '',
-    name: '',
-    isActive: true,
-    trainingUnits: [
-      new TrainingUnit('awda', 'Push', [
-        new TrainingSection('awdag', 'Volume', [
-          new Exercise(
-            '',
-            1,
-            'Banded Straddle Planche Hold',
-            '3',
-            '4-5',
-            2,
-            10,
-            '3 min',
-            null
-          ),
-          new Exercise(
-            '',
-            2,
-            ['Straddle Planche Hold', 'Straddle Planche Press'],
-            '1',
-            '1',
-            2,
-            10,
-            '2 min',
-            null
-          ),
-          new Exercise(
-            '',
-            2,
-            ['Straddle Planche Hold', 'Straddle Planche Press'],
-            '1',
-            '1',
-            2,
-            10,
-            '2 min',
-            null
-          ),
-        ]),
-      ]),
-    ],
-  });
+  private readonly workoutsService = inject(WorkoutsService);
+  private readonly toastService = inject(AppToastService);
+
+  trainingPlan = signal<TrainingPlan | undefined>(undefined);
+
+  constructor() {
+    this.workoutsService
+      .getActiveTrainingPlan()
+      .pipe(catchError((err) => of(err)))
+      .subscribe((result) => {
+        if (!result.isSuccess) {
+          this.toastService.error(
+            result.error.message || result.message || 'Error'
+          );
+          return;
+        }
+
+        const plan: TrainingPlan = result.value.trainingPlan;
+        plan.trainingUnits.forEach((u) => {
+          u.trainingSections.forEach((s) => {
+            s.exercises.forEach((e) => {
+              if (e.exerciseType == ExerciseType.Combo) {
+                e.name = (e.name as string).split('>');
+              }
+            });
+          });
+        });
+
+        this.trainingPlan.set(plan);
+      });
+  }
 }
