@@ -24,6 +24,14 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'workout-dashboard',
+    canActivate: [userMustBeLoggedInGuard],
+    loadChildren: () =>
+      import('./modules/workout-dashboard/workout-dashboard.routes').then(
+        (x) => x.routes
+      ),
+  },
+  {
     path: '',
     redirectTo: 'auth',
     pathMatch: 'full',

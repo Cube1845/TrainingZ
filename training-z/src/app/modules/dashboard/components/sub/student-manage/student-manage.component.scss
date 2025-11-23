@@ -28,6 +28,11 @@
     .selected {
         background: var(--p-primary-950) !important;
 
+        &:hover {
+            background: var(--p-primary-900)  !important;
+            cursor: pointer;
+        }
+
         h2 {
             color: var(--p-surface-100) !important;
         }
