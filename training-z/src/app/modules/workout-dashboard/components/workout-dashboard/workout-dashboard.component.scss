@@ -1,6 +1,4 @@
 :host {
-    overflow: auto;
-
     h1 {
         color: var(--p-surface-100);
     }
@@ -26,10 +24,22 @@
             &.highlighted {
                 background: var(--p-surface-800);
             }
+
+            &.marked {
+                background: var(--p-primary-950);
+            }
+
+            &.marked.highlighted {
+                background: var(--p-primary-900);
+            }
         }
     }
 
     .flex-3 {
         flex: 3;
+    }
+
+    .panel {
+        background: var(--p-surface-875);
     }
 }
