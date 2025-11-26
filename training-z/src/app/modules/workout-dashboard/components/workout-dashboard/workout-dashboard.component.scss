@@ -1,4 +1,7 @@
 :host {
+    display: flex;
+    justify-content: center;
+
     h1 {
         color: var(--p-surface-100);
     }
