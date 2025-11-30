@@ -33,7 +33,7 @@ public class GetWorkoutsDataEndpoint(IAppDbContext context) : EndpointWithoutReq
             .Where(x => x.TrainingUnit!.TrainingPlan!.CoachingData!.StudentId == userId)
             .OrderByDescending(x => x.Finished)
             .Take(3)
-            .Select(x => new LastWorkoutData(x.Id, x.TrainingUnit!.TrainingPlan!.Name, x.TrainingUnit.Name, x.Finished))
+            .Select(x => new LastWorkoutData(x.Id, x.TrainingUnit!.TrainingPlan!.Name, x.TrainingUnit.Name, x.CreatedAt))
             .ToListAsync(ct);
 
         await SendOkAsync(Result<GetWorkoutsDataResponse>.Success(new(userTrainingPlans.Any(x => x.IsActive), lastWorkouts)), ct);
