@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { CoachingService } from '../../../services/coaching.service';
 import { catchError, of } from 'rxjs';
 import { AppToastService } from '../../../../common/services/app-toast.service';
-import { WorkoutsService } from '../../../services/workouts.service';
+import { WorkoutsService } from '../../../../workout-dashboard/services/workouts.service';
 
 @Component({
   selector: 'app-workouts',

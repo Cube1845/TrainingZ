@@ -7,10 +7,10 @@ import { TrainingSection } from '../../../../workout-planner/models/training-sec
 import { Exercise } from '../../../../workout-planner/models/exercise';
 import { AppButtonComponent } from '../../../../common/components/app-button/app-button.component';
 import { ResponsiveService } from '../../../../common/services/responsive.service';
-import { WorkoutsService } from '../../../services/workouts.service';
 import { catchError, of } from 'rxjs';
 import { AppToastService } from '../../../../common/services/app-toast.service';
 import { ExerciseType } from '../../../../workout-planner/models/enums/exercise-type';
+import { WorkoutsService } from '../../../../workout-dashboard/services/workouts.service';
 
 @Component({
   selector: 'app-workout-selection',

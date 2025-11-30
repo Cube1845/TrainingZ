@@ -8,11 +8,10 @@ public class DoneSet : BaseEntity
     public Guid DoneExerciseId { get; set; }
     public DoneExercise? DoneExercise { get; set; }
 
-    public DoneSet(string comment, Guid doneExerciseId, DoneExercise? doneExercise, DateTime createdAt)
+    public DoneSet(string comment, Guid doneExerciseId, DateTime createdAt)
     {
         Comment = comment;
         DoneExerciseId = doneExerciseId;
-        DoneExercise = doneExercise;
         CreatedAt = createdAt;
     }
 }
