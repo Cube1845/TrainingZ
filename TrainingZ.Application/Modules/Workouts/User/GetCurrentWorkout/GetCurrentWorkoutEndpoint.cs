@@ -25,6 +25,9 @@ public class GetCurrentWorkoutEndpoint(IAppDbContext context) : EndpointWithoutR
             .Include(x => x.TrainingUnit)
             .ThenInclude(x => x!.TrainingPlan)
             .ThenInclude(x => x!.CoachingData)
+            .Include(x => x.TrainingUnit)
+            .ThenInclude(x => x!.TrainingSections)
+            .ThenInclude(x => x.Exercises)
             .FirstOrDefaultAsync(x => x.TrainingUnit!.TrainingPlan!.CoachingData!.StudentId == userId && x.IsActive, ct);
 
         if (userWorkout == null)

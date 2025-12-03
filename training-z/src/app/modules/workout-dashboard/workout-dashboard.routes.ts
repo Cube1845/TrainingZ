@@ -3,7 +3,7 @@ import { WorkoutDashboardComponent } from './components/workout-dashboard/workou
 
 export const routes: Routes = [
   {
-    path: ':id',
+    path: '',
     component: WorkoutDashboardComponent,
     children: [],
   },

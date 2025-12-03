@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { DividerModule } from 'primeng/divider';
 import { CheckboxModule } from 'primeng/checkbox';
 import { AppInputComponent } from '../../../common/components/app-input/app-input.component';
 import { AccordionModule } from 'primeng/accordion';
 import { AppButtonComponent } from '../../../common/components/app-button/app-button.component';
+import { WorkoutsService } from '../../services/workouts.service';
+import { catchError, of } from 'rxjs';
+import { AppToastService } from '../../../common/services/app-toast.service';
+import { TrainingUnit } from '../../../workout-planner/models/training-unit';
 
 @Component({
   selector: 'app-workout-dashboard',
@@ -17,4 +21,39 @@ import { AppButtonComponent } from '../../../common/components/app-button/app-bu
   templateUrl: './workout-dashboard.component.html',
   styleUrl: './workout-dashboard.component.scss',
 })
-export class WorkoutDashboardComponent {}
+export class WorkoutDashboardComponent {
+  private readonly workoutsService = inject(WorkoutsService);
+  private readonly toastService = inject(AppToastService);
+
+  trainingUnit = signal<TrainingUnit | undefined>(undefined);
+
+  currentSectionIndex = signal<number>(0);
+  currentExerciseIndex = signal<number>(0);
+
+  constructor() {
+    this.workoutsService
+      .getCurrentWorkout()
+      .pipe(catchError((err) => of(err)))
+      .subscribe((result) => {
+        if (!result.isSuccess) {
+          this.toastService.error(
+            result.error.message || result.message || 'Error'
+          );
+          return;
+        }
+
+        this.trainingUnit.set(result.value.trainingUnit);
+        var x = 5;
+      });
+  }
+
+  getNElementArray(n: string): number[] {
+    var x = [];
+
+    for (let i = 0; i < Number(n); i++) {
+      x.push(i);
+    }
+
+    return x;
+  }
+}

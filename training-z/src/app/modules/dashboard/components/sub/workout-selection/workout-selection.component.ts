@@ -11,6 +11,7 @@ import { catchError, of } from 'rxjs';
 import { AppToastService } from '../../../../common/services/app-toast.service';
 import { ExerciseType } from '../../../../workout-planner/models/enums/exercise-type';
 import { WorkoutsService } from '../../../../workout-dashboard/services/workouts.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-workout-selection',
@@ -23,6 +24,7 @@ export class WorkoutSelectionComponent {
 
   private readonly workoutsService = inject(WorkoutsService);
   private readonly toastService = inject(AppToastService);
+  private readonly router = inject(Router);
 
   trainingPlan = signal<TrainingPlan | undefined>(undefined);
 
@@ -50,6 +52,22 @@ export class WorkoutSelectionComponent {
         });
 
         this.trainingPlan.set(plan);
+      });
+  }
+
+  startWorkout(unitId: string): void {
+    this.workoutsService
+      .startWorkout(unitId)
+      .pipe(catchError((err) => of(err)))
+      .subscribe((result) => {
+        if (!result.isSuccess) {
+          this.toastService.error(
+            result.error.message || result.message || 'Error'
+          );
+          return;
+        }
+
+        this.router.navigateByUrl('workout-dashboard');
       });
   }
 }
