@@ -2,8 +2,16 @@
     <div class="flex flex-column justify-content-between h-full w-full lg:w-6">
         <div class="flex flex-column align-items-center p-4 gap-3 lg:gap-6 overflow-auto">
             <div class="flex flex-column gap-2 w-full">
-                <h2 class="m-0 p-0 uppercase font-light text-xl">{{ trainingUnit()!.trainingSections[currentSectionIndex()].name }}</h2>
-                <h1 class="font-light m-0 p-0 uppercase">{{ trainingUnit()!.trainingSections[currentSectionIndex()].exercises[currentExerciseIndex()].name }}</h1>
+                <h3 class="m-0 p-0 uppercase font-light text-xl">{{ trainingUnit()!.trainingSections[currentSectionIndex()].name }}</h3>
+                @if (trainingUnit()!.trainingSections[currentSectionIndex()].exercises[currentExerciseIndex()].exerciseType == 1) {
+                    <h1 class="font-light m-0 p-0 uppercase">{{ trainingUnit()!.trainingSections[currentSectionIndex()].exercises[currentExerciseIndex()].name }}</h1>
+                } @else {
+                    <h1 class="font-light m-0 p-0 uppercase">Combo:</h1>
+
+                    @for (comboItem of getCombo(trainingUnit()!.trainingSections[currentSectionIndex()].exercises[currentExerciseIndex()].name); track $index) {
+                        <h2 class="font-light m-0 p-0 uppercase text-3xl">{{ comboItem }}</h2>
+                    }
+                }
             </div>
 
             <div class="flex w-full">

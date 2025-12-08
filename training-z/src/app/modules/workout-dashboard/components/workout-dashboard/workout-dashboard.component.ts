@@ -8,6 +8,7 @@ import { WorkoutsService } from '../../services/workouts.service';
 import { catchError, of } from 'rxjs';
 import { AppToastService } from '../../../common/services/app-toast.service';
 import { TrainingUnit } from '../../../workout-planner/models/training-unit';
+import { Combo } from '../../../workout-planner/models/combo';
 
 @Component({
   selector: 'app-workout-dashboard',
@@ -43,7 +44,6 @@ export class WorkoutDashboardComponent {
         }
 
         this.trainingUnit.set(result.value.trainingUnit);
-        var x = 5;
       });
   }
 
@@ -55,5 +55,9 @@ export class WorkoutDashboardComponent {
     }
 
     return x;
+  }
+
+  getCombo(exercise: string | Combo): Combo {
+    return (exercise as string).split('>');
   }
 }
