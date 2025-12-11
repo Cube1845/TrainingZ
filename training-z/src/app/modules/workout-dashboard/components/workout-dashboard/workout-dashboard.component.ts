@@ -60,4 +60,48 @@ export class WorkoutDashboardComponent {
   getCombo(exercise: string | Combo): Combo {
     return (exercise as string).split('>');
   }
+
+  canMoveForward(): boolean {
+    return (
+      this.currentSectionIndex() + 1 <
+        this.trainingUnit()!.trainingSections.length ||
+      (this.currentSectionIndex() + 1 ==
+        this.trainingUnit()!.trainingSections.length &&
+        this.currentExerciseIndex() + 1 <
+          this.trainingUnit()!.trainingSections[this.currentSectionIndex()]
+            .exercises.length)
+    );
+  }
+
+  canMoveBackward(): boolean {
+    return !(
+      this.currentExerciseIndex() == 0 && this.currentSectionIndex() == 0
+    );
+  }
+
+  nextExercise(): void {
+    if (this.canMoveForward()) {
+      if (
+        this.currentExerciseIndex() + 1 <
+        this.trainingUnit()!.trainingSections[this.currentSectionIndex()]
+          .exercises.length
+      ) {
+        this.currentExerciseIndex.update((x) => x + 1);
+      } else {
+        this.currentSectionIndex.update((x) => x + 1);
+        this.currentExerciseIndex.update(() => 0);
+      }
+    }
+  }
+
+  previousExercise(): void {
+    if (this.canMoveBackward()) {
+      if (this.currentExerciseIndex() > 0) {
+        this.currentExerciseIndex.update((x) => x - 1);
+      } else {
+        this.currentSectionIndex.update((x) => x - 1);
+        this.currentExerciseIndex.update(() => 0);
+      }
+    }
+  }
 }
