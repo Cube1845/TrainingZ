@@ -60,7 +60,10 @@ export class WorkoutPlannerComponent {
             return;
           }
 
-          const plan: TrainingPlan = result.value.trainingPlan;
+          var plan: TrainingPlan = TrainingPlan.fromBackend(
+            result.value.trainingPlan
+          );
+
           plan.trainingUnits.forEach((u) => {
             u.trainingSections.forEach((s) => {
               s.exercises.forEach((e) => {

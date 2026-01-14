@@ -47,6 +47,10 @@ export class WorkoutDashboardComponent {
       });
   }
 
+  private unit(): TrainingUnit | undefined {
+    return this.trainingUnit();
+  }
+
   getNElementArray(n: string): number[] {
     var x = [];
 
@@ -62,46 +66,61 @@ export class WorkoutDashboardComponent {
   }
 
   canMoveForward(): boolean {
-    return (
-      this.currentSectionIndex() + 1 <
-        this.trainingUnit()!.trainingSections.length ||
-      (this.currentSectionIndex() + 1 ==
-        this.trainingUnit()!.trainingSections.length &&
-        this.currentExerciseIndex() + 1 <
-          this.trainingUnit()!.trainingSections[this.currentSectionIndex()]
-            .exercises.length)
-    );
+    const unit = this.unit();
+    if (!unit) return false;
+
+    const sectionIndex = this.currentSectionIndex();
+    const exerciseIndex = this.currentExerciseIndex();
+    const sections = unit.trainingSections;
+    const exercises = sections[sectionIndex].exercises;
+
+    if (exerciseIndex + 1 < exercises.length) {
+      return true;
+    }
+
+    return sectionIndex + 1 < sections.length;
   }
 
   canMoveBackward(): boolean {
+    const unit = this.unit();
+    if (!unit) return false;
+
     return !(
-      this.currentExerciseIndex() == 0 && this.currentSectionIndex() == 0
+      this.currentSectionIndex() === 0 && this.currentExerciseIndex() === 0
     );
   }
 
   nextExercise(): void {
-    if (this.canMoveForward()) {
-      if (
-        this.currentExerciseIndex() + 1 <
-        this.trainingUnit()!.trainingSections[this.currentSectionIndex()]
-          .exercises.length
-      ) {
-        this.currentExerciseIndex.update((x) => x + 1);
-      } else {
-        this.currentSectionIndex.update((x) => x + 1);
-        this.currentExerciseIndex.update(() => 0);
-      }
+    if (!this.canMoveForward()) return;
+
+    const unit = this.unit()!;
+    const sectionIndex = this.currentSectionIndex();
+    const exerciseIndex = this.currentExerciseIndex();
+    const exercises = unit.trainingSections[sectionIndex].exercises;
+
+    if (exerciseIndex + 1 < exercises.length) {
+      this.currentExerciseIndex.update((i) => i + 1);
+    } else {
+      this.currentSectionIndex.update((i) => i + 1);
+      this.currentExerciseIndex.set(0);
     }
   }
 
   previousExercise(): void {
-    if (this.canMoveBackward()) {
-      if (this.currentExerciseIndex() > 0) {
-        this.currentExerciseIndex.update((x) => x - 1);
-      } else {
-        this.currentSectionIndex.update((x) => x - 1);
-        this.currentExerciseIndex.update(() => 0);
-      }
+    if (!this.canMoveBackward()) return;
+
+    const unit = this.unit()!;
+    const sectionIndex = this.currentSectionIndex();
+    const exerciseIndex = this.currentExerciseIndex();
+
+    if (exerciseIndex > 0) {
+      this.currentExerciseIndex.update((i) => i - 1);
+    } else {
+      const prevSectionIndex = sectionIndex - 1;
+      const prevSection = unit.trainingSections[prevSectionIndex];
+
+      this.currentSectionIndex.set(prevSectionIndex);
+      this.currentExerciseIndex.set(prevSection.exercises.length - 1);
     }
   }
 }
