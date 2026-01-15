@@ -66,9 +66,12 @@
                 </p-accordion>
             }   
         </div>
-        <div class="flex panel w-full justify-content-between">
-            <app-button label="Previous" color="secondary" class="p-3" icon="pi pi-arrow-left" [disabled]="!canMoveBackward()" (click)="previousExercise()" />
-            <app-button label="Next" color="secondary" class="p-3" icon="pi pi-arrow-right" iconPos="right" [disabled]="!canMoveForward()" (click)="nextExercise()" />
+        <div class="flex flex-column panel w-full gap-3">
+            <div class="flex justify-content-between p-3">
+                <app-button color="secondary" icon="pi pi-arrow-left" [disabled]="!canMoveBackward()" (click)="previousExercise()" />
+                <app-button label="Finish" color="secondary" icon="pi pi-stop-circle" (click)="previousExercise()" />
+                <app-button color="secondary" icon="pi pi-arrow-right" iconPos="right" [disabled]="!canMoveForward()" (click)="nextExercise()" />
+            </div>
         </div>
     </div>
 }

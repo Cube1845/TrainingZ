@@ -23,8 +23,12 @@ public class GetWorkoutsDataEndpoint(IAppDbContext context) : EndpointWithoutReq
 
         var userTrainingPlans = await _context.TrainingPlans
             .Include(x => x.CoachingData)
+            .Include(x => x.TrainingUnits)
+            .ThenInclude(x => x.Workouts)
             .Where(x => x.CoachingData!.StudentId == userId)
             .ToListAsync(ct);
+
+        var hasCurrentWorkout = userTrainingPlans.Any(p => p.TrainingUnits.Any(u => u.Workouts.Any(w => w.IsActive)));
 
         var lastWorkouts = await _context.Workouts
             .Include(x => x.TrainingUnit)
@@ -36,6 +40,6 @@ public class GetWorkoutsDataEndpoint(IAppDbContext context) : EndpointWithoutReq
             .Select(x => new LastWorkoutData(x.Id, x.TrainingUnit!.TrainingPlan!.Name, x.TrainingUnit.Name, x.CreatedAt))
             .ToListAsync(ct);
 
-        await SendOkAsync(Result<GetWorkoutsDataResponse>.Success(new(userTrainingPlans.Any(x => x.IsActive), lastWorkouts)), ct);
+        await SendOkAsync(Result<GetWorkoutsDataResponse>.Success(new(hasCurrentWorkout, userTrainingPlans.Any(x => x.IsActive), lastWorkouts)), ct);
     }
 }

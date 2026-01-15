@@ -42,7 +42,7 @@ public class StartWorkoutEndpoint(IAppDbContext context, TimeProvider time) : En
             return;
         }
 
-        Workout workoutDb = new(req.TrainingUnitId, null, true, _time.GetLocalNow().Date.ToUniversalTime());
+        Workout workoutDb = new(req.TrainingUnitId, null, true, _time.GetUtcNow().LocalDateTime.ToUniversalTime());
 
         await _context.Workouts.AddAsync(workoutDb, ct);
         await _context.SaveChangesAsync(ct);

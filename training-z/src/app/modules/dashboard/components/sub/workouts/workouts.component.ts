@@ -40,5 +40,9 @@ export class WorkoutsComponent {
     this.router.navigateByUrl('dashboard/workout-selection');
   }
 
+  goBackToWorkout(): void {
+    this.router.navigateByUrl('workout-dashboard');
+  }
+
   workoutsData = signal<WorkoutsData | undefined>(undefined);
 }

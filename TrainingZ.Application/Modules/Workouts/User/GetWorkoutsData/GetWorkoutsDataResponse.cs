@@ -2,4 +2,4 @@
 
 namespace TrainingZ.Application.Modules.Workouts.User.GetWorkoutsData;
 
-public record GetWorkoutsDataResponse(bool HasActiveTrainingPlan, List<LastWorkoutData> LastWorkouts);
+public record GetWorkoutsDataResponse(bool HasCurrentWorkout, bool HasActiveTrainingPlan, List<LastWorkoutData> LastWorkouts);

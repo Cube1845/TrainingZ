@@ -59,7 +59,7 @@ public class ImageService(AppDbContext context, TimeProvider time) : IImageServi
         using MemoryStream memoryStream = new();
         await imageFile.CopyToAsync(memoryStream, ct);
 
-        Image image = new(memoryStream.ToArray(), imageFile.ContentType, _time.GetLocalNow().DateTime.ToUniversalTime());
+        Image image = new(memoryStream.ToArray(), imageFile.ContentType, _time.GetUtcNow().LocalDateTime.ToUniversalTime());
 
         return image;
     }

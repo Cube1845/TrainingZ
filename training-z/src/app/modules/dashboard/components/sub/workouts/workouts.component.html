@@ -1,6 +1,11 @@
 @if (workoutsData() != undefined) {
     <div class="flex align-items-center flex-column w-full lg:w-6 p-4 gap-4">
-        @if (workoutsData()!.hasActiveTrainingPlan) {
+        @if (workoutsData()!.hasCurrentWorkout) {
+            <div class="p-4 tile hoverable border-round-lg flex flex-column align-items-center" (click)="goBackToWorkout()">
+                <h1 class="m-0 p-0 text-center">Go back to your workout</h1>
+                <i class="pi pi-play-circle text-4xl pt-2"></i>
+            </div>
+        } @else if (workoutsData()!.hasActiveTrainingPlan) {
             <div class="p-4 tile hoverable border-round-lg flex flex-column align-items-center" (click)="goToWorkoutSelection()">
                 <h1 class="m-0 p-0 text-center">Start new workout</h1>
                 <i class="pi pi-play-circle text-4xl pt-2"></i>
