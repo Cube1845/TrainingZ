@@ -35,17 +35,32 @@
                 <h3 class="m-0 p-0 uppercase font-light text-xl">Progress</h3>
 
                 <div class="flex flex-column flex-1 gap-1">
-                    @for (set of getNElementArray(trainingUnit()!.trainingSections[currentSectionIndex()].exercises[currentExerciseIndex()].sets); track $index) {
-                        <div class="p-2 border-round-md set-label highlighted">
-                            <h2 class="m-0 p-0 uppercase font-light text-xl text-center">Set {{ $index + 1 }}</h2>
+                    @for (set of currentSetsProgress; track set.index) {
+                        <div
+                            class="p-2 border-round-md set-label"
+                            [class.highlighted]="set.index === selectedSetIndex()"
+                            [class.marked]="set.done"
+                            (click)="selectSet(set.index)"
+                            >
+
+                            <h2 class="m-0 p-0 uppercase font-light text-xl text-center">Set {{ set.index + 1 }}</h2>
                         </div>
                     }
                 </div>
 
-                <div class="flex align-items-center gap-4">
-                    <app-input label="Comment" />
+                <div [formGroup]="setFormGroup" class="flex align-items-center gap-4 w-full">
+                    <app-input
+                        class="flex-1"
+                        label="Comment"
+                        formControlName="comment"
+                    />
+
                     <div class="flex gap-2 align-items-center justify-content-center">
-                        <p-check-box [binary]="true" size="large" />
+                        <p-checkbox
+                        formControlName="done"
+                        [binary]="true"
+                        size="large"
+                        />
                         <h3 class="m-0 p-0 font-light">Done</h3>
                     </div>
                 </div>

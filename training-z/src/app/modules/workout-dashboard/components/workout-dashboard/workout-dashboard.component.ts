@@ -9,6 +9,9 @@ import { catchError, of } from 'rxjs';
 import { AppToastService } from '../../../common/services/app-toast.service';
 import { TrainingUnit } from '../../../workout-planner/models/training-unit';
 import { Combo } from '../../../workout-planner/models/combo';
+import { TrainingProgress } from '../../models/training-progress';
+import { TrainingSection } from '../../../workout-planner/models/training-section';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-workout-dashboard',
@@ -18,6 +21,7 @@ import { Combo } from '../../../workout-planner/models/combo';
     AppInputComponent,
     AccordionModule,
     AppButtonComponent,
+    ReactiveFormsModule,
   ],
   templateUrl: './workout-dashboard.component.html',
   styleUrl: './workout-dashboard.component.scss',
@@ -28,8 +32,17 @@ export class WorkoutDashboardComponent {
 
   trainingUnit = signal<TrainingUnit | undefined>(undefined);
 
+  trainingProgress = signal<TrainingProgress | null>(null);
+
   currentSectionIndex = signal<number>(0);
   currentExerciseIndex = signal<number>(0);
+
+  selectedSetIndex = signal<number>(0);
+
+  setFormGroup = new FormGroup({
+    comment: new FormControl<string | null>(''),
+    done: new FormControl<boolean>(false),
+  });
 
   constructor() {
     this.workoutsService
@@ -44,25 +57,100 @@ export class WorkoutDashboardComponent {
         }
 
         this.trainingUnit.set(result.value.trainingUnit);
+        this.trainingProgress.set({
+          unitId: result.value.trainingUnit.id,
+          sections: result.value.trainingUnit.trainingSections.map(
+            (section: TrainingSection) => ({
+              sectionId: section.id,
+              exercises: section.exercises.map((ex) => ({
+                exerciseId: ex.id,
+                sets: Array.from({ length: Number(ex.sets) }).map((_, i) => ({
+                  index: i,
+                  done: false,
+                  comment: '',
+                })),
+              })),
+            })
+          ),
+        });
+
+        this.syncFormWithSelectedSet();
       });
+
+    this.setFormGroup.get('comment')!.valueChanges.subscribe((comment) => {
+      this.trainingProgress.update((progress) => {
+        if (!progress) return progress;
+
+        const newProgress = structuredClone(progress);
+
+        newProgress.sections[this.currentSectionIndex()].exercises[
+          this.currentExerciseIndex()
+        ].sets[this.selectedSetIndex()].comment = comment;
+
+        return newProgress;
+      });
+    });
+
+    this.setFormGroup.get('done')!.valueChanges.subscribe((done) => {
+      this.trainingProgress.update((progress) => {
+        if (!progress) return progress;
+
+        const newProgress = structuredClone(progress);
+
+        newProgress.sections[this.currentSectionIndex()].exercises[
+          this.currentExerciseIndex()
+        ].sets[this.selectedSetIndex()].done = done!;
+
+        return newProgress;
+      });
+    });
   }
 
   private unit(): TrainingUnit | undefined {
     return this.trainingUnit();
   }
 
-  getNElementArray(n: string): number[] {
-    var x = [];
+  private syncFormWithSelectedSet(): void {
+    const set = this.getSelectedSetProgress();
 
-    for (let i = 0; i < Number(n); i++) {
-      x.push(i);
-    }
+    this.setFormGroup.patchValue(
+      {
+        comment: set?.comment ?? '',
+        done: set?.done ?? false,
+      },
+      { emitEvent: false }
+    );
+  }
 
-    return x;
+  private getSelectedSetProgress() {
+    const progress = this.trainingProgress();
+    if (!progress) return null;
+
+    return progress.sections[this.currentSectionIndex()].exercises[
+      this.currentExerciseIndex()
+    ].sets[this.selectedSetIndex()];
+  }
+
+  private currentExerciseProgress() {
+    const progress = this.trainingProgress();
+    if (!progress) return null;
+
+    return progress.sections[this.currentSectionIndex()].exercises[
+      this.currentExerciseIndex()
+    ];
+  }
+
+  get currentSetsProgress() {
+    return this.currentExerciseProgress()?.sets ?? [];
   }
 
   getCombo(exercise: string | Combo): Combo {
     return (exercise as string).split('>');
+  }
+
+  selectSet(index: number): void {
+    this.selectedSetIndex.set(index);
+    this.syncFormWithSelectedSet();
   }
 
   canMoveForward(): boolean {
@@ -104,6 +192,9 @@ export class WorkoutDashboardComponent {
       this.currentSectionIndex.update((i) => i + 1);
       this.currentExerciseIndex.set(0);
     }
+
+    this.selectedSetIndex.set(0);
+    this.syncFormWithSelectedSet();
   }
 
   previousExercise(): void {
@@ -122,5 +213,8 @@ export class WorkoutDashboardComponent {
       this.currentSectionIndex.set(prevSectionIndex);
       this.currentExerciseIndex.set(prevSection.exercises.length - 1);
     }
+
+    this.selectedSetIndex.set(0);
+    this.syncFormWithSelectedSet();
   }
 }

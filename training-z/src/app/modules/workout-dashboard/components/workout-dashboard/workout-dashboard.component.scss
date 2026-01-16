@@ -18,17 +18,21 @@
         background: var(--p-surface-900);
 
         .set-label {
-            transition: .2s background-color;
+            cursor: pointer;
+            transition: background-color .2s, transform .1s;
+
+            background: var(--p-surface-875);
 
             &:hover {
                 background: var(--p-surface-850);
+                transform: scale(1.02);
             }
 
-            &.highlighted {
+            &.highlighted:not(.marked) {
                 background: var(--p-surface-800);
             }
 
-            &.marked {
+            &.marked:not(.highlighted) {
                 background: var(--p-primary-950);
             }
 
