@@ -8,13 +8,11 @@ public class DoneExercise : BaseEntity
     public Workout? Workout { get; set; }
     public Guid ExerciseId { get; set; }
     public ICollection<DoneSet> DoneSets { get; set; } = [];
-    public string StudentFeedback { get; set; }
 
-    public DoneExercise(Guid workoutId, Guid exerciseId, string studentFeedback, DateTime createdAt)
+    public DoneExercise(Guid workoutId, Guid exerciseId, DateTime createdAt)
     {
         ExerciseId = exerciseId;
         WorkoutId = workoutId;
-        StudentFeedback = studentFeedback;
         CreatedAt = createdAt;
     }
 }

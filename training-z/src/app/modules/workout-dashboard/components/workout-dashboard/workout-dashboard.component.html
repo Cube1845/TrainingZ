@@ -81,10 +81,12 @@
                 </p-accordion>
             }   
         </div>
+
+        <p-menu #workoutMenu [popup]="true" [model]="menuItems"></p-menu>
         <div class="flex flex-column panel w-full gap-3">
             <div class="flex justify-content-between p-3">
                 <app-button color="secondary" icon="pi pi-arrow-left" [disabled]="!canMoveBackward()" (click)="previousExercise()" />
-                <app-button label="Finish" color="secondary" icon="pi pi-stop-circle" (click)="previousExercise()" />
+                <app-button color="secondary" icon="pi pi-ellipsis-v" (click)="workoutMenu.toggle($event)" />
                 <app-button color="secondary" icon="pi pi-arrow-right" iconPos="right" [disabled]="!canMoveForward()" (click)="nextExercise()" />
             </div>
         </div>

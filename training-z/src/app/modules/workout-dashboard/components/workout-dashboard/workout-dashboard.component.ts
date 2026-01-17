@@ -12,6 +12,8 @@ import { Combo } from '../../../workout-planner/models/combo';
 import { TrainingProgress } from '../../models/training-progress';
 import { TrainingSection } from '../../../workout-planner/models/training-section';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Menu } from 'primeng/menu';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-workout-dashboard',
@@ -22,6 +24,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
     AccordionModule,
     AppButtonComponent,
     ReactiveFormsModule,
+    Menu,
   ],
   templateUrl: './workout-dashboard.component.html',
   styleUrl: './workout-dashboard.component.scss',
@@ -51,7 +54,7 @@ export class WorkoutDashboardComponent {
       .subscribe((result) => {
         if (!result.isSuccess) {
           this.toastService.error(
-            result.error.message || result.message || 'Error'
+            result.error.message || result.message || 'Error',
           );
           return;
         }
@@ -70,7 +73,7 @@ export class WorkoutDashboardComponent {
                   comment: '',
                 })),
               })),
-            })
+            }),
           ),
         });
 
@@ -106,6 +109,19 @@ export class WorkoutDashboardComponent {
     });
   }
 
+  menuItems: MenuItem[] = [
+    {
+      label: 'Finish workout',
+      icon: 'pi pi-stop-circle',
+      command: () => this.finishWorkout(),
+    },
+    {
+      label: 'Back to menu',
+      icon: 'pi pi-home',
+      command: () => this.goBackToMenu(),
+    },
+  ];
+
   private unit(): TrainingUnit | undefined {
     return this.trainingUnit();
   }
@@ -118,8 +134,16 @@ export class WorkoutDashboardComponent {
         comment: set?.comment ?? '',
         done: set?.done ?? false,
       },
-      { emitEvent: false }
+      { emitEvent: false },
     );
+  }
+
+  finishWorkout() {
+    // call finish endpoint
+  }
+
+  goBackToMenu() {
+    // router navigation
   }
 
   private getSelectedSetProgress() {

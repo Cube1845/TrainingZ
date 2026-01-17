@@ -11,5 +11,7 @@ public class DoneSetConfiguration : IEntityTypeConfiguration<DoneSet>
         builder.HasKey(x => x.Id);
 
         builder.HasOne(x => x.DoneExercise).WithMany(x => x.DoneSets);
+
+        builder.HasIndex(x => new { x.DoneExerciseId, x.SetIndex }).IsUnique();
     }
 }
