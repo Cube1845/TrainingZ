@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, HostListener, inject, signal } from '@angular/core';
 import { DividerModule } from 'primeng/divider';
 import { CheckboxModule } from 'primeng/checkbox';
 import { AppInputComponent } from '../../../common/components/app-input/app-input.component';
@@ -14,6 +14,9 @@ import { TrainingSection } from '../../../workout-planner/models/training-sectio
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Menu } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
+import { Router } from '@angular/router';
+import { AppDialogService } from '../../../common/services/app-dialog.service';
+import { environment } from '../../../../../environments/environment.development';
 
 @Component({
   selector: 'app-workout-dashboard',
@@ -32,6 +35,10 @@ import { MenuItem } from 'primeng/api';
 export class WorkoutDashboardComponent {
   private readonly workoutsService = inject(WorkoutsService);
   private readonly toastService = inject(AppToastService);
+  private readonly router = inject(Router);
+  private readonly dialogService = inject(AppDialogService);
+
+  private readonly apiUrl = environment.apiUrl;
 
   trainingUnit = signal<TrainingUnit | undefined>(undefined);
 
@@ -47,6 +54,8 @@ export class WorkoutDashboardComponent {
     done: new FormControl<boolean>(false),
   });
 
+  workoutId: string = '';
+
   constructor() {
     this.workoutsService
       .getCurrentWorkout()
@@ -58,6 +67,8 @@ export class WorkoutDashboardComponent {
           );
           return;
         }
+
+        this.workoutId = result.value.workoutId;
 
         this.trainingUnit.set(result.value.trainingUnit);
         this.trainingProgress.set({
@@ -122,6 +133,13 @@ export class WorkoutDashboardComponent {
     },
   ];
 
+  @HostListener('window:beforeunload')
+  onLeave() {
+    const req = this.buildSaveRequest();
+    const blob = new Blob([JSON.stringify(req)], { type: 'application/json' });
+    navigator.sendBeacon(`${this.apiUrl}/workouts/save`, blob);
+  }
+
   private unit(): TrainingUnit | undefined {
     return this.trainingUnit();
   }
@@ -136,14 +154,6 @@ export class WorkoutDashboardComponent {
       },
       { emitEvent: false },
     );
-  }
-
-  finishWorkout() {
-    // call finish endpoint
-  }
-
-  goBackToMenu() {
-    // router navigation
   }
 
   private getSelectedSetProgress() {
@@ -240,5 +250,65 @@ export class WorkoutDashboardComponent {
 
     this.selectedSetIndex.set(0);
     this.syncFormWithSelectedSet();
+  }
+
+  finishWorkout() {
+    this.dialogService
+      .displayConfirmation(
+        'Are you sure?',
+        'Do you want to finish the workout?',
+      )
+      .subscribe(() => {
+        const req = this.buildSaveRequest();
+
+        this.workoutsService
+          .finishWorkout(req)
+          .pipe(catchError((err) => of(err)))
+          .subscribe((result) => {
+            if (!result.isSuccess) {
+              this.toastService.error(
+                result.error.message || result.message || 'Error',
+              );
+              return;
+            }
+
+            this.router.navigateByUrl('dashboard/workouts');
+            this.toastService.success('Workout finished');
+          });
+      });
+  }
+
+  goBackToMenu() {
+    const req = this.buildSaveRequest();
+
+    this.workoutsService
+      .saveWorkout(req)
+      .pipe(catchError((err) => of(err)))
+      .subscribe((result) => {
+        if (!result.isSuccess) {
+          this.toastService.error(
+            result.error.message || result.message || 'Error',
+          );
+          return;
+        }
+
+        this.router.navigateByUrl('dashboard/workouts');
+      });
+  }
+
+  private buildSaveRequest() {
+    return {
+      workoutId: this.workoutId,
+      exercises: this.trainingProgress()!.sections[
+        this.currentSectionIndex()!
+      ].exercises.map((ex) => ({
+        exerciseId: ex.exerciseId,
+        sets: ex.sets.map((s) => ({
+          index: s.index,
+          done: s.done,
+          comment: s.comment ?? '',
+        })),
+      })),
+    };
   }
 }

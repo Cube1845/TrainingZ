@@ -36,6 +36,6 @@ public class GetCurrentWorkoutEndpoint(IAppDbContext context) : EndpointWithoutR
             return;
         }
 
-        await SendOkAsync(Result<GetCurrentWorkoutResponse>.Success(new(userWorkout.TrainingUnit!.DeepCopyWithoutInclusions())), ct);
+        await SendOkAsync(Result<GetCurrentWorkoutResponse>.Success(new(userWorkout.TrainingUnit!.DeepCopyWithoutInclusions(), userWorkout.Id)), ct);
     }
 }

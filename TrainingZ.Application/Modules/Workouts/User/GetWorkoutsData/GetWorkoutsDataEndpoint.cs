@@ -34,7 +34,7 @@ public class GetWorkoutsDataEndpoint(IAppDbContext context) : EndpointWithoutReq
             .Include(x => x.TrainingUnit)
             .ThenInclude(x => x!.TrainingPlan)
             .ThenInclude(x => x!.CoachingData)
-            .Where(x => x.TrainingUnit!.TrainingPlan!.CoachingData!.StudentId == userId)
+            .Where(x => x.TrainingUnit!.TrainingPlan!.CoachingData!.StudentId == userId && !x.IsActive)
             .OrderByDescending(x => x.Finished)
             .Take(3)
             .Select(x => new LastWorkoutData(x.Id, x.TrainingUnit!.TrainingPlan!.Name, x.TrainingUnit.Name, x.CreatedAt))

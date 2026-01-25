@@ -2,4 +2,4 @@
 
 namespace TrainingZ.Application.Modules.Workouts.User.GetCurrentWorkout;
 
-public record GetCurrentWorkoutResponse(TrainingUnit TrainingUnit);
+public record GetCurrentWorkoutResponse(TrainingUnit TrainingUnit, Guid WorkoutId);

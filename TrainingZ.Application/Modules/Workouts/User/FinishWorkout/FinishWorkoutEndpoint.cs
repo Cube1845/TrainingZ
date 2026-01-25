@@ -9,7 +9,7 @@ using TrainingZ.Domain.Enums;
 
 namespace TrainingZ.Application.Modules.Workouts.User.FinishWorkout;
 
-public class FinishWorkoutEndpoint(IAppDbContext context, TimeProvider time) : Endpoint<SaveWorkoutRequest, Result>
+public class FinishWorkoutEndpoint(IAppDbContext context, TimeProvider time) : Endpoint<FinishWorkoutRequest, Result>
 {
     private readonly IAppDbContext _context = context;
     private readonly TimeProvider _time = time;
@@ -20,7 +20,7 @@ public class FinishWorkoutEndpoint(IAppDbContext context, TimeProvider time) : E
         Roles(Role.User.ToString());
     }
 
-    public override async Task HandleAsync(SaveWorkoutRequest req, CancellationToken ct)
+    public override async Task HandleAsync(FinishWorkoutRequest req, CancellationToken ct)
     {
         var userId = User.GetId();
 

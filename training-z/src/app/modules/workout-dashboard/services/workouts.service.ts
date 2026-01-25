@@ -16,13 +16,13 @@ export class WorkoutsService {
 
   getWorkoutsData(): Observable<Result<WorkoutsData>> {
     return this.http.get<Result<WorkoutsData>>(
-      this.apiUrl + 'workouts/workouts-data'
+      this.apiUrl + 'workouts/workouts-data',
     );
   }
 
   getActiveTrainingPlan(): Observable<Result<GetActiveTrainingPlanResponse>> {
     return this.http.get<Result<GetActiveTrainingPlanResponse>>(
-      this.apiUrl + 'workouts/plan'
+      this.apiUrl + 'workouts/plan',
     );
   }
 
@@ -36,7 +36,15 @@ export class WorkoutsService {
 
   getCurrentWorkout(): Observable<Result<GetCurrentWorkoutResponse>> {
     return this.http.get<Result<GetCurrentWorkoutResponse>>(
-      this.apiUrl + 'workouts/current'
+      this.apiUrl + 'workouts/current',
     );
+  }
+
+  saveWorkout(req: any) {
+    return this.http.post(this.apiUrl + 'workouts/save', req);
+  }
+
+  finishWorkout(req: any) {
+    return this.http.post(this.apiUrl + 'workouts/finish', req);
   }
 }
