@@ -74,7 +74,10 @@ export class HeaderComponent {
       icon: 'pi pi-book',
       isSelected: signal<boolean>(false),
       route: '/dashboard/workouts',
-      alternativeRoutes: ['/dashboard/workout-selection'],
+      alternativeRoutes: [
+        '/dashboard/workout-selection',
+        '/dashboard/workout-history',
+      ],
       role: Role.User,
     },
     {
@@ -122,7 +125,7 @@ export class HeaderComponent {
       .subscribe((result) => {
         if (!result.isSuccess) {
           this.toastService.error(
-            result.error.message || result.message || 'There was an error'
+            result.error.message || result.message || 'There was an error',
           );
           return;
         }

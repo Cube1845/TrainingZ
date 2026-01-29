@@ -1,0 +1,25 @@
+<div class="flex justify-content-center w-full overflow-auto">
+    <div class="flex flex-column w-full lg:w-6 gap-4 p-3 lg:p-4">
+        <h1 class="m-0 font-light uppercase text-xl lg:text-2xl">Workout History</h1>
+
+        @for (workout of workouts(); track workout.id) {
+            <p-card class="workout-card clickable" (click)="openWorkout(workout.id)">
+                <ng-template pTemplate="content">
+                    <div class="flex flex-column gap-3">
+                        <h2 class="m-0 font-light uppercase text-lg sm:text-2xl">
+                        {{ workout.unitName }}
+                        </h2>
+                            <div class="flex flex-column sm:flex-row justify-content-between gap-1">
+                        <h3 class="m-0 font-light text-sm sm:text-lg">
+                            Plan: {{ workout.planName }}
+                        </h3>
+                            <h3 class="m-0 font-light text-sm sm:text-base">
+                            {{ workout.date | date: 'dd.MM.yyyy HH:mm' }}
+                         </h3>
+                         </div>
+                      </div>
+               </ng-template>
+            </p-card>
+        }
+    </div>
+</div>

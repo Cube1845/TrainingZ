@@ -12,6 +12,7 @@ import { StudentInviteComponent } from './components/sub/student-invite/student-
 import { InvitationCodeComponent } from './components/sub/invitation-code/invitation-code.component';
 import { StudentManageComponent } from './components/sub/student-manage/student-manage.component';
 import { WorkoutSelectionComponent } from './components/sub/workout-selection/workout-selection.component';
+import { WorkoutHistoryComponent } from './components/sub/workout-history/workout-history.component';
 
 export const routes: Routes = [
   {
@@ -64,6 +65,10 @@ export const routes: Routes = [
       {
         path: 'account-settings',
         component: AccountSettingsComponent,
+      },
+      {
+        path: 'workout-history',
+        component: WorkoutHistoryComponent,
       },
       {
         path: '**',

@@ -27,7 +27,7 @@ export class WorkoutsComponent {
       .subscribe((result) => {
         if (!result.isSuccess) {
           this.toastService.error(
-            result.error.message || result.message || 'Invalid id'
+            result.error.message || result.message || 'Invalid id',
           );
           return;
         }
@@ -42,6 +42,10 @@ export class WorkoutsComponent {
 
   goBackToWorkout(): void {
     this.router.navigateByUrl('workout-dashboard');
+  }
+
+  goToWorkoutHistory(): void {
+    this.router.navigateByUrl('dashboard/workout-history');
   }
 
   workoutsData = signal<WorkoutsData | undefined>(undefined);
