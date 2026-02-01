@@ -1,0 +1,79 @@
+<div class="flex justify-content-center w-full">
+  <div class="flex flex-column w-full lg:w-6 p-4 gap-4">
+
+    <div class="flex align-items-center gap-3">
+      <app-button
+        icon="pi pi-arrow-left"
+        color="secondary"
+        (click)="goBack()"
+      />
+      <h1 class="m-0 font-light uppercase">
+        Workout Details
+      </h1>
+    </div>
+
+    @if (workout()) {
+      <p-card>
+        <ng-template pTemplate="content">
+          <div class="flex flex-column gap-2">
+            <h2 class="m-0 font-light uppercase">
+              {{ workout()!.unitName }}
+            </h2>
+
+            <h3 class="m-0 font-light">
+              Plan: {{ workout()!.planName }}
+            </h3>
+
+            <h4 class="m-0 font-light">
+              {{ workout()!.finishedAt | date:'dd.MM.yyyy HH:mm' }}
+            </h4>
+          </div>
+        </ng-template>
+      </p-card>
+
+      <p-accordion [multiple]="true">
+        @for (exercise of workout()!.exercises; track exercise.exerciseName) {
+
+          <p-accordion-panel>
+            <p-accordion-header>
+              <h3 class="m-0 font-light uppercase">
+                {{ exercise.exerciseName }}
+              </h3>
+            </p-accordion-header>
+
+            <p-accordion-content>
+              <div class="flex flex-column gap-3">
+
+                <div class="flex flex-wrap gap-2">
+                  @for (set of exercise.sets; track set.index) {
+                    <div
+                      class="set-tile"
+                      [class.done]="set.done"
+                      [class.not-done]="!set.done"
+                    >
+                      <span>Set {{ set.index + 1 }}</span>
+                    </div>
+                  }
+                </div>
+
+                @for (set of exercise.sets; track set.index) {
+                  @if (set.comment) {
+                    <p class="m-0 font-light text-sm">
+                      <strong>Set {{ set.index + 1 }}:</strong>
+                      {{ set.comment }}
+                    </p>
+                  }
+                }
+
+              </div>
+            </p-accordion-content>
+
+          </p-accordion-panel>
+
+        }
+      </p-accordion>
+
+    }
+
+  </div>
+</div>

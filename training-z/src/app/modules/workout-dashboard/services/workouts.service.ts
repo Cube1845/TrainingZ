@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { WorkoutsData } from '../../dashboard/models/workouts-data';
 import { GetActiveTrainingPlanResponse } from '../../dashboard/services/api-responses/get-active-training-plan-response';
 import { GetCurrentWorkoutResponse } from './api-responses/get-current-workout-response';
+import { GetWorkoutHistoryResponse } from './api-responses/get-workout-history-response';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,12 @@ export class WorkoutsService {
   getWorkoutsData(): Observable<Result<WorkoutsData>> {
     return this.http.get<Result<WorkoutsData>>(
       this.apiUrl + 'workouts/workouts-data',
+    );
+  }
+
+  getWorkoutHistory(): Observable<Result<GetWorkoutHistoryResponse>> {
+    return this.http.get<Result<GetWorkoutHistoryResponse>>(
+      this.apiUrl + 'workouts/history',
     );
   }
 

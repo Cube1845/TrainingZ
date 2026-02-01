@@ -1,0 +1,17 @@
+.set-tile {
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-weight: 300;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+.set-tile.done {
+  background: var(--green-500);
+  color: white;
+}
+
+.set-tile.not-done {
+  background: var(--surface-300);
+  color: var(--text-color);
+}

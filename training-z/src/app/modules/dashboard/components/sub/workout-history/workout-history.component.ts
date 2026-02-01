@@ -11,7 +11,7 @@ import { AppToastService } from '../../../../common/services/app-toast.service';
 
 @Component({
   selector: 'app-workout-history',
-  imports: [CardModule, AppButtonComponent, DatePipe],
+  imports: [CardModule, DatePipe],
   templateUrl: './workout-history.component.html',
   styleUrl: './workout-history.component.scss',
 })
@@ -20,11 +20,11 @@ export class WorkoutHistoryComponent {
   private readonly router = inject(Router);
   private readonly toastService = inject(AppToastService);
 
-  data = signal<WorkoutsData | null>(null);
+  data = signal<LastWorkoutData[] | null>(null);
 
   constructor() {
     this.workoutsService
-      .getWorkoutsData()
+      .getWorkoutHistory()
       .pipe(catchError((err) => of(err)))
       .subscribe((result) => {
         if (!result.isSuccess) {
@@ -34,12 +34,12 @@ export class WorkoutHistoryComponent {
           return;
         }
 
-        this.data.set(result.value);
+        this.data.set(result.value.workouts);
       });
   }
 
   workouts(): LastWorkoutData[] {
-    return this.data()?.lastWorkouts ?? [];
+    return this.data() ?? [];
   }
 
   openWorkout(id: string) {}

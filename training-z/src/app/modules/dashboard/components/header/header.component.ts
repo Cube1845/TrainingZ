@@ -77,6 +77,7 @@ export class HeaderComponent {
       alternativeRoutes: [
         '/dashboard/workout-selection',
         '/dashboard/workout-history',
+        '/dashboard/workout-details',
       ],
       role: Role.User,
     },
