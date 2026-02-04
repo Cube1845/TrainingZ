@@ -49,4 +49,8 @@ export class WorkoutsComponent {
   }
 
   workoutsData = signal<WorkoutsData | undefined>(undefined);
+
+  openWorkout(id: string) {
+    this.router.navigateByUrl('dashboard/workout-details/' + id);
+  }
 }

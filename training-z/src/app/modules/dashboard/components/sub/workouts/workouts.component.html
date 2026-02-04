@@ -23,7 +23,7 @@
             <div class="flex flex-column gap-4 mt-3">
                 @if (workoutsData()!.lastWorkouts.length > 0) {
                     @for (lastWorkout of workoutsData()!.lastWorkouts; track $index) {
-                        <div class="p-4 tile border-round-lg flex-1 darker-tile hoverable flex align-items-center flex-column">
+                        <div class="p-4 tile border-round-lg flex-1 darker-tile hoverable flex align-items-center flex-column" (click)="openWorkout(lastWorkout.id)" >
                             <h1 class="m-0 p-0 text-3xl">{{ lastWorkout.unitName }}</h1>
                             <h2 class="m-0 p-0 text-2xl">{{ lastWorkout.date | date: 'dd.MM.yyyy HH:mm' }}</h2>
                         </div>

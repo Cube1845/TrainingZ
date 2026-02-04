@@ -11,7 +11,7 @@ import { AppToastService } from '../../../../common/services/app-toast.service';
 
 @Component({
   selector: 'app-workout-history',
-  imports: [CardModule, DatePipe],
+  imports: [CardModule, DatePipe, AppButtonComponent],
   templateUrl: './workout-history.component.html',
   styleUrl: './workout-history.component.scss',
 })
@@ -42,5 +42,11 @@ export class WorkoutHistoryComponent {
     return this.data() ?? [];
   }
 
-  openWorkout(id: string) {}
+  openWorkout(id: string) {
+    this.router.navigateByUrl('dashboard/workout-details/' + id);
+  }
+
+  goBack() {
+    history.back();
+  }
 }
