@@ -6,6 +6,8 @@ import { DatePipe } from '@angular/common';
 import { WorkoutsService } from '../../../../workout-dashboard/services/workouts.service';
 import { ActivatedRoute } from '@angular/router';
 import { WorkoutDetails } from '../../../models/workout-details';
+import { catchError, of } from 'rxjs';
+import { AppToastService } from '../../../../common/services/app-toast.service';
 
 @Component({
   selector: 'app-workout-details',
@@ -16,50 +18,29 @@ import { WorkoutDetails } from '../../../models/workout-details';
 export class WorkoutDetailsComponent implements OnInit {
   private readonly workoutsService = inject(WorkoutsService);
   private readonly route = inject(ActivatedRoute);
+  private readonly toastService = inject(AppToastService);
 
-  workout = signal<WorkoutDetails | null>({
-    id: '',
-    unitName: 'Push day',
-    planName: 'hahaha',
-    finishedAt: new Date(),
-    exercises: [
-      {
-        exerciseName: 'Planche',
-        sets: [
-          {
-            index: 0,
-            done: true,
-            comment: '',
-          },
-          {
-            index: 1,
-            done: true,
-            comment: '',
-          },
-          {
-            index: 2,
-            done: false,
-            comment: '',
-          },
-          {
-            index: 3,
-            done: true,
-            comment: '',
-          },
-        ],
-      },
-    ],
-  });
-  loading = signal(false); // change here
+  selectedSetIndex = 0;
+
+  workout = signal<WorkoutDetails | null>(null);
+  loading = signal(true);
 
   ngOnInit() {
     const workoutId = this.route.snapshot.paramMap.get('id')!;
-    // this.workoutsService.getWorkoutDetails(id).subscribe({
-    //   next: (res) => {
-    //     this.workout.set(res);
-    //     this.loading.set(false);
-    //   },
-    // });
+    this.workoutsService
+      .getWorkoutDetails(workoutId)
+      .pipe(catchError((err) => of(err)))
+      .subscribe((result) => {
+        if (!result.isSuccess) {
+          this.toastService.error(
+            result.error.message || result.message || 'Invalid id',
+          );
+          return;
+        }
+
+        this.workout.set(result.value);
+        this.loading.set(false);
+      });
   }
 
   goBack() {

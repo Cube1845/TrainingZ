@@ -7,6 +7,7 @@ import { WorkoutsData } from '../../dashboard/models/workouts-data';
 import { GetActiveTrainingPlanResponse } from '../../dashboard/services/api-responses/get-active-training-plan-response';
 import { GetCurrentWorkoutResponse } from './api-responses/get-current-workout-response';
 import { GetWorkoutHistoryResponse } from './api-responses/get-workout-history-response';
+import { WorkoutDetails } from '../../dashboard/models/workout-details';
 
 @Injectable({
   providedIn: 'root',
@@ -48,10 +49,16 @@ export class WorkoutsService {
   }
 
   saveWorkout(req: any) {
-    return this.http.post(this.apiUrl + 'workouts/save', req);
+    return this.http.post<Result>(this.apiUrl + 'workouts/save', req);
   }
 
   finishWorkout(req: any) {
-    return this.http.post(this.apiUrl + 'workouts/finish', req);
+    return this.http.post<Result>(this.apiUrl + 'workouts/finish', req);
+  }
+
+  getWorkoutDetails(id: string) {
+    return this.http.get<Result<WorkoutDetails>>(
+      this.apiUrl + 'workouts/details/' + id,
+    );
   }
 }

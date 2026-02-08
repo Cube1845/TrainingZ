@@ -50,5 +50,6 @@ public class Exercise : BaseEntity
             Info = Info,
             CreatedAt = CreatedAt,
         };
+
     }
 }
