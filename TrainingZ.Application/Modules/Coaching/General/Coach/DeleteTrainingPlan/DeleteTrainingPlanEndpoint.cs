@@ -24,6 +24,7 @@ public class DeleteTrainingPlanEndpoint(IAppDbContext context) : Endpoint<Delete
             .Include(x => x.TrainingUnits)
             .ThenInclude(x => x.Workouts)
             .ThenInclude(x => x.DoneExercises)
+            .ThenInclude(x => x.DoneSets)
             .Include(x => x.TrainingUnits)
             .ThenInclude(x => x.TrainingSections)
             .ThenInclude(x => x.Exercises)
@@ -45,6 +46,11 @@ public class DeleteTrainingPlanEndpoint(IAppDbContext context) : Endpoint<Delete
         {
             foreach (var workout in unit.Workouts)
             {
+                foreach (var doneExercise in workout.DoneExercises)
+                {
+                    _context.DoneSets.RemoveRange(doneExercise.DoneSets);
+                }
+
                 _context.DoneExercises.RemoveRange(workout.DoneExercises);
             }
 
