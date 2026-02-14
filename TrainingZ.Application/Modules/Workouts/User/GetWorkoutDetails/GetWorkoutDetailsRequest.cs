@@ -1,3 +1,3 @@
 ﻿namespace TrainingZ.Application.Modules.Workouts.User.GetWorkoutDetails;
 
-public record GetWorkoutDetailsRequest(Guid Id);
+public record GetWorkoutDetailsRequest(Guid Id, Guid? StudentId);

@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { WorkoutsService } from '../../../../workout-dashboard/services/workouts.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { WorkoutsData } from '../../../models/workouts-data';
 import { catchError, of } from 'rxjs';
 import { LastWorkoutData } from '../../../models/last-workout-data';
@@ -22,9 +22,18 @@ export class WorkoutHistoryComponent {
 
   data = signal<LastWorkoutData[] | null>(null);
 
+  private readonly route = inject(ActivatedRoute);
+
+  studentId = signal<string | null>(null);
+
   constructor() {
+    this.route.queryParamMap.subscribe((params) => {
+      const id = params.get('studentId');
+      this.studentId.set(id);
+    });
+
     this.workoutsService
-      .getWorkoutHistory()
+      .getWorkoutHistory(this.studentId())
       .pipe(catchError((err) => of(err)))
       .subscribe((result) => {
         if (!result.isSuccess) {
@@ -42,8 +51,12 @@ export class WorkoutHistoryComponent {
     return this.data() ?? [];
   }
 
-  openWorkout(id: string) {
-    this.router.navigateByUrl('dashboard/workout-details/' + id);
+  openWorkout(workoutId: string): void {
+    const studentId = this.studentId();
+
+    this.router.navigate(['dashboard/workout-details', workoutId], {
+      queryParams: studentId ? { studentId } : {},
+    });
   }
 
   goBack() {

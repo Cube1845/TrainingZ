@@ -47,11 +47,21 @@
                 <h1 class="text-2xl lg:text-4xl m-0 p-0">Last workouts:</h1>
                 <div class="flex gap-4 justify-content-center flex-column lg:flex-row">
                     @for (item of studentData()!.lastWorkouts; track $index) {
-                        <div class="flex align-items-center justify-content-center p-4 flex-column workout-tile border-round-lg flex-1">
-                            <h2 class="m-0 p-0 text-2xl">02.03.2025</h2>
-                            <h2 class="m-0 p-0 text-xl">15:35</h2>
+                        <div class="flex align-items-center justify-content-center p-4 flex-column workout-tile border-round-lg flex-1 gap-1" (click)="openWorkoutDetails(item.id)">
+                            <h1 class="m-0 p-0 text-2xl">{{ item.unitName }}</h1>
+                            <h2 class="m-0 p-0 text-xl">{{ item.date | date: 'dd.MM.yyyy HH:mm' }}</h2>
                         </div>
                     }
+                </div>
+
+                <div class="flex justify-content-end">
+                    <app-button
+                        label="View full workout history"
+                        icon="pi pi-history"
+                        color="secondary"
+                        [outlined]="true"
+                        (click)="openWorkoutHistory()"
+                    />
                 </div>
             </div>
         }

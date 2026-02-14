@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Result } from '../../common/models/result';
 import { environment } from '../../../../environments/environment.development';
@@ -22,9 +22,18 @@ export class WorkoutsService {
     );
   }
 
-  getWorkoutHistory(): Observable<Result<GetWorkoutHistoryResponse>> {
+  getWorkoutHistory(
+    studentId?: string | null,
+  ): Observable<Result<GetWorkoutHistoryResponse>> {
+    let params = new HttpParams();
+
+    if (studentId) {
+      params = params.set('studentId', studentId);
+    }
+
     return this.http.get<Result<GetWorkoutHistoryResponse>>(
       this.apiUrl + 'workouts/history',
+      { params },
     );
   }
 
@@ -56,9 +65,13 @@ export class WorkoutsService {
     return this.http.post<Result>(this.apiUrl + 'workouts/finish', req);
   }
 
-  getWorkoutDetails(id: string) {
-    return this.http.get<Result<WorkoutDetails>>(
-      this.apiUrl + 'workouts/details/' + id,
-    );
+  getWorkoutDetails(id: string, studentId?: string | null) {
+    let params = new HttpParams();
+
+    if (studentId) {
+      params = params.set('studentId', studentId);
+    }
+
+    return this.http.get(`${this.apiUrl}workouts/details/${id}`, { params });
   }
 }

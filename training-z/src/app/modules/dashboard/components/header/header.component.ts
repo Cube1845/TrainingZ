@@ -89,6 +89,8 @@ export class HeaderComponent {
       alternativeRoutes: [
         '/dashboard/student-invite',
         '/dashboard/student-manage',
+        '/dashboard/workout-history',
+        '/dashboard/workout-details',
       ],
       role: Role.Coach,
     },

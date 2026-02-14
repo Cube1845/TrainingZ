@@ -42,7 +42,7 @@ export class StudentManageComponent {
         .subscribe((result) => {
           if (!result.isSuccess) {
             this.toastService.error(
-              result.error.message || result.message || 'Invalid data'
+              result.error.message || result.message || 'Invalid data',
             );
             return;
           }
@@ -60,6 +60,18 @@ export class StudentManageComponent {
     });
   }
 
+  openWorkoutHistory(): void {
+    this.router.navigate(['dashboard/workout-history'], {
+      queryParams: { studentId: this.studentId },
+    });
+  }
+
+  openWorkoutDetails(workoutId: string): void {
+    this.router.navigate(['dashboard/workout-details', workoutId], {
+      queryParams: { studentId: this.studentId },
+    });
+  }
+
   changeTrainingPlanActiveState(index: number, event: Event): void {
     event.stopPropagation();
 
@@ -69,25 +81,25 @@ export class StudentManageComponent {
       ? () =>
           this.dialogService.displayConfirmation(
             'Are you sure?',
-            'Do you want to deactivate this training plan? This student will have no training plan active.'
+            'Do you want to deactivate this training plan? This student will have no training plan active.',
           )
       : () =>
           this.dialogService.displayConfirmation(
             'Are you sure?',
-            'Do you want to activate this training plan? Other active plans will be deactivated.'
+            'Do you want to activate this training plan? Other active plans will be deactivated.',
           );
 
     fn().subscribe(() => {
       this.plannerService
         .changeTrainingPlanActiveState(
           this.studentData()!.trainingPlans[index].id,
-          this.studentData()!.studentData.id
+          this.studentData()!.studentData.id,
         )
         .pipe(catchError((err) => of(err)))
         .subscribe((result) => {
           if (!result.isSuccess) {
             this.toastService.error(
-              result.error.message || result.message || 'Invalid id'
+              result.error.message || result.message || 'Invalid id',
             );
             return;
           }
@@ -96,7 +108,7 @@ export class StudentManageComponent {
             if (x!.trainingPlans![index].active) {
               x!.trainingPlans![index].active = false;
               this.toastService.success(
-                "You've deactivated this training plan"
+                "You've deactivated this training plan",
               );
             } else {
               x!.trainingPlans!.forEach((y) => {
@@ -119,7 +131,7 @@ export class StudentManageComponent {
       environment.maxTrainingPlansPerStudent
     ) {
       this.toastService.error(
-        'You can only have up to 2 training plans per student at the same time'
+        'You can only have up to 2 training plans per student at the same time',
       );
       return;
     }
@@ -130,13 +142,13 @@ export class StudentManageComponent {
       .subscribe((result) => {
         if (!result.isSuccess) {
           this.toastService.error(
-            result.error.message || result.message || 'Invalid id'
+            result.error.message || result.message || 'Invalid id',
           );
           return;
         }
 
         this.router.navigateByUrl(
-          'workout-planner/' + result.value.trainingPlanId
+          'workout-planner/' + result.value.trainingPlanId,
         );
       });
   }
@@ -147,7 +159,7 @@ export class StudentManageComponent {
     this.dialogService
       .displayConfirmation(
         'Are you sure?',
-        'Do you want to delete this training plan (all data related to this plan will also be deleted, e. g. done workouts)?'
+        'Do you want to delete this training plan (all data related to this plan will also be deleted, e. g. done workouts)?',
       )
       .subscribe(() => {
         this.coachingService
@@ -156,7 +168,7 @@ export class StudentManageComponent {
           .subscribe((result) => {
             if (!result.isSuccess) {
               this.toastService.error(
-                result.error.message || result.message || 'Invalid id'
+                result.error.message || result.message || 'Invalid id',
               );
               return;
             }

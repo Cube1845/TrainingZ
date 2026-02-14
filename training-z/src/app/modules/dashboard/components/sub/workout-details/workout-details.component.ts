@@ -25,10 +25,17 @@ export class WorkoutDetailsComponent implements OnInit {
   workout = signal<WorkoutDetails | null>(null);
   loading = signal(true);
 
+  studentId = signal<string | null>(null);
+
   ngOnInit() {
+    this.route.queryParamMap.subscribe((params) => {
+      const studentId = params.get('studentId');
+      this.studentId.set(studentId);
+    });
+
     const workoutId = this.route.snapshot.paramMap.get('id')!;
     this.workoutsService
-      .getWorkoutDetails(workoutId)
+      .getWorkoutDetails(workoutId, this.studentId())
       .pipe(catchError((err) => of(err)))
       .subscribe((result) => {
         if (!result.isSuccess) {
