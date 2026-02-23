@@ -23,6 +23,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Exercise> Exercises { get; set; }
     public DbSet<Workout> Workouts { get; set; }
     public DbSet<DoneExercise> DoneExercises { get; set; }
+    public DbSet<DoneSet> DoneSets { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

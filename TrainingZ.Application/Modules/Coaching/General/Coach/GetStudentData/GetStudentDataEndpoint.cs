@@ -41,8 +41,10 @@ public class GetStudentDataEndpoint(IAppUserRepository appUserRepo, IAppDbContex
             .Include(x => x.TrainingUnit)
             .ThenInclude(x => x!.TrainingPlan)
             .ThenInclude(x => x!.CoachingData)
-            .Where(x => x.TrainingUnit!.TrainingPlan!.CoachingData!.CoachId == userId)
-            .Select(x => new LastWorkoutData(x.Id, x.TrainingUnit!.TrainingPlan!.Name, x.TrainingUnit.Name, x.Finished))
+            .Where(x => x.TrainingUnit!.TrainingPlan!.CoachingData!.CoachId == userId && !x.IsActive)
+            .OrderByDescending(x => x.Finished)
+            .Take(3)
+            .Select(x => new LastWorkoutData(x.Id, x.TrainingUnit!.TrainingPlan!.Name, x.TrainingUnit.Name, x.CreatedAt))
             .ToListAsync(ct);
 
         await SendOkAsync(Result<GetStudentDataResponse>.Success(new(appUser, trainingPlans, lastWorkouts)), ct);

@@ -5,7 +5,7 @@ using TrainingZ.Application.Common.Models;
 using TrainingZ.Application.Modules.Coaching.General.Coach.GetStudentData.Models;
 using TrainingZ.Domain.Enums;
 
-namespace TrainingZ.Application.Modules.Coaching.General.User.GetWorkoutsData;
+namespace TrainingZ.Application.Modules.Workouts.User.GetWorkoutsData;
 
 public class GetWorkoutsDataEndpoint(IAppDbContext context) : EndpointWithoutRequest<Result<GetWorkoutsDataResponse>>
 {
@@ -13,7 +13,7 @@ public class GetWorkoutsDataEndpoint(IAppDbContext context) : EndpointWithoutReq
 
     public override void Configure()
     {
-        Get("coaching/general/workouts-data");
+        Get("workouts/workouts-data");
         Roles(Role.User.ToString());
     }
 
@@ -23,19 +23,23 @@ public class GetWorkoutsDataEndpoint(IAppDbContext context) : EndpointWithoutReq
 
         var userTrainingPlans = await _context.TrainingPlans
             .Include(x => x.CoachingData)
+            .Include(x => x.TrainingUnits)
+            .ThenInclude(x => x.Workouts)
             .Where(x => x.CoachingData!.StudentId == userId)
             .ToListAsync(ct);
+
+        var hasCurrentWorkout = userTrainingPlans.Any(p => p.TrainingUnits.Any(u => u.Workouts.Any(w => w.IsActive)));
 
         var lastWorkouts = await _context.Workouts
             .Include(x => x.TrainingUnit)
             .ThenInclude(x => x!.TrainingPlan)
             .ThenInclude(x => x!.CoachingData)
-            .Where(x => x.TrainingUnit!.TrainingPlan!.CoachingData!.StudentId == userId)
+            .Where(x => x.TrainingUnit!.TrainingPlan!.CoachingData!.StudentId == userId && !x.IsActive)
             .OrderByDescending(x => x.Finished)
             .Take(3)
-            .Select(x => new LastWorkoutData(x.Id, x.TrainingUnit!.TrainingPlan!.Name, x.TrainingUnit.Name, x.Finished))
+            .Select(x => new LastWorkoutData(x.Id, x.TrainingUnit!.TrainingPlan!.Name, x.TrainingUnit.Name, x.CreatedAt))
             .ToListAsync(ct);
 
-        await SendOkAsync(Result<GetWorkoutsDataResponse>.Success(new(userTrainingPlans.Any(x => x.IsActive), lastWorkouts)), ct);
+        await SendOkAsync(Result<GetWorkoutsDataResponse>.Success(new(hasCurrentWorkout, userTrainingPlans.Any(x => x.IsActive), lastWorkouts)), ct);
     }
 }

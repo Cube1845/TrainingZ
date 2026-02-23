@@ -1,5 +1,6 @@
 import { Component, input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
+import { ButtonIconPosition } from 'primeng/button';
 
 @Component({
   selector: 'app-button',
@@ -17,4 +18,5 @@ export class AppButtonComponent {
   color = input<'primary' | 'secondary'>('primary');
   class = input<string>('');
   styleClass = input<string>('');
+  iconPos = input<ButtonIconPosition>('left');
 }

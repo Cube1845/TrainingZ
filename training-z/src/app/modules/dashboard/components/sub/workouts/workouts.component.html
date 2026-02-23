@@ -1,6 +1,11 @@
 @if (workoutsData() != undefined) {
     <div class="flex align-items-center flex-column w-full lg:w-6 p-4 gap-4">
-        @if (workoutsData()!.hasActiveTrainingPlan) {
+        @if (workoutsData()!.hasCurrentWorkout) {
+            <div class="p-4 tile hoverable border-round-lg flex flex-column align-items-center" (click)="goBackToWorkout()">
+                <h1 class="m-0 p-0 text-center">Go back to your workout</h1>
+                <i class="pi pi-play-circle text-4xl pt-2"></i>
+            </div>
+        } @else if (workoutsData()!.hasActiveTrainingPlan) {
             <div class="p-4 tile hoverable border-round-lg flex flex-column align-items-center" (click)="goToWorkoutSelection()">
                 <h1 class="m-0 p-0 text-center">Start new workout</h1>
                 <i class="pi pi-play-circle text-4xl pt-2"></i>
@@ -18,7 +23,7 @@
             <div class="flex flex-column gap-4 mt-3">
                 @if (workoutsData()!.lastWorkouts.length > 0) {
                     @for (lastWorkout of workoutsData()!.lastWorkouts; track $index) {
-                        <div class="p-4 tile border-round-lg flex-1 darker-tile hoverable flex align-items-center flex-column">
+                        <div class="p-4 tile border-round-lg flex-1 darker-tile hoverable flex align-items-center flex-column" (click)="openWorkout(lastWorkout.id)" >
                             <h1 class="m-0 p-0 text-3xl">{{ lastWorkout.unitName }}</h1>
                             <h2 class="m-0 p-0 text-2xl">{{ lastWorkout.date | date: 'dd.MM.yyyy HH:mm' }}</h2>
                         </div>
@@ -32,7 +37,7 @@
         </div>
 
         <div class="flex justify-content-end w-full">
-            <app-button label="See full history" color="secondary" size="large" class="pb-4" />
+            <app-button label="See full history" color="secondary" size="large" class="pb-4" (click)="goToWorkoutHistory()" />
         </div>
     </div>
 }

@@ -1,0 +1,47 @@
+<p-accordion class="w-full">
+    <p-accordion-panel value="0">
+        <p-accordion-header>
+            <h1 class="m-0 p-0 text-2xl">{{ trainingUnit().name }}</h1>
+        </p-accordion-header>
+        <p-accordion-content>
+            <div class="flex flex-column gap-2">
+                @for (section of trainingUnit().trainingSections; track $index) {
+                    <div class="p-4 darker-tile flex flex-column gap-2 border-round-lg">
+                        <h2 class="m-0 p-0 text-2xl">{{ section.name }}</h2>
+
+                        <table>
+                            <tr>
+                                <th class="text-left text-xl p-2">Exercise</th>
+                                <th class="text-left text-xl p-2">Sets</th>
+                                <th class="text-left text-xl p-2">Reps</th>
+                            </tr>
+
+                            @for (exercise of section.exercises; track $index) {
+                                <tr>
+                                    <td class="p-2 text-xl">
+                                        @if (exercise.exerciseType == 1) {
+                                            {{ exercise.name }}
+                                        } @else {
+                                            <div class="tile hoverable w-min border-round-md flex flex-row px-3 py-2 gap-2 align-items-center" (click)="op.toggle($event)">
+                                                <h2 class="m-0 p-0 line-height-1 text-lg">Combo</h2>
+                                                <i class="pi pi-info-circle"></i>
+                                            </div>
+                                            <p-popover #op>
+                                                <div>
+                                                    <h1 class="m-0 p-0 text-lg">{{ joinCombo(exercise.name) }}</h1>
+                                                </div>
+                                            </p-popover>
+
+                                        }
+                                    </td>
+                                    <td class="p-2 text-xl">{{ exercise.sets }}</td>
+                                    <td class="p-2 text-xl">{{ exercise.reps }}</td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                }
+            </div>
+        </p-accordion-content>
+    </p-accordion-panel>
+</p-accordion>

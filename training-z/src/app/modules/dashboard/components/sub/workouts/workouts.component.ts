@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { CoachingService } from '../../../services/coaching.service';
 import { catchError, of } from 'rxjs';
 import { AppToastService } from '../../../../common/services/app-toast.service';
+import { WorkoutsService } from '../../../../workout-dashboard/services/workouts.service';
 
 @Component({
   selector: 'app-workouts',
@@ -16,17 +17,17 @@ import { AppToastService } from '../../../../common/services/app-toast.service';
 })
 export class WorkoutsComponent {
   private readonly router = inject(Router);
-  private readonly coachingService = inject(CoachingService);
+  private readonly workoutsService = inject(WorkoutsService);
   private readonly toastService = inject(AppToastService);
 
   constructor() {
-    this.coachingService
+    this.workoutsService
       .getWorkoutsData()
       .pipe(catchError((err) => of(err)))
       .subscribe((result) => {
         if (!result.isSuccess) {
           this.toastService.error(
-            result.error.message || result.message || 'Invalid id'
+            result.error.message || result.message || 'Invalid id',
           );
           return;
         }
@@ -39,5 +40,17 @@ export class WorkoutsComponent {
     this.router.navigateByUrl('dashboard/workout-selection');
   }
 
+  goBackToWorkout(): void {
+    this.router.navigateByUrl('workout-dashboard');
+  }
+
+  goToWorkoutHistory(): void {
+    this.router.navigateByUrl('dashboard/workout-history');
+  }
+
   workoutsData = signal<WorkoutsData | undefined>(undefined);
+
+  openWorkout(id: string) {
+    this.router.navigateByUrl('dashboard/workout-details/' + id);
+  }
 }

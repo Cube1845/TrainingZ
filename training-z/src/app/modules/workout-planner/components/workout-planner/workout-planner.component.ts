@@ -60,42 +60,21 @@ export class WorkoutPlannerComponent {
             return;
           }
 
-          this.trainingPlan.set(
-            new TrainingPlan(
-              result.value.trainingPlan.id,
-              result.value.trainingPlan.name,
-              result.value.trainingPlan.trainingUnits.map((u: TrainingUnit) => {
-                return new TrainingUnit(
-                  u.id,
-                  u.name,
-                  u.trainingSections.map((s: TrainingSection) => {
-                    return new TrainingSection(
-                      s.id,
-                      s.name,
-                      s.exercises.map((e: Exercise) => {
-                        const name = this.isCombo(e.name, e.exerciseType)
-                          ? e.name.split('>')
-                          : e.name;
-
-                        return new Exercise(
-                          e.id,
-                          e.exerciseType,
-                          name,
-                          e.sets,
-                          e.reps,
-                          e.intensityType,
-                          e.intensity,
-                          e.rest,
-                          e.info
-                        );
-                      })
-                    );
-                  })
-                );
-              }),
-              result.value.trainingPlan.isActive
-            )
+          var plan: TrainingPlan = TrainingPlan.fromBackend(
+            result.value.trainingPlan
           );
+
+          plan.trainingUnits.forEach((u) => {
+            u.trainingSections.forEach((s) => {
+              s.exercises.forEach((e) => {
+                if (e.exerciseType == ExerciseType.Combo) {
+                  e.name = (e.name as string).split('>');
+                }
+              });
+            });
+          });
+
+          this.trainingPlan.set(plan);
           this.studentInfo.set(result.value.studentInfo);
 
           this.profileImageService
@@ -121,11 +100,6 @@ export class WorkoutPlannerComponent {
         });
     });
   }
-
-  private isCombo(obj: string | Combo, et: ExerciseType): obj is string {
-    return et == ExerciseType.Combo;
-  }
-
   changeTrainingPlanActiveState(): void {
     var fn = this.trainingPlan()!.isActive
       ? () =>

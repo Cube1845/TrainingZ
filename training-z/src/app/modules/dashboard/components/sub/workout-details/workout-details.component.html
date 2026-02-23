@@ -1,0 +1,88 @@
+<div class="flex justify-content-center w-full">
+  <div class="flex flex-column w-full lg:w-6 p-4 gap-4">
+
+    <div class="flex align-items-center gap-3">
+      <app-button
+        icon="pi pi-arrow-left"
+        color="secondary"
+        (click)="goBack()"
+      />
+      <h1 class="m-0 font-light uppercase lg:text-4xl text-2xl">
+        Workout Details
+      </h1>
+    </div>
+
+    @if (workout()) {
+      <p-card>
+        <ng-template pTemplate="content">
+          <div class="flex flex-column gap-2">
+            <h2 class="m-0 font-light uppercase">
+              {{ workout()!.unitName }}
+            </h2>
+
+            <h3 class="m-0 font-light">
+              Plan: {{ workout()!.planName }}
+            </h3>
+
+            <h4 class="m-0 font-light">
+              {{ workout()!.finishedAt | date:'dd.MM.yyyy HH:mm' }}
+            </h4>
+          </div>
+        </ng-template>
+      </p-card>
+
+      <p-accordion [multiple]="true">
+        @for (exercise of workout()!.exercises; track exercise.exerciseName) {
+
+          <p-accordion-panel>
+            <p-accordion-header>
+              <h3 class="m-0 font-light uppercase">
+                {{ exercise.exerciseName }}
+              </h3>
+            </p-accordion-header>
+
+            <p-accordion-content>
+              <div class="flex flex-column gap-3 p-1">
+
+                <div class="flex gap-2">
+                  @for (set of exercise.sets; track set.index) {
+                    <button
+                      type="button"
+                      class="set-chip"
+                      [class.done]="set.done"
+                      [class.active]="set.index === selectedSetIndex"
+                      (click)="selectedSetIndex = set.index"
+                    >
+                      {{ set.index + 1 }}
+                    </button>
+                  }
+                </div>
+
+                @let selectedSet = exercise.sets[selectedSetIndex];
+
+                @if (selectedSet?.comment) {
+                  <div class="set-comment">
+                    <span class="label">
+                      Set {{ selectedSet.index + 1 }} note
+                    </span>
+                    <p class="m-0">
+                      {{ selectedSet.comment }}
+                    </p>
+                  </div>
+                } @else {
+                  <p class="text-sm opacity-60 m-0">
+                    No comment for this set
+                  </p>
+                }
+
+              </div>
+            </p-accordion-content>
+
+          </p-accordion-panel>
+
+        }
+      </p-accordion>
+    }
+
+  </div>
+</div>

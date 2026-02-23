@@ -81,13 +81,6 @@ namespace TrainingZ.Infrastructure.Migrations
                     b.Property<Guid>("ExerciseId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("SetsDone")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("StudentFeedback")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<Guid>("WorkoutId")
                         .HasColumnType("uuid");
 
@@ -96,6 +89,36 @@ namespace TrainingZ.Infrastructure.Migrations
                     b.HasIndex("WorkoutId");
 
                     b.ToTable("DoneExercises");
+                });
+
+            modelBuilder.Entity("TrainingZ.Domain.Entities.DoneSet", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("DoneExerciseId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDone")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("SetIndex")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoneExerciseId", "SetIndex")
+                        .IsUnique();
+
+                    b.ToTable("DoneSets");
                 });
 
             modelBuilder.Entity("TrainingZ.Domain.Entities.Exercise", b =>
@@ -308,8 +331,11 @@ namespace TrainingZ.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("Finished")
+                    b.Property<DateTime?>("Finished")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
 
                     b.Property<Guid>("TrainingUnitId")
                         .HasColumnType("uuid");
@@ -397,6 +423,17 @@ namespace TrainingZ.Infrastructure.Migrations
                     b.Navigation("Workout");
                 });
 
+            modelBuilder.Entity("TrainingZ.Domain.Entities.DoneSet", b =>
+                {
+                    b.HasOne("TrainingZ.Domain.Entities.DoneExercise", "DoneExercise")
+                        .WithMany("DoneSets")
+                        .HasForeignKey("DoneExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DoneExercise");
+                });
+
             modelBuilder.Entity("TrainingZ.Domain.Entities.Exercise", b =>
                 {
                     b.HasOne("TrainingZ.Domain.Entities.TrainingSection", "TrainingSection")
@@ -477,6 +514,11 @@ namespace TrainingZ.Infrastructure.Migrations
             modelBuilder.Entity("TrainingZ.Domain.Entities.CoachingData", b =>
                 {
                     b.Navigation("TrainingPlans");
+                });
+
+            modelBuilder.Entity("TrainingZ.Domain.Entities.DoneExercise", b =>
+                {
+                    b.Navigation("DoneSets");
                 });
 
             modelBuilder.Entity("TrainingZ.Domain.Entities.TrainingPlan", b =>

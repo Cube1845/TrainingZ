@@ -1,0 +1,94 @@
+@if (trainingUnit() != undefined) {
+    <div class="flex flex-column justify-content-between h-full w-full lg:w-6">
+        <div class="flex flex-column align-items-center p-4 gap-3 lg:gap-6 overflow-auto">
+            <div class="flex flex-column gap-2 w-full">
+                <h3 class="m-0 p-0 uppercase font-light text-xl">{{ trainingUnit()!.trainingSections[currentSectionIndex()].name }}</h3>
+                @if (trainingUnit()!.trainingSections[currentSectionIndex()].exercises[currentExerciseIndex()].exerciseType == 1) {
+                    <h1 class="font-light m-0 p-0 uppercase">{{ trainingUnit()!.trainingSections[currentSectionIndex()].exercises[currentExerciseIndex()].name }}</h1>
+                } @else {
+                    <h1 class="font-light m-0 p-0 uppercase">Combo:</h1>
+
+                    @for (comboItem of getCombo(trainingUnit()!.trainingSections[currentSectionIndex()].exercises[currentExerciseIndex()].name); track $index) {
+                        <h2 class="font-light m-0 p-0 uppercase text-3xl flex align-items-center gap-2"><i class="pi pi-chevron-right"></i>{{ comboItem }}</h2>
+                    }
+                }
+            </div>
+
+            <div class="flex w-full">
+                <div class="flex flex-column flex-1 gap-1">
+                    <h3 class="m-0 p-0 font-light uppercase text-lg">Sets</h3>
+                    <h2 class="m-0 p-0 font-light text-3xl">{{ trainingUnit()!.trainingSections[currentSectionIndex()].exercises[currentExerciseIndex()].sets }}</h2>
+                </div>
+                <div class="flex flex-column flex-1 gap-1">
+                    <h3 class="m-0 p-0 font-light uppercase text-lg">Reps</h3>
+                    <h2 class="m-0 p-0 font-light text-3xl">{{ trainingUnit()!.trainingSections[currentSectionIndex()].exercises[currentExerciseIndex()].reps }}</h2>
+                </div>
+                <div class="flex flex-column flex-1 gap-1">
+                    <h3 class="m-0 p-0 font-light uppercase text-lg">Rest</h3>
+                    <h2 class="m-0 p-0 font-light text-3xl">{{ trainingUnit()!.trainingSections[currentSectionIndex()].exercises[currentExerciseIndex()].rest }}</h2>
+                </div>
+            </div>
+
+            <p-divider class="m-0 p-0" />
+
+            <div class="flex flex-column tile w-full border-round-lg p-3 gap-3">
+                <h3 class="m-0 p-0 uppercase font-light text-xl">Progress</h3>
+
+                <div class="flex flex-column flex-1 gap-1">
+                    @for (set of currentSetsProgress; track set.index) {
+                        <div
+                            class="p-2 border-round-md set-label"
+                            [class.highlighted]="set.index === selectedSetIndex()"
+                            [class.marked]="set.done"
+                            (click)="selectSet(set.index)"
+                            >
+
+                            <h2 class="m-0 p-0 uppercase font-light text-xl text-center">Set {{ set.index + 1 }}</h2>
+                        </div>
+                    }
+                </div>
+
+                <div [formGroup]="setFormGroup" class="flex align-items-center gap-4 w-full">
+                    <app-input
+                        class="flex-1"
+                        label="Comment"
+                        formControlName="comment"
+                    />
+
+                    <div class="flex gap-2 align-items-center justify-content-center">
+                        <p-checkbox
+                        formControlName="done"
+                        [binary]="true"
+                        size="large"
+                        />
+                        <h3 class="m-0 p-0 font-light">Done</h3>
+                    </div>
+                </div>
+            </div>
+
+            @if (trainingUnit()!.trainingSections[currentSectionIndex()].exercises[currentExerciseIndex()].info != null && trainingUnit()!.trainingSections[currentSectionIndex()].exercises[currentExerciseIndex()].info != '') {
+                <p-accordion class="w-full" value="1">
+                    <p-accordion-panel value="1">
+                        <p-accordion-header>
+                            <h3 class="m-0 p-0 text-lg uppercase font-light">Additional info</h3>
+                        </p-accordion-header>
+                        <p-accordion-content>
+                            <div class="flex flex-column">
+                                <h2 class="m-0 p-0 font-light text-base text-justify">{{ trainingUnit()!.trainingSections[currentSectionIndex()].exercises[currentExerciseIndex()].info }}</h2>
+                            </div>
+                        </p-accordion-content>
+                    </p-accordion-panel>
+                </p-accordion>
+            }   
+        </div>
+
+        <p-menu #workoutMenu [popup]="true" [model]="menuItems"></p-menu>
+        <div class="flex flex-column panel w-full gap-3">
+            <div class="flex justify-content-between p-3">
+                <app-button color="secondary" icon="pi pi-arrow-left" [disabled]="!canMoveBackward()" (click)="previousExercise()" />
+                <app-button color="secondary" icon="pi pi-ellipsis-v" (click)="workoutMenu.toggle($event)" />
+                <app-button color="secondary" icon="pi pi-arrow-right" iconPos="right" [disabled]="!canMoveForward()" (click)="nextExercise()" />
+            </div>
+        </div>
+    </div>
+}

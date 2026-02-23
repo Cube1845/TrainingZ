@@ -11,6 +11,14 @@ export class TrainingSection {
     this.exercises = exercises;
   }
 
+  static fromBackend(raw: any): TrainingSection {
+    return new TrainingSection(
+      raw.id,
+      raw.name,
+      raw.exercises.map((e: any) => Exercise.fromBackend(e))
+    );
+  }
+
   editSectionName(name: string): void {
     this.name = name;
   }

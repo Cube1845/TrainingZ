@@ -74,7 +74,11 @@ export class HeaderComponent {
       icon: 'pi pi-book',
       isSelected: signal<boolean>(false),
       route: '/dashboard/workouts',
-      alternativeRoutes: ['/dashboard/workout-selection'],
+      alternativeRoutes: [
+        '/dashboard/workout-selection',
+        '/dashboard/workout-history',
+        '/dashboard/workout-details',
+      ],
       role: Role.User,
     },
     {
@@ -85,6 +89,8 @@ export class HeaderComponent {
       alternativeRoutes: [
         '/dashboard/student-invite',
         '/dashboard/student-manage',
+        '/dashboard/workout-history',
+        '/dashboard/workout-details',
       ],
       role: Role.Coach,
     },
@@ -122,7 +128,7 @@ export class HeaderComponent {
       .subscribe((result) => {
         if (!result.isSuccess) {
           this.toastService.error(
-            result.error.message || result.message || 'There was an error'
+            result.error.message || result.message || 'There was an error',
           );
           return;
         }

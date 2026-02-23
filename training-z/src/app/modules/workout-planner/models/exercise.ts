@@ -34,4 +34,18 @@ export class Exercise {
     this.rest = rest;
     this.info = info;
   }
+
+  static fromBackend(raw: any): Exercise {
+    return new Exercise(
+      raw.id,
+      raw.exerciseType,
+      raw.name,
+      raw.sets,
+      raw.reps,
+      raw.intensityType,
+      raw.intensity,
+      raw.rest,
+      raw.info
+    );
+  }
 }
