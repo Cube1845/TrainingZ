@@ -6,7 +6,69 @@
         color: var(--p-primary-color);
     }
 
-    h2 {
-        color: var(--p-primary-700);
-    }
+.welcome-card {
+  background: var(--p-surface-800);
+}
+
+.kicker {
+  letter-spacing: 0.08em;
+  color: var(--p-surface-300);
+}
+
+h1,
+h2,
+.tile h3 {
+  color: var(--p-surface-200);
+}
+
+.subtitle,
+.calendar-card p,
+.tile p {
+  color: var(--p-surface-300);
+}
+
+.calendar-card {
+  background: var(--p-surface-800);
+}
+
+.day-pill {
+  border: 1px solid var(--p-surface-700);
+  background: var(--p-surface-600);
+  color: var(--p-surface-300);
+  min-width: 2.5rem;
+
+  &.active {
+    border-color: var(--p-primary-700);
+    background: var(--p-primary-700);
+    color: var(--p-primary-contrast-color);
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.tile {
+  background: var(--p-surface-800);
+  text-align: left;
+  transition: transform 0.15s ease, border-color 0.15s ease,
+    box-shadow 0.15s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  border: 1px solid var(--p-surface-300);;
+
+  i {
+    color: var(--p-surface-300);
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: var(--p-primary-500);
+  }
 }
