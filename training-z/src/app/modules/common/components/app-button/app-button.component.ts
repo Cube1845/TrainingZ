@@ -1,6 +1,7 @@
 import { Component, input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
-import { ButtonIconPosition } from 'primeng/button';
+
+type ButtonIconPosition = 'left' | 'right' | 'top' | 'bottom';
 
 @Component({
   selector: 'app-button',
