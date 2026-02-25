@@ -2,95 +2,14 @@
     @if (userRole == 2) {
         <h1 class="m-0 p-0 mt-4">Welcome, user</h1>
 
-    <section
-      class="calendar-card mt-3 border-round-xl p-3 lg:p-4 flex flex-column md:flex-row md:align-items-center md:justify-content-between gap-3"
-    >
-      <div class="flex flex-column gap-2">
-        <div class="flex align-items-center gap-2">
-          <p class="kicker m-0 text-xs font-semibold uppercase">Calendar</p>
-        </div>
-        <h2 class="m-0 text-2xl font-semibold">{{ todayDayName() }}</h2>
-        <p class="m-0">{{ todayDateLabel() }}</p>
-      </div>
-
-      <div class="week-days flex flex-wrap gap-2 md:justify-content-end">
-        @for (day of weekDays(); track day.label) {
-          <div
-            [class]="
-              'day-pill border-round-3xl px-3 py-2 text-sm font-semibold text-center ' +
-              (day.isToday ? 'active' : '')
-            "
-          >
-            {{ day.label }}
-          </div>
-        }
-      </div>
-    </section>
-
-    @if (userRole === role.Coach) {
-      <section class="grid mt-3 px-2">
-        <button class="tile border-round-xl p-4" (click)="navigateTo('/dashboard/students')">
-          <i class="pi pi-users text-2xl"></i>
-          <h3 class="m-0 mt-3 text-xl">Manage students</h3>
-          <p class="m-0 mt-2 line-height-3">View all students, open details, and adjust their plans.</p>
-        </button>
-
-        <button
-          class="tile border-round-xl p-4"
-          (click)="navigateTo('/dashboard/student-invite')"
-        >
-          <i class="pi pi-user-plus text-2xl"></i>
-          <h3 class="m-0 mt-3 text-xl">Invite a student</h3>
-          <p class="m-0 mt-2 line-height-3">Share your invitation code and grow your coaching list.</p>
-        </button>
-
-        <button
-          class="tile border-round-xl p-4"
-          (click)="navigateTo('/dashboard/notifications')"
-        >
-          <i class="pi pi-bell text-2xl"></i>
-          <h3 class="m-0 mt-3 text-xl">Review notifications</h3>
-          <p class="m-0 mt-2 line-height-3">Stay up to date with important activity in one place.</p>
-        </button>
-      </section>
+        <h2>You're currently coaching 0 people</h2>
     } @else {
-      <section class="grid mt-3 px-2">
-        <button class="tile border-round-xl p-4" (click)="navigateTo('/dashboard/workouts')">
-          <i class="pi pi-book text-2xl"></i>
-          <h3 class="m-0 mt-3 text-xl">Go to workouts</h3>
-          <p class="m-0 mt-2 line-height-3">
-            @if (workoutsData()?.hasCurrentWorkout) {
-              Continue your active workout right away.
-            } @else if (workoutsData()?.hasActiveTrainingPlan) {
-              You have an active plan ready for your next session.
-            } @else {
-              No active plan yet — start by contacting your coach.
-            }
-          </p>
-        </button>
+        <h1 class="m-0 p-0 mt-4">Welcome, user</h1>
 
-        <button class="tile border-round-xl p-4" (click)="navigateTo('/dashboard/coach')">
-          <i class="pi pi-user text-2xl"></i>
-          <h3 class="m-0 mt-3 text-xl">Coach connection</h3>
-          <p class="m-0 mt-2 line-height-3">
-            @if (hasCoach()) {
-              Check your coach profile and contact details.
-            } @else {
-              Add a coach using an invitation code.
-            }
-          </p>
-        </button>
-
-        <button
-          class="tile border-round-xl p-4"
-          (click)="navigateTo('/dashboard/workout-history')"
-        >
-          <i class="pi pi-chart-line text-2xl"></i>
-          <h3 class="m-0 mt-3 text-xl">Workout history</h3>
-          <p class="m-0 mt-2 line-height-3">
-            Check your recently completed workouts
-          </p>
-        </button>
-      </section>
+        @if (true) {
+            <h2 class="m-0 p-0 mt-4">You're currently coached by: Jan Kowalski</h2>
+        } @else {
+            <h2 class="m-0 p-0 mt-4">You have no coach right now</h2>
+        }
     }
 </div>
