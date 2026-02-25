@@ -1,6 +1,31 @@
-<div class="flex flex-column align-items-center m-3">
-    @if (userRole == 2) {
-        <h1 class="m-0 p-0 mt-4">Welcome, user</h1>
+<div class="home-container p-3 lg:p-4">
+  @if (userRole === role.Coach || userRole === role.User) {
+    <section
+      class="welcome-card border-round-2xl p-4 lg:p-5 flex flex-column gap-2"
+    >
+      @if (userRole === role.Coach) {
+        <p class="kicker m-0 text-sm font-semibold uppercase">Coach dashboard</p>
+        <h1 class="m-0 text-3xl lg:text-4xl font-semibold">
+          Welcome back{{ userName() ? ', ' + userName() : '' }} 👋
+        </h1>
+        <p class="subtitle m-0 text-lg">
+          You are currently coaching <strong>{{ studentsCount() }}</strong>
+          {{ studentsCount() === 1 ? 'person' : 'people' }}.
+        </p>
+      } @else {
+        <p class="kicker m-0 text-sm font-semibold uppercase">Athlete dashboard</p>
+        <h1 class="m-0 text-3xl lg:text-4xl font-semibold">
+          Welcome back{{ userName() ? ', ' + userName() : '' }} 💪
+        </h1>
+        <p class="subtitle m-0 text-lg">
+          @if (hasCoach()) {
+            Your coach is <strong>{{ coachName() }}</strong>.
+          } @else {
+            You are not connected to a coach yet.
+          }
+        </p>
+      }
+    </section>
 
     <section
       class="calendar-card mt-3 border-round-xl p-3 lg:p-4 flex flex-column md:flex-row md:align-items-center md:justify-content-between gap-3"
@@ -93,4 +118,5 @@
         </button>
       </section>
     }
+  }
 </div>
