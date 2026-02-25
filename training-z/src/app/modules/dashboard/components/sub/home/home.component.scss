@@ -1,11 +1,10 @@
 :host {
-  display: block;
-}
+    height: auto;
+    width: auto;
 
-.home-container {
-  max-width: 1000px;
-  margin: 0 auto;
-}
+    h1 {
+        color: var(--p-primary-color);
+    }
 
 .welcome-card {
   background: var(--p-surface-800);
