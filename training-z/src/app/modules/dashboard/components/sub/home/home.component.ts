@@ -64,7 +64,7 @@ export class HomeComponent implements OnInit {
     const today = new Date();
 
     this.todayDayName.set(
-      today.toLocaleDateString(undefined, { weekday: 'long' }),
+      today.toLocaleDateString(undefined, { weekday: 'long' }).toUpperCase(),
     );
     this.todayDateLabel.set(
       today.toLocaleDateString(undefined, {

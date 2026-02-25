@@ -8,44 +8,34 @@
 }
 
 .welcome-card {
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--p-surface-50) 88%, var(--p-primary-100)),
-    color-mix(in srgb, var(--p-surface-100) 92%, var(--p-primary-100))
-  );
-  border: 1px solid color-mix(in srgb, var(--p-surface-400) 70%, var(--p-primary-300));
+  background: var(--p-surface-800);
 }
 
 .kicker {
   letter-spacing: 0.08em;
-  color: var(--p-surface-700);
+  color: var(--p-surface-300);
 }
 
 h1,
 h2,
 .tile h3 {
-  color: var(--p-surface-900);
+  color: var(--p-surface-200);
 }
 
 .subtitle,
 .calendar-card p,
 .tile p {
-  color: var(--p-surface-700);
+  color: var(--p-surface-300);
 }
 
 .calendar-card {
-  border: 1px solid color-mix(in srgb, var(--p-surface-400) 75%, var(--p-primary-300));
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--p-surface-50) 90%, var(--p-primary-100)),
-    color-mix(in srgb, var(--p-surface-100) 96%, var(--p-primary-200))
-  );
+  background: var(--p-surface-800);
 }
 
 .day-pill {
-  border: 1px solid var(--p-surface-400);
-  background: var(--p-surface-0);
-  color: var(--p-surface-700);
+  border: 1px solid var(--p-surface-700);
+  background: var(--p-surface-600);
+  color: var(--p-surface-300);
   min-width: 2.5rem;
 
   &.active {
@@ -63,8 +53,7 @@ h2,
 }
 
 .tile {
-  border: 1px solid var(--p-surface-300);
-  background: var(--p-surface-0);
+  background: var(--p-surface-800);
   text-align: left;
   transition: transform 0.15s ease, border-color 0.15s ease,
     box-shadow 0.15s ease;
@@ -73,14 +62,14 @@ h2,
   flex-direction: column;
   height: 100%;
   width: 100%;
+  border: 1px solid var(--p-surface-300);;
 
   i {
-    color: var(--p-primary-600);
+    color: var(--p-surface-300);
   }
 
   &:hover {
     transform: translateY(-3px);
     border-color: var(--p-primary-500);
-    box-shadow: 0 10px 20px color-mix(in srgb, var(--p-surface-900) 14%, transparent);
   }
 }

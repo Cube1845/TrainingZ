@@ -28,12 +28,11 @@
     </section>
 
     <section
-      class="calendar-card mt-3 border-round-xl p-3 lg:p-4 flex flex-column md:flex-row md:align-items-center md:justify-content-between gap-3"
+      class="calendar-card mt-3 border-round-xl p-3 lg6:p-4 flex flex-column md:flex-row md:align-items-center md:justify-content-between gap-3"
     >
-      <div class="flex flex-column gap-1">
+      <div class="flex flex-column gap-2">
         <div class="flex align-items-center gap-2">
           <p class="kicker m-0 text-xs font-semibold uppercase">Calendar</p>
-          <p-tag value="Today" severity="info" />
         </div>
         <h2 class="m-0 text-2xl font-semibold">{{ todayDayName() }}</h2>
         <p class="m-0">{{ todayDateLabel() }}</p>
@@ -54,7 +53,7 @@
     </section>
 
     @if (userRole === role.Coach) {
-      <section class="grid mt-3">
+      <section class="grid mt-3 px-2">
         <button class="tile border-round-xl p-4" (click)="navigateTo('/dashboard/students')">
           <i class="pi pi-users text-2xl"></i>
           <h3 class="m-0 mt-3 text-xl">Manage students</h3>
@@ -80,7 +79,7 @@
         </button>
       </section>
     } @else {
-      <section class="grid mt-3">
+      <section class="grid mt-3 px-2">
         <button class="tile border-round-xl p-4" (click)="navigateTo('/dashboard/workouts')">
           <i class="pi pi-book text-2xl"></i>
           <h3 class="m-0 mt-3 text-xl">Go to workouts</h3>
@@ -114,9 +113,7 @@
           <i class="pi pi-chart-line text-2xl"></i>
           <h3 class="m-0 mt-3 text-xl">Workout history</h3>
           <p class="m-0 mt-2 line-height-3">
-            You have completed
-            <strong>{{ workoutsData()?.lastWorkouts?.length || 0 }}</strong>
-            recent workouts available to review.
+            Check your recently completed workouts
           </p>
         </button>
       </section>
