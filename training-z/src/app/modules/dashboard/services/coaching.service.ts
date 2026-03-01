@@ -10,6 +10,7 @@ import { GetCodeResponse } from './api-responses/get-user-info-response';
 import { PlainStudentManageData } from '../models/student-manage-data';
 import { CreateTrainingPlanResponse } from './api-responses/create-training-plan-response';
 import { WorkoutsData } from '../models/workouts-data';
+import { GetNotificationsResponse } from './api-responses/get-notifications-response';
 
 @Injectable({
   providedIn: 'root',
@@ -80,6 +81,20 @@ export class CoachingService {
   removeCoaching(studentId: string): Observable<Result> {
     return this.http.delete<Result>(
       this.apiUrl + 'coaching/manage/' + studentId
+    );
+  }
+
+
+  sendNotification(receiverId: string, message: string): Observable<Result> {
+    return this.http.post<Result>(this.apiUrl + 'notifications', {
+      receiverId: receiverId,
+      message: message,
+    });
+  }
+
+  getNotifications(): Observable<Result<GetNotificationsResponse>> {
+    return this.http.get<Result<GetNotificationsResponse>>(
+      this.apiUrl + 'notifications'
     );
   }
 

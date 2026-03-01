@@ -1,7 +1,10 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Notification } from '../../../models/notification';
 import { ImageModule } from 'primeng/image';
 import { DividerModule } from 'primeng/divider';
+import { CoachingService } from '../../../services/coaching.service';
+import { catchError, of } from 'rxjs';
+import { AppToastService } from '../../../../common/services/app-toast.service';
 
 @Component({
   selector: 'app-notifications',
@@ -10,17 +13,24 @@ import { DividerModule } from 'primeng/divider';
   styleUrl: './notifications.component.scss',
 })
 export class NotificationsComponent {
-  notifications = signal<Notification[]>([
-    {
-      header: 'From Jakub Jerzy',
-      message:
-        'Do your workout! stop ahauiwf abegubae uibisbfisbe fibseifb seibf osemf opseo esipf ebnawda wdawgesg srg drgh tjtyj rth rthgfggherg rthg jku ergf rw',
-      id: 'awdawdaw-awdawdaw-awdawdaw',
-    },
-    {
-      header: 'TrainingZ',
-      message: "Don't forget o work out!",
-      id: 'awdawdaw-awdawdaw-awdawdaw',
-    },
-  ]);
+  private readonly coachingService = inject(CoachingService);
+  private readonly toastService = inject(AppToastService);
+
+  notifications = signal<Notification[]>([]);
+
+  constructor() {
+    this.coachingService
+      .getNotifications()
+      .pipe(catchError((err) => of(err)))
+      .subscribe((result) => {
+        if (!result.isSuccess) {
+          this.toastService.error(
+            result.error.message || result.message || 'There was an error'
+          );
+          return;
+        }
+
+        this.notifications.set(result.value.notifications);
+      });
+  }
 }

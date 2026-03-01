@@ -15,5 +15,6 @@ public interface IAppDbContext
     DbSet<Workout> Workouts { get; set; }
     DbSet<DoneExercise> DoneExercises { get; set; }
     DbSet<DoneSet> DoneSets { get; set; }
+    DbSet<Notification> Notifications { get; set; }
     Task<int> SaveChangesAsync(CancellationToken ct = default);
 }
