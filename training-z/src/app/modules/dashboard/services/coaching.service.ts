@@ -98,6 +98,17 @@ export class CoachingService {
     );
   }
 
+
+  deleteNotification(notificationId: string): Observable<Result> {
+    return this.http.delete<Result>(
+      this.apiUrl + 'notifications/' + notificationId
+    );
+  }
+
+  clearNotifications(): Observable<Result> {
+    return this.http.delete<Result>(this.apiUrl + 'notifications');
+  }
+
   updateUserInfo(
     userInfo: Partial<{
       goals: string | null;

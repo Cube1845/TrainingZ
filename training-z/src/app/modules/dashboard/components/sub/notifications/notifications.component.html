@@ -1,4 +1,4 @@
-<div class="absolute clear-button flex p-4 lg:p-3 border-circle lg:border-round-xl z-1">
+<div class="absolute clear-button flex p-4 lg:p-3 border-circle lg:border-round-xl z-1" (click)="clearNotifications()">
     <i class="pi pi-eraser text-xl"></i>
     <h3 class="m-0 p-0 text-lg hidden lg:block pl-2">Clear notifications</h3>
 </div>
@@ -15,7 +15,7 @@
                 <p class="m-0 p-0 line-height-1">{{ notification.message }}</p>
             </div>
 
-            <div class="flex align-items-end justify-content-end lighter-hover border-circle">
+            <div class="flex align-items-end justify-content-end lighter-hover border-circle" (click)="deleteNotification(notification.id)">
                 <i class="pi pi-trash p-2 lg:p-3 text-lg lg:text-xl"></i>
             </div>
         </div>
