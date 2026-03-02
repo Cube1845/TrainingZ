@@ -11,6 +11,7 @@ import { AppDialogService } from '../../../../common/services/app-dialog.service
 import { catchError, of } from 'rxjs';
 import { AuthDataService } from '../../../../auth/services/auth-data.service';
 import { CoachingService } from '../../../services/coaching.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-coach',
@@ -53,6 +54,44 @@ export class CoachComponent {
           .convertExtendedProfileImageId(coachData)
           .subscribe((convertedCoachData) => {
             this.coachData = signal<ExtendedUserData>(convertedCoachData);
+          });
+      });
+  }
+
+  sendMessage(): void {
+    if (this.coachData == undefined) {
+      return;
+    }
+
+    const messageControl = new FormControl('', [
+      Validators.required,
+      Validators.maxLength(600),
+    ]);
+
+    this.dialogService
+      .displayEditDialog('Send message', [
+        {
+          label: 'Message',
+          form: messageControl,
+        },
+      ], 'Send')
+      .subscribe((shouldSend) => {
+        if (!shouldSend) {
+          return;
+        }
+
+        this.coachingService
+          .sendNotification(this.coachData!().id, messageControl.value || '')
+          .pipe(catchError((err) => of(err)))
+          .subscribe((result) => {
+            if (!result.isSuccess) {
+              this.toastService.error(
+                result.error.message || result.message || 'There was an error'
+              );
+              return;
+            }
+
+            this.toastService.success('Message sent');
           });
       });
   }

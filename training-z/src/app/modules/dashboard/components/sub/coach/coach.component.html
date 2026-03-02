@@ -1,7 +1,7 @@
 @if (coachData != undefined) {
     <div class="flex p-4 w-full h-full lg:p-6 justify-content-center">
         <div class="flex flex-column w-full lg:w-6 relative">
-            <div class="absolute message-button flex p-4 lg:p-3 border-circle lg:border-round-xl z-1">
+            <div class="absolute message-button flex p-4 lg:p-3 border-circle lg:border-round-xl z-1" (click)="sendMessage()">
                 <i class="pi pi-envelope text-xl"></i>
                 <h4 class="m-0 p-0 text-lg hidden lg:block pl-2">Send message</h4>
             </div>
