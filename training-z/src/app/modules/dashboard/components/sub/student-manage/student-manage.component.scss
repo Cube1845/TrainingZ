@@ -15,6 +15,28 @@
         color: var(--p-surface-400);
     }
 
+
+    h4 {
+        color: var(--p-primary-color);
+    }
+
+    .message-button {
+        top: 1rem;
+        right: 0.6rem;
+
+        transition: .2s background-color;
+        background: var(--p-primary-800);
+
+        i, h4 {
+            color: var(--p-surface-0);
+        }
+
+        &:hover {
+            background: var(--p-primary-500);
+            cursor: pointer;
+        }
+    }
+
     .workout-tile {
         background: var(--p-surface-800);
         transition: .2s background-color;
