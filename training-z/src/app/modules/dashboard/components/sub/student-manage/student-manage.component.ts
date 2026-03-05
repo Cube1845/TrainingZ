@@ -12,6 +12,7 @@ import { catchError, of } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { AppDialogService } from '../../../../common/services/app-dialog.service';
 import { PlannerService } from '../../../../workout-planner/services/planner.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-student-manage',
@@ -58,6 +59,41 @@ export class StudentManageComponent {
             });
         });
     });
+  }
+
+
+  sendMessageToStudent(): void {
+    const messageControl = new FormControl('', [
+      Validators.required,
+      Validators.maxLength(600),
+    ]);
+
+    this.dialogService
+      .displayEditDialog('Send message', [
+        {
+          label: 'Message',
+          form: messageControl,
+        },
+      ], 'Send')
+      .subscribe((shouldSend) => {
+        if (!shouldSend) {
+          return;
+        }
+
+        this.coachingService
+          .sendNotification(this.studentData()!.studentData.id, messageControl.value || '')
+          .pipe(catchError((err) => of(err)))
+          .subscribe((result) => {
+            if (!result.isSuccess) {
+              this.toastService.error(
+                result.error.message || result.message || 'There was an error',
+              );
+              return;
+            }
+
+            this.toastService.success('Message sent');
+          });
+      });
   }
 
   openWorkoutHistory(): void {

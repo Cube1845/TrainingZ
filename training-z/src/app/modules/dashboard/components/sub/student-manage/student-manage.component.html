@@ -22,6 +22,18 @@
 
         <p-divider class="m-0 my-4 lg:my-6 w-full"/>
 
+        <div class="flex justify-content-end">
+            <app-button
+                label="Send message"
+                icon="pi pi-envelope"
+                [outlined]="true"
+                color="secondary"
+                (click)="sendMessageToStudent()"
+            />
+        </div>
+
+        <p-divider class="m-0 my-4 lg:my-6 w-full"/>
+
         <div class="flex flex-column gap-4 pb-4">
             <h1 class="text-2xl lg:text-4xl m-0 p-0">Training plans:</h1>
 
