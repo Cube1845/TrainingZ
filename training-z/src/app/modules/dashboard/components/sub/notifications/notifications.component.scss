@@ -9,6 +9,11 @@
         color: var(--p-surface-400);
     }
 
+    .notification-date {
+        color: var(--p-surface-500);
+        font-size: 0.75rem;
+    }
+
     .tile {
         transition: .2s background-color;
 
