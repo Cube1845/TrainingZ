@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { Notification } from '../../../models/notification';
 import { ImageModule } from 'primeng/image';
@@ -9,7 +10,7 @@ import { AppDialogService } from '../../../../common/services/app-dialog.service
 
 @Component({
   selector: 'app-notifications',
-  imports: [ImageModule, DividerModule],
+  imports: [ImageModule, DividerModule, DatePipe],
   templateUrl: './notifications.component.html',
   styleUrl: './notifications.component.scss',
 })
