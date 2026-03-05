@@ -4,10 +4,11 @@ import { DividerModule } from 'primeng/divider';
 import { UserData } from '../../../models/user-data';
 import { Router } from '@angular/router';
 import { ProfileImageService } from '../../../services/profile-image.service';
-import { catchError, combineLatest, Observable, of } from 'rxjs';
+import { catchError, combineLatest, of } from 'rxjs';
 import { AppDialogService } from '../../../../common/services/app-dialog.service';
 import { AppToastService } from '../../../../common/services/app-toast.service';
 import { CoachingService } from '../../../services/coaching.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-students',
@@ -83,6 +84,44 @@ export class StudentsComponent {
             );
 
             this.setStudents();
+          });
+      });
+  }
+
+  sendMessage(studentData: UserData, event: Event): void {
+    event.stopPropagation();
+
+    const messageControl = new FormControl('', [
+      Validators.required,
+      Validators.maxLength(600),
+    ]);
+
+    this.dialogService
+      .displayEditDialog('Send message', [
+        {
+          label: 'Message',
+          form: messageControl,
+        },
+      ], 'Send')
+      .subscribe((shouldSend) => {
+        if (!shouldSend) {
+          return;
+        }
+
+        this.coachingService
+          .sendNotification(studentData.id, messageControl.value || '')
+          .pipe(catchError((err) => of(err)))
+          .subscribe((result) => {
+            if (!result.isSuccess) {
+              this.toastService.error(
+                result.error.message || result.message || 'There was an error'
+              );
+              return;
+            }
+
+            this.toastService.success(
+              'Message sent to ' + studentData.name + ' ' + studentData.surname
+            );
           });
       });
   }

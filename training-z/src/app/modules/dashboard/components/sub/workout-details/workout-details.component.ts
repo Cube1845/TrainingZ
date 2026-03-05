@@ -20,7 +20,7 @@ export class WorkoutDetailsComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly toastService = inject(AppToastService);
 
-  selectedSetIndex = 0;
+  selectedSetIndexes = signal<Record<number, number>>({});
 
   workout = signal<WorkoutDetails | null>(null);
   loading = signal(true);
@@ -48,6 +48,18 @@ export class WorkoutDetailsComponent implements OnInit {
         this.workout.set(result.value);
         this.loading.set(false);
       });
+  }
+
+
+  setSelectedSetIndex(exerciseIndex: number, setIndex: number): void {
+    this.selectedSetIndexes.update((indexes) => ({
+      ...indexes,
+      [exerciseIndex]: setIndex,
+    }));
+  }
+
+  getSelectedSetIndex(exerciseIndex: number): number {
+    return this.selectedSetIndexes()[exerciseIndex] ?? 0;
   }
 
   goBack() {

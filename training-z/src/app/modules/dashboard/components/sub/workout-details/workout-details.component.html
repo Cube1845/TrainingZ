@@ -32,7 +32,7 @@
       </p-card>
 
       <p-accordion [multiple]="true">
-        @for (exercise of workout()!.exercises; track exercise.exerciseName) {
+        @for (exercise of workout()!.exercises; track exercise.exerciseName; let exerciseIndex = $index) {
 
           <p-accordion-panel>
             <p-accordion-header>
@@ -50,15 +50,15 @@
                       type="button"
                       class="set-chip"
                       [class.done]="set.done"
-                      [class.active]="set.index === selectedSetIndex"
-                      (click)="selectedSetIndex = set.index"
+                      [class.active]="set.index === getSelectedSetIndex(exerciseIndex)"
+                      (click)="setSelectedSetIndex(exerciseIndex, set.index)"
                     >
                       {{ set.index + 1 }}
                     </button>
                   }
                 </div>
 
-                @let selectedSet = exercise.sets[selectedSetIndex];
+                @let selectedSet = exercise.sets[getSelectedSetIndex(exerciseIndex)];
 
                 @if (selectedSet?.comment) {
                   <div class="set-comment">
