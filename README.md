@@ -1,1 +1,3 @@
 EN: Angular & .NET app that also uses Capacitor API. This app offers coach-user contact, workout plan creator and more. PL: Aplikacja pisana w Angular i .NET, która korzysta również z Capacitor API. Oferuje kontakt z trenerem, kreator planów treningowych i wiele więcej.
+
+Screens from the app avaiable at https://cube1845.github.io/portfolio/
